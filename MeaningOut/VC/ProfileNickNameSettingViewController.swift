@@ -18,12 +18,12 @@ class ProfileNickNameSettingViewController: UIViewController {
         "profile_10", "profile_11"
     ]
     
-    lazy var randomProfileImageName = randomProfiles.randomElement() ?? "profile_0"
-    lazy var profileImageButton = CircleImageButton(imageName: "\(randomProfileImageName)")
-    let cameraImage = CircleImageView(imageName: "camera.fill")
+   lazy var randomProfileImageName = randomProfiles.randomElement() ?? "profile_0"
+    lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(randomProfileImageName)")
+    let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
     let nicknameTextField = CustomTextField(placeholderText: "닉네임을 입력해주세요 :)")
     let seperator = CustomColorSeperator(bgColor: CustomColor.black)
-    let nicknameStateLabel = PrimaryColorLabel(title: "닉네임에 @ 는 포함할 수 없어요.", textAlignmet: .left)
+    let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     
     let completeButton = PrimaryColorButton(title: "완료")
     
@@ -38,7 +38,7 @@ class ProfileNickNameSettingViewController: UIViewController {
         setUpLayout()
         setUPNavigation()
         setUpTextField()
-        
+        profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
     }
     
     private func setUpHierarchy() {
@@ -105,7 +105,12 @@ class ProfileNickNameSettingViewController: UIViewController {
         }
     }
     
-   
+    @objc func profileImageButtonClicked() {
+        
+        let vc = ProfileImageSettingViewController()
+        vc.selectedImageName = randomProfileImageName
+        navigationController?.pushViewController(vc, animated: true)
+    }
   
     
     
@@ -113,6 +118,10 @@ class ProfileNickNameSettingViewController: UIViewController {
         
         navigationItem.title = "PROFILE SETTING"
         
+        navigationItem.backBarButtonItem?.tintColor = .black
+        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        blackBackButton.tintColor = .black
+        navigationItem.backBarButtonItem = blackBackButton
     }
     
     
