@@ -12,20 +12,16 @@ import SnapKit
 
 class ProfileNickNameSettingViewController: UIViewController {
     
-    let randomProfiles = [
-        "profile_0", "profile_1", "profile_2", "profile_3", "profile_4",
-        "profile_5", "profile_6", "profile_7", "profile_8", "profile_9",
-        "profile_10", "profile_11"
-    ]
     
-   lazy var randomProfileImageName = randomProfiles.randomElement() ?? "profile_0"
-    lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(randomProfileImageName)")
-    let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
-    let nicknameTextField = CustomTextField(placeholderText: "닉네임을 입력해주세요 :)")
-    let seperator = CustomColorSeperator(bgColor: CustomColor.black)
-    let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
+    private lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(randomProfileImageName)")
+    private var randomProfileImageName = ProfileImages().profileImageName.randomElement() ?? "profile_0"
     
-    let completeButton = PrimaryColorButton(title: "완료")
+    private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
+    private let nicknameTextField = CustomTextField(placeholderText: "닉네임을 입력해주세요 :)")
+    private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
+    private let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
+    
+    private let completeButton = PrimaryColorButton(title: "완료")
     
     
     
@@ -39,6 +35,7 @@ class ProfileNickNameSettingViewController: UIViewController {
         setUPNavigation()
         setUpTextField()
         profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
+        completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
     }
     
     private func setUpHierarchy() {
@@ -49,7 +46,7 @@ class ProfileNickNameSettingViewController: UIViewController {
         view.addSubview(seperator)
         view.addSubview(nicknameStateLabel)
         view.addSubview(completeButton)
-        
+        print(randomProfileImageName)
         
     }
     
@@ -105,25 +102,29 @@ class ProfileNickNameSettingViewController: UIViewController {
         }
     }
     
-    @objc func profileImageButtonClicked() {
-        
-        let vc = ProfileImageSettingViewController()
-        vc.selectedImageName = randomProfileImageName
-        navigationController?.pushViewController(vc, animated: true)
-    }
-  
-    
-    
-    func setUPNavigation() {
+    private func setUPNavigation() {
         
         navigationItem.title = "PROFILE SETTING"
         
         navigationItem.backBarButtonItem?.tintColor = .black
+        
         let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         blackBackButton.tintColor = .black
         navigationItem.backBarButtonItem = blackBackButton
     }
     
+    @objc private func profileImageButtonClicked() {
+        
+        let vc = ProfileImageSettingViewController()
+        vc.selectedImageName = randomProfileImageName
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func completeButtonClicked() {
+        guard let nickname = nicknameTextField.text else { return }
+        User.nickName = nickname
+        
+    }
     
 }
 
@@ -134,31 +135,40 @@ extension ProfileNickNameSettingViewController: UITextFieldDelegate {
         nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged )
         
     }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+    }
+    @objc private func textFieldDidChange(_ textField: UITextField) {
         
         validateNickname()
         
     }
-    func validateNickname() {
+    
+    private func validateNickname() {
         guard let userNickname = nicknameTextField.text else { return }
-        let charSet: CharacterSet = {
-            var cs = CharacterSet.lowercaseLetters
-            cs.insert(charactersIn: "@#$%")
-            cs.insert(charactersIn:"0123456789")
-            return cs.inverted
-            
-        }()
+        
+        let regexNumber = "[0-9]"
+        let isNumberContains = userNickname.range(of: regexNumber, options: .regularExpression) != nil
+        
+        let regexSpecialCharacters = "[@#$%]"
+        let ispecialCharactersContains = userNickname.range(of: regexSpecialCharacters, options: .regularExpression) != nil
         
         if userNickname.count < 2 || userNickname.count > 10 {
-            
             nicknameStateLabel.text = NicknameState.isNotAllowedTextRange.rawValue
-            
         } else {
-            
             nicknameStateLabel.text = NicknameState.isValidate.rawValue
         }
+        // MARK: 특수문자 입력 검증
+        if ispecialCharactersContains {
+            nicknameStateLabel.text = NicknameState.isUsedSpecialCharacters.rawValue
+            return
+        }
         
+        // MARK: 숫자 입력 검증
+        if isNumberContains  {
+            nicknameStateLabel.text = NicknameState.isUsedNumber.rawValue
+            return
+        }
         
     }
 }
