@@ -23,6 +23,15 @@
 		9973EBA82C1B43C50067B97E /* PrimaryColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA72C1B43C50067B97E /* PrimaryColorButton.swift */; };
 		9973EBAA2C1B4A120067B97E /* RectangleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA92C1B4A120067B97E /* RectangleImageView.swift */; };
 		9973EBAC2C1B4CF20067B97E /* OnboardingAppNameLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBAB2C1B4CF20067B97E /* OnboardingAppNameLabel.swift */; };
+		9973EBAE2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */; };
+		9973EBB02C1BD92F0067B97E /* CircleImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBAF2C1BD92F0067B97E /* CircleImageButton.swift */; };
+		9973EBB32C1BE4990067B97E /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB22C1BE4990067B97E /* CircleImageView.swift */; };
+		9973EBB62C1BE62F0067B97E /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 9973EBB52C1BE62F0067B97E /* TextFieldEffects */; };
+		9973EBB82C1BE6B00067B97E /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB72C1BE6B00067B97E /* CustomTextField.swift */; };
+		9973EBBA2C1BEB990067B97E /* TextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB92C1BEB990067B97E /* TextField+Extension.swift */; };
+		9973EBBC2C1BECDE0067B97E /* PrimaryColorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBBB2C1BECDE0067B97E /* PrimaryColorLabel.swift */; };
+		9973EBBE2C1C04040067B97E /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBBD2C1C04040067B97E /* ProfileImage.swift */; };
+		9973EBC02C1C17D80067B97E /* CustomColorSeperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBBF2C1C17D80067B97E /* CustomColorSeperator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +49,14 @@
 		9973EBA72C1B43C50067B97E /* PrimaryColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColorButton.swift; sourceTree = "<group>"; };
 		9973EBA92C1B4A120067B97E /* RectangleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleImageView.swift; sourceTree = "<group>"; };
 		9973EBAB2C1B4CF20067B97E /* OnboardingAppNameLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAppNameLabel.swift; sourceTree = "<group>"; };
+		9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNickNameSettingViewController.swift; sourceTree = "<group>"; };
+		9973EBAF2C1BD92F0067B97E /* CircleImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageButton.swift; sourceTree = "<group>"; };
+		9973EBB22C1BE4990067B97E /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
+		9973EBB72C1BE6B00067B97E /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		9973EBB92C1BEB990067B97E /* TextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextField+Extension.swift"; sourceTree = "<group>"; };
+		9973EBBB2C1BECDE0067B97E /* PrimaryColorLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryColorLabel.swift; sourceTree = "<group>"; };
+		9973EBBD2C1C04040067B97E /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
+		9973EBBF2C1C17D80067B97E /* CustomColorSeperator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColorSeperator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +68,7 @@
 				9924600B2C1B2F510023A63E /* IQKeyboardManagerSwift in Frameworks */,
 				992460052C1B2F350023A63E /* Kingfisher in Frameworks */,
 				992460022C1B2F2D0023A63E /* Alamofire in Frameworks */,
+				9973EBB62C1BE62F0067B97E /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +95,9 @@
 		99245FE62C1B24CD0023A63E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
-				9973EBA62C1B43AF0067B97E /* CustomView */,
+				9973EBB12C1BD9770067B97E /* Extension */,
 				9973EBA12C1B3E950067B97E /* Enum */,
+				9973EBA62C1B43AF0067B97E /* CustomView */,
 				9973EB9E2C1B389A0067B97E /* VC */,
 				99245FFD2C1B269D0023A63E /* APIKey */,
 				99245FE72C1B24CD0023A63E /* AppDelegate.swift */,
@@ -86,6 +105,7 @@
 				99245FF02C1B24CF0023A63E /* Assets.xcassets */,
 				99245FF22C1B24CF0023A63E /* LaunchScreen.storyboard */,
 				99245FF52C1B24CF0023A63E /* Info.plist */,
+				9973EBBD2C1C04040067B97E /* ProfileImage.swift */,
 			);
 			path = MeaningOut;
 			sourceTree = "<group>";
@@ -102,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				9973EB9F2C1B39070067B97E /* OnboardingViewController.swift */,
+				9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -110,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				9973EBA22C1B3EA40067B97E /* Resource.swift */,
-				9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -121,8 +141,22 @@
 				9973EBA72C1B43C50067B97E /* PrimaryColorButton.swift */,
 				9973EBA92C1B4A120067B97E /* RectangleImageView.swift */,
 				9973EBAB2C1B4CF20067B97E /* OnboardingAppNameLabel.swift */,
+				9973EBAF2C1BD92F0067B97E /* CircleImageButton.swift */,
+				9973EBB22C1BE4990067B97E /* CircleImageView.swift */,
+				9973EBB72C1BE6B00067B97E /* CustomTextField.swift */,
+				9973EBBB2C1BECDE0067B97E /* PrimaryColorLabel.swift */,
+				9973EBBF2C1C17D80067B97E /* CustomColorSeperator.swift */,
 			);
 			path = CustomView;
+			sourceTree = "<group>";
+		};
+		9973EBB12C1BD9770067B97E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */,
+				9973EBB92C1BEB990067B97E /* TextField+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,6 +180,7 @@
 				992460042C1B2F350023A63E /* Kingfisher */,
 				992460072C1B2F470023A63E /* SnapKit */,
 				9924600A2C1B2F510023A63E /* IQKeyboardManagerSwift */,
+				9973EBB52C1BE62F0067B97E /* TextFieldEffects */,
 			);
 			productName = MeaningOut;
 			productReference = 99245FE42C1B24CD0023A63E /* MeaningOut.app */;
@@ -180,6 +215,7 @@
 				992460032C1B2F350023A63E /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				992460062C1B2F470023A63E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				992460092C1B2F510023A63E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 			);
 			productRefGroup = 99245FE52C1B24CD0023A63E /* Products */;
 			projectDirPath = "";
@@ -208,13 +244,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9973EBB82C1BE6B00067B97E /* CustomTextField.swift in Sources */,
+				9973EBBE2C1C04040067B97E /* ProfileImage.swift in Sources */,
+				9973EBBC2C1BECDE0067B97E /* PrimaryColorLabel.swift in Sources */,
 				9973EBA52C1B3F020067B97E /* UIColor+Extension.swift in Sources */,
+				9973EBC02C1C17D80067B97E /* CustomColorSeperator.swift in Sources */,
 				99245FE82C1B24CD0023A63E /* AppDelegate.swift in Sources */,
 				9973EBAC2C1B4CF20067B97E /* OnboardingAppNameLabel.swift in Sources */,
 				9973EBA02C1B39070067B97E /* OnboardingViewController.swift in Sources */,
+				9973EBB32C1BE4990067B97E /* CircleImageView.swift in Sources */,
 				9973EBAA2C1B4A120067B97E /* RectangleImageView.swift in Sources */,
+				9973EBB02C1BD92F0067B97E /* CircleImageButton.swift in Sources */,
 				99245FFF2C1B26AD0023A63E /* APIKey.swift in Sources */,
 				9973EBA82C1B43C50067B97E /* PrimaryColorButton.swift in Sources */,
+				9973EBAE2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift in Sources */,
+				9973EBBA2C1BEB990067B97E /* TextField+Extension.swift in Sources */,
 				9973EBA32C1B3EA40067B97E /* Resource.swift in Sources */,
 				99245FEA2C1B24CD0023A63E /* SceneDelegate.swift in Sources */,
 			);
@@ -475,6 +519,14 @@
 				minimumVersion = 7.0.3;
 			};
 		};
+		9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -497,6 +549,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 992460092C1B2F510023A63E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		9973EBB52C1BE62F0067B97E /* TextFieldEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
+			productName = TextFieldEffects;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

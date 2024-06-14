@@ -1,5 +1,5 @@
 //
-//  OnboardingAppNameLabel.swift
+//  CustomColorSeperator.swift
 //  MeaningOut
 //
 //  Created by 김윤우 on 6/14/24.
@@ -7,17 +7,13 @@
 
 import UIKit
 
-class OnboardingAppNameLabel: UILabel {
+class CustomColorSeperator: UIView {
     
-    init(labelText: String) {
+    init(bgColor: UIColor) {
         super.init(frame: .zero)
         
-        text = labelText
-        font = Onboarding.Font.NoteworthyBold60
-        textColor = Onboarding.Color.appPrimaryColor
-        textAlignment = .center
-        
-      
+        backgroundColor = bgColor
+       
     }
     
     
@@ -35,4 +31,3 @@ class OnboardingAppNameLabel: UILabel {
     
     
 }
-

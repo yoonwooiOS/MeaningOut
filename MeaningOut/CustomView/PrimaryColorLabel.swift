@@ -1,5 +1,5 @@
 //
-//  OnboardingAppNameLabel.swift
+//  PrimaryColorLabel.swift
 //  MeaningOut
 //
 //  Created by 김윤우 on 6/14/24.
@@ -7,17 +7,16 @@
 
 import UIKit
 
-class OnboardingAppNameLabel: UILabel {
+class PrimaryColorLabel: UILabel {
     
-    init(labelText: String) {
+    init(title: String, textAlignmet:  NSTextAlignment) {
         super.init(frame: .zero)
         
-        text = labelText
-        font = Onboarding.Font.NoteworthyBold60
-        textColor = Onboarding.Color.appPrimaryColor
-        textAlignment = .center
+        text = title
+        textColor = CustomColor.appPrimaryColor
+        font = CumstomFont.regular13
+        textAlignment = textAlignmet
         
-      
     }
     
     

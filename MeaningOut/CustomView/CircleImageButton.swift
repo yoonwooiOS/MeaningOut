@@ -1,5 +1,5 @@
 //
-//  PrimaryColorButton.swift
+//  CircleImageButton.swift
 //  MeaningOut
 //
 //  Created by 김윤우 on 6/14/24.
@@ -7,22 +7,21 @@
 
 import UIKit
 
-class PrimaryColorButton: UIButton {
+
+class CircleImageButton: UIButton {
     
-    init(title: String) {
+    init(imageName: String) {
         super.init(frame: .zero)
         
-        setTitle(title, for: .normal)
         
-        setTitleColor(CustomColor.white, for: .normal)
+        setImage(UIImage(named: imageName), for: .normal)
+        contentMode = .scaleToFill
         
+        layer.cornerRadius = CGFloat(CirecleImage.size / 2)
+        layer.masksToBounds = true
         
-        titleLabel?.font = CumstomFont.bold16
-        
-        backgroundColor = CustomColor.appPrimaryColor
-        
-        layer.cornerRadius = 20
-        
+        layer.borderWidth = 3
+        layer.borderColor = CustomColor.appPrimaryColor.cgColor
     }
     
     
@@ -40,3 +39,4 @@ class PrimaryColorButton: UIButton {
     
     
 }
+

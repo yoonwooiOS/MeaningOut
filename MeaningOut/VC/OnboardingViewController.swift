@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import Kingfisher
+
 
 class OnboardingViewController: UIViewController {
     
@@ -22,11 +22,13 @@ class OnboardingViewController: UIViewController {
         
         setUpHierarchy()
         setUpLayout()
-        
+        setUpButton()
+        setUPNavigation()
+       
     }
     
 
-    func setUpHierarchy() {
+    private func setUpHierarchy() {
         
         view.addSubview(appNameLabel)
         view.addSubview(onBoardingImage)
@@ -34,7 +36,7 @@ class OnboardingViewController: UIViewController {
         
     }
     
-    func setUpLayout() {
+    private func setUpLayout() {
         
         appNameLabel.snp.makeConstraints {
             
@@ -65,9 +67,23 @@ class OnboardingViewController: UIViewController {
         
     }
     
-    func startButtonClicked() {
+    private func setUpButton() {
         
+        startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
         
+    }
+    
+    private func setUPNavigation() {
+        
+        navigationItem.backBarButtonItem?.tintColor = .black
+        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        blackBackButton.tintColor = .black
+        navigationItem.backBarButtonItem = blackBackButton
+    }
+        
+    @objc private func startButtonClicked() {
+        
+            navigationController?.pushViewController(ProfileNickNameSettingViewController(), animated: true)
         
     }
     
