@@ -22,6 +22,7 @@ class CustomTextField: UITextField {
         borderStyle = .none
         placeholder = placeholderText
         tintColor = CustomColor.gray
+        
     }
     
     
