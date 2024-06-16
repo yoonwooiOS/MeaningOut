@@ -20,7 +20,7 @@ class PirmaryColorCircleImageView: UIImageView {
         layer.borderWidth = 3
         clipsToBounds = true
         backgroundColor = CustomColor.appPrimaryColor
-        layer.cornerRadius = CGFloat(CirecleImage.size / 3 / 2)
+        layer.cornerRadius = CGFloat(PrimaryCircleSize.size / 3 / 2)
         
     }
     

@@ -17,7 +17,7 @@ class PrimaryColorCircleImageButton: UIButton {
         setImage(UIImage(named: imageName), for: .normal)
         contentMode = .scaleToFill
         
-        layer.cornerRadius = CGFloat(CirecleImage.size / 2)
+        layer.cornerRadius = CGFloat(PrimaryCircleSize.size / 2)
         layer.masksToBounds = true
         
         layer.borderWidth = 3
