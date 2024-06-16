@@ -1,28 +1,26 @@
 //
-//  GrayColorButton.swift
+//  CustomNoImageButton.swift
 //  MeaningOut
 //
-//  Created by 김윤우 on 6/14/24.
+//  Created by 김윤우 on 6/16/24.
 //
 
 import UIKit
 
-class GrayColorButton: UIButton {
+class CustomNoImageButton: UIButton {
     
-    init(title: String) {
+    init(title: String, textColor: UIColor, fontSize: UIFont, backgroundColor bgColor: UIColor, cornerRadius: CGFloat) {
         super.init(frame: .zero)
         
         setTitle(title, for: .normal)
         
-        setTitleColor(CustomColor.white, for: .normal)
+        setTitleColor(textColor, for: .normal)
         
+        titleLabel?.font = fontSize
         
-        titleLabel?.font = CumstomFont.bold16
+        backgroundColor = bgColor
         
-        backgroundColor = CustomColor.gray
-        
-        layer.cornerRadius = 20
-        
+        layer.cornerRadius = cornerRadius
         
     }
     

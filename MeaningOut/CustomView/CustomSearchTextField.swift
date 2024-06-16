@@ -1,28 +1,30 @@
 //
-//  CustomTextField.swift
+//  CustomSearchTextField.swift
 //  MeaningOut
 //
-//  Created by 김윤우 on 6/14/24.
+//  Created by 김윤우 on 6/16/24.
 //
 
 import UIKit
-import TextFieldEffects
 
-class CustomTextField: UITextField {
+class CustomSearchTextField: UITextField {
     
     
     
     init(placeholderText: String) {
         super.init(frame: .zero)
-
+        
+        addLeftPadding()
+        addleftimage(image: UIImage(systemName: "magnifyingglass")!)
         font = CumstomFont.bold14
         textColor = CustomColor.black
         textAlignment = .left
         keyboardType = .default
         borderStyle = .none
         placeholder = placeholderText
-        tintColor = CustomColor.gray
-        
+        tintColor = CustomColor.darkGray
+        backgroundColor = CustomColor.lightGray
+        layer.cornerRadius = 7
     }
     
     
@@ -38,3 +40,4 @@ class CustomTextField: UITextField {
     
     
 }
+
