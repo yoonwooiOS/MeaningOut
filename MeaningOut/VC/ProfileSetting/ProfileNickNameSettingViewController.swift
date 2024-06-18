@@ -12,9 +12,9 @@ import SnapKit
 
 class ProfileNickNameSettingViewController: UIViewController {
     
-   
-    private lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(randomProfileImageName)")
-        
+    
+    private lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
+    
     private var randomProfileImageName = ProfileImages().profileImageName.randomElement() ?? "profile_0"
     
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
@@ -23,7 +23,7 @@ class ProfileNickNameSettingViewController: UIViewController {
     private let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     
     private let completeButton = PrimaryColorButton(title: "완료")
-    
+    let ud = UserDefaultsManager()
     
     
     override func viewDidLoad() {
@@ -37,14 +37,15 @@ class ProfileNickNameSettingViewController: UIViewController {
         setUpTextField()
         profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
-        
+        User.selectedProfileImage = randomProfileImageName
+        print(User.selectedProfileImage,"ViewdidLoad")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
-        let ud = UserDefaultsManager()
-        profileImageButton.setImage(UIImage(named: ud.profileImage), for: .normal)
+        profileImageButton.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
         nicknameTextField.text = ud.nickname
+        print(User.selectedProfileImage,"ViewwillApear")
     }
     
     private func setUpHierarchy() {
@@ -55,9 +56,7 @@ class ProfileNickNameSettingViewController: UIViewController {
         view.addSubview(seperator)
         view.addSubview(nicknameStateLabel)
         view.addSubview(completeButton)
-//        print(randomProfileImageName)
-        User.selectedProfileImage = randomProfileImageName
-//        print(User.selectedProfileImage,"User.selectedImage")
+
     }
     
     private func setUpLayout() {
@@ -121,11 +120,14 @@ class ProfileNickNameSettingViewController: UIViewController {
         let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         blackBackButton.tintColor = .black
         navigationItem.backBarButtonItem = blackBackButton
+        
+        
     }
     
     @objc private func profileImageButtonClicked() {
         
         let vc = ProfileImageSettingViewController()
+        User.selectedProfileImage = randomProfileImageName
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -133,34 +135,21 @@ class ProfileNickNameSettingViewController: UIViewController {
         guard let nickname = nicknameTextField.text else { return }
         User.nickName = nickname
         User.selectedProfileImage = randomProfileImageName
-       
-        UserDefaults.standard.set(nickname, forKey: "nickname")
         
-        if User.recentSearchList == nil {
-            
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let navigationController = UINavigationController(rootViewController: NoRecentSearchViewController())
-            
-            sceneDelegate?.window?.rootViewController = navigationController
-            sceneDelegate?.window?.makeKeyAndVisible()
-
-        } else {
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let navigationController = UINavigationController(rootViewController: RecentSearchViewController())
-            
-            sceneDelegate?.window?.rootViewController = navigationController
-            sceneDelegate?.window?.makeKeyAndVisible()
-
-            
-            
-            
-        }
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let currentDateString = dateFormatter.string(from: currentDate)
         
-       
+        User.joinDate = currentDateString
+        
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        let tabBar = TabBarController()
+//        let navigationController = UINavigationController(rootViewController:tabBar )
+        
+        sceneDelegate?.window?.rootViewController = tabBar
+        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
 }

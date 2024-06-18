@@ -15,13 +15,13 @@ class ProfileImageSettingCollectionViewCell: UICollectionViewCell {
     
     var profileImageButton = GrayColorCircleButton(imageName: "profile_0")
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame )
+        
         profileImageButton.isUserInteractionEnabled = false
         setUpHierarchy()
         setUpLayout()
-        
-        print("clickedButton")
     }
     
     private func setUpHierarchy() {
@@ -41,17 +41,18 @@ class ProfileImageSettingCollectionViewCell: UICollectionViewCell {
     }
     
     func setUpCell(data: String) {
-         print(data,"1111")
+//         print(data,"1111")
          profileImageButton.setImage(UIImage(named: data), for: .normal)
-        if data == User.selectedProfileImage {
-            
-            profileImageButton.alpha = 1
-            profileImageButton.layer.borderWidth = 3
-            profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
-            
-        } 
+       
         
     }
+    override func prepareForReuse() {
+            super.prepareForReuse()
+            
+            profileImageButton.alpha = 0.5
+            profileImageButton.layer.borderWidth = 1
+            profileImageButton.layer.borderColor = CustomColor.gray.cgColor
+        }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
