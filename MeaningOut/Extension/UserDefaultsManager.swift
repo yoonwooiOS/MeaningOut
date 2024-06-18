@@ -11,7 +11,7 @@ class UserDefaultsManager {
     
     var nickname:String {
         get {
-            return UserDefaults.standard.string(forKey: "nickname") ?? "손님"
+            return UserDefaults.standard.string(forKey: "nickname") ?? ""
         } set {
             UserDefaults.standard.set(newValue, forKey: "nickname")
         }
@@ -20,9 +20,28 @@ class UserDefaultsManager {
     
     var profileImage: String {
         get {
-            return UserDefaults.standard.string(forKey: "profileImage") ?? "닉네임을 입력해주세요 :)"
+            return UserDefaults.standard.string(forKey: "profileImage") ?? ""
         } set {
             UserDefaults.standard.set(newValue, forKey: "profileImage")
+        }
+        
+    }
+    
+    
+    var recentSearchList: [String] {
+        get {
+            return (UserDefaults.standard.array(forKey: "recentSearchList")  as? [String]) ?? []
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "recentSearchList")
+        }
+        
+    }
+    
+    var joinDate: String {
+        get {
+            return UserDefaults.standard.string(forKey: "joinDate") ?? ""
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "joinDate")
         }
         
     }

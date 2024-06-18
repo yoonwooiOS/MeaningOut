@@ -10,16 +10,19 @@ import UIKit
 enum CustomColor {
     
     static let appPrimaryColor = UIColor(hex: "EF8947")
+    
     static let black = UIColor(hex: "000000")
+    static let blackAlpah50 = UIColor(hex: "000000", alpha: 0.5)
     static let white = UIColor(hex: "ffffff")
     static let gray = UIColor(hex: "828282")
+    static let grayAlpha50 = UIColor(hex: "828282", alpha: 0.5)
     static let darkGray = UIColor(hex: "4C4C4C")
     static let lightGray = UIColor(hex: "CDCDCD")
     
     
 }
 
-enum CumstomFont {
+enum CustomFont {
     
     static let bold16 = UIFont.boldSystemFont(ofSize: 16)
     static let bold15 = UIFont.boldSystemFont(ofSize: 15)
@@ -48,27 +51,32 @@ enum Onboarding {
     
 }
 
-enum CirecleImage {
+enum PrimaryCircleSize {
     
-    static let size = 120
+    static let size = CGFloat(120)
     
 }
 
-enum Label {
+enum GrayCircleSize {
+    static let sectionSpacing: CGFloat = 20
+    static let cellSpacing: CGFloat = 16
+    static let width = UIScreen.main.bounds.width - (GrayCircleSize.sectionSpacing * 3 ) - (GrayCircleSize.cellSpacing * 4)
+    static let height = GrayCircleSize.width / 4 * 1.3
     
-    enum Font {
-        
-       
-        
-    }
-    
-    enum Color {
-        
-        static let appPrimaryColor = CustomColor.appPrimaryColor
+}
 
-    }
+enum UserProfileImageGrayCircleSize {
     
+    static let size = CGFloat(100)
     
+}
+
+enum SearchResultCell {
+    
+    static let sectionSpacing: CGFloat = 5
+    static let cellSpacing: CGFloat = 10
+    static let width = UIScreen.main.bounds.width -  (SearchResultCell.cellSpacing * 2)
+    static let height = (SearchResultCell.width / 2) * 1.5
     
 }
 
@@ -80,5 +88,14 @@ enum NicknameState: String {
     case isUsedSpecialCharacters = "닉네임에 @,#,$,% 는 포함할 수 없어요"
     case isUsedNumber = "닉네임에 숫자는 포함할 수 없어요"
     case isValidate = "사용 가능한 닉네임 입니다"
+    case isValidate2 = "사용 가능한 닉네임 입니다 :D"
 }
 
+enum SearchSorted: String {
+    
+    case sim 
+    case date
+    case asc
+    case dsc
+    
+}
