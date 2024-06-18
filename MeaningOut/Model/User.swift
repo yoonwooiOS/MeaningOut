@@ -8,10 +8,50 @@
 import Foundation
 
 struct User {
-    static var nickName: String? = UserDefaults.standard.string(forKey: "nickname")
-    static var selectedProfileImage: String = ""
-    static var recentSearchList: [String]? = ["dasd","asdsad"]
-    let bookMark: Bool
-    let joinDate: String
+    static var nickName: String {
+        get {
+            return UserDefaultsManager().nickname
+        }
+        set {
+            var ud = UserDefaultsManager()
+            ud.nickname = newValue
+        }
+    }
+    
+    static var selectedProfileImage: String {
+        
+        get {
+            return UserDefaultsManager().profileImage
+        }
+        set {
+            var ud = UserDefaultsManager()
+            ud.profileImage = newValue
+        }
+        
+    }
+    static var savedRecentSearchList: [String] {
+            get {
+                return UserDefaultsManager().recentSearchList
+            }
+            set {
+                var ud = UserDefaultsManager()
+                ud.recentSearchList = newValue
+            }
+        }
+    let isLiked: Bool
+    
+    static var joinDate: String {
+        
+        get {
+            return UserDefaultsManager().joinDate
+        }
+        set {
+            var ud = UserDefaultsManager()
+            ud.joinDate = newValue
+        }
+        
+        
+        
+    }
     static let shoppingList: [String]? = nil
 }
