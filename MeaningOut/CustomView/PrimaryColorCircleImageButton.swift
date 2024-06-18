@@ -10,14 +10,14 @@ import UIKit
 
 class PrimaryColorCircleImageButton: UIButton {
     
-    init(imageName: String) {
+    init(imageName: String, cornerRadius: CGFloat) {
         super.init(frame: .zero)
         
         
         setImage(UIImage(named: imageName), for: .normal)
         contentMode = .scaleToFill
         
-        layer.cornerRadius = CGFloat(PrimaryCircleSize.size / 2)
+        layer.cornerRadius = CGFloat( cornerRadius / 2)
         layer.masksToBounds = true
         
         layer.borderWidth = 3

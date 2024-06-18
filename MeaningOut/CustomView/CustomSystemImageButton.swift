@@ -1,5 +1,5 @@
 //
-//  BlackColorLabel.swift
+//  CustomSystemImageButton.swift
 //  MeaningOut
 //
 //  Created by 김윤우 on 6/16/24.
@@ -7,16 +7,19 @@
 
 import UIKit
 
-
-class BlackColorLabel: UILabel {
+class CustomSystemImageButton: UIButton {
     
-    init(title: String, textAlignmet:  NSTextAlignment, fontSize: UIFont) {
+    init(imageName: String, tColor: UIColor) {
         super.init(frame: .zero)
         
-        text = title
-        textColor = CustomColor.black
-        font = fontSize
-        textAlignment = textAlignmet
+        let image = UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate)
+        setImage(image, for: .normal)
+        
+        tintColor = tColor
+        
+        contentMode = .scaleToFill
+        
+      
         
     }
     
@@ -35,5 +38,3 @@ class BlackColorLabel: UILabel {
     
     
 }
-
-

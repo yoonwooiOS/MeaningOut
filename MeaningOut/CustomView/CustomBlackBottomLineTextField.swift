@@ -13,7 +13,7 @@ class CustomBlackBottomLineTextField: UITextField {
     init(placeholderText: String) {
         super.init(frame: .zero)
 
-        font = CumstomFont.bold14
+        font = CustomFont.bold14
         textColor = CustomColor.black
         textAlignment = .left
         keyboardType = .default

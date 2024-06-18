@@ -14,7 +14,7 @@ class PrimaryColorLabel: UILabel {
         
         text = title
         textColor = CustomColor.appPrimaryColor
-        font = CumstomFont.regular13
+        font = CustomFont.regular13
         textAlignment = textAlignmet
         
     }

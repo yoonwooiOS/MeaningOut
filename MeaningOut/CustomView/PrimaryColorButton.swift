@@ -17,7 +17,7 @@ class PrimaryColorButton: UIButton {
         setTitleColor(CustomColor.white, for: .normal)
         
         
-        titleLabel?.font = CumstomFont.bold16
+        titleLabel?.font = CustomFont.bold16
         
         backgroundColor = CustomColor.appPrimaryColor
         

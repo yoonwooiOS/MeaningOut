@@ -16,7 +16,7 @@ class CustomSearchTextField: UITextField {
         
         addLeftPadding()
         addleftimage(image: UIImage(systemName: "magnifyingglass")!)
-        font = CumstomFont.bold14
+        font = CustomFont.bold14
         textColor = CustomColor.black
         textAlignment = .left
         keyboardType = .default

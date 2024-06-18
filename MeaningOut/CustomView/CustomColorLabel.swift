@@ -1,5 +1,5 @@
 //
-//  CustomImageButton.swift
+//  CustomColorLabel.swift
 //  MeaningOut
 //
 //  Created by 김윤우 on 6/16/24.
@@ -7,20 +7,17 @@
 
 import UIKit
 
-class CustomImageButton: UIButton {
+
+class CustomColorLabel: UILabel {
     
-    init(imageName: String, tColor: UIColor) {
+    init(title: String, textcolor: UIColor, textAlignmet:  NSTextAlignment, fontSize: UIFont) {
         super.init(frame: .zero)
         
-        let image = UIImage(systemName: imageName)?.withRenderingMode(.alwaysTemplate)
-        setImage(image, for: .normal)
-        
-        tintColor = tColor
-        
-        contentMode = .scaleToFill
-        
-      
-        
+        text = title
+        textColor = textcolor
+        font = fontSize
+        textAlignment = textAlignmet
+        numberOfLines = 2
     }
     
     
@@ -38,3 +35,5 @@ class CustomImageButton: UIButton {
     
     
 }
+
+

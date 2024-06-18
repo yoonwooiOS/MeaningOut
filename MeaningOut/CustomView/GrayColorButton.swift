@@ -9,19 +9,22 @@ import UIKit
 
 class GrayColorButton: UIButton {
     
-    init(title: String) {
+    init(title: String, backgroundColor bcColor: UIColor, tintcolor: UIColor) {
         super.init(frame: .zero)
         
         setTitle(title, for: .normal)
         
-        setTitleColor(CustomColor.white, for: .normal)
+       
+        setTitleColor(CustomColor.black, for: .normal)
         
         
-        titleLabel?.font = CumstomFont.bold16
+        titleLabel?.font = CustomFont.bold13
+        setTitleColor(tintcolor, for: .normal) 
+        backgroundColor = bcColor
         
-        backgroundColor = CustomColor.gray
-        
-        layer.cornerRadius = 20
+        layer.borderColor = CustomColor.lightGray.cgColor
+        layer.borderWidth = 0.5
+        layer.cornerRadius = 16
         
         
     }
