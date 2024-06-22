@@ -79,6 +79,7 @@ class ProductDetailViewController: UIViewController {
                 likedButtonList.remove(at: removeLikedImage)
                 navigationItem.rightBarButtonItem?.image = UIImage(named: "like_unselected")
                
+                
             }
             
         } else {

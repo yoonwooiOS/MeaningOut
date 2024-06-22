@@ -252,6 +252,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         vc.likedButtonList = likedButtonList
         print(likedButtonList)
         navigationController?.pushViewController(vc, animated: true)
+    
         
     }
     

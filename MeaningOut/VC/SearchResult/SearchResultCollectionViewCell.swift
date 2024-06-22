@@ -99,6 +99,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         likeImageButton.backgroundColor = UserDefaults.standard.bool(forKey: productData.productId) ? CustomColor.white : CustomColor.blackAlpah50
         
         
+        
     }
     
     
