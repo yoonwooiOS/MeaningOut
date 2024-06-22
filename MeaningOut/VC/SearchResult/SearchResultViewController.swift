@@ -23,12 +23,20 @@ class SearchResultViewController: UIViewController {
     let highPriceButton = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
     let lowPriceButton = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
-   
+  
+    var likedButtonList:[String] = []
+//
     var page = 1
-    var isEnd = false
-    
+   
+    override func viewWillAppear(_ animated: Bool) {
+        print(likedButtonList, "viewWillAppaer")
+       
+        print(likedButtonList, "viewWillAppaer")
+        collectionView.reloadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(likedButtonList, "viewdidLoad")
         view.backgroundColor = .systemBackground
         callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.sim.rawValue)
         setUpHierarchy()
@@ -108,7 +116,7 @@ class SearchResultViewController: UIViewController {
         collectionView.delegate = self
         collectionView.prefetchDataSource = self
         collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
-        
+        collectionView.isUserInteractionEnabled = true
     }
     
     private func setUpNavigation() {
@@ -229,7 +237,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         let data = productList.items[indexPath.row]
         
         cell.setUpcell(productData: data) 
-        cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd), for: .touchUpInside)
+        cell.likeImageButton.tag = indexPath.row
+        cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
         
         return cell
     }
@@ -239,15 +248,34 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         let vc = ProductDetailViewController()
         vc.siteURL = data.link
         vc.storeName = data.mallName
+        vc.productId = data.productId
+        vc.likedButtonList = likedButtonList
+        print(likedButtonList)
         navigationController?.pushViewController(vc, animated: true)
         
     }
     
     //MARK: 즐겨찾기 기능 추가 예정
-    @objc func likeImageButtonClicekd() {
+    @objc func likeImageButtonClicekd(sender: UIButton) {
+//        print(productList.items[sender.tag].productId)
+//        print(sender.tag)
+//        print("sdfsadfds")
         
-        
-        
+        if UserDefaults.standard.bool(forKey: "\(productList.items[sender.tag].productId)") {
+            UserDefaults.standard.setValue(false, forKey: "\(productList.items[sender.tag].productId)")
+            if let removeLikedImage = likedButtonList.firstIndex(of:  "\(productList.items[sender.tag].productId)") {
+                likedButtonList.remove(at: removeLikedImage)
+                
+                
+            }
+        } else {
+            UserDefaults.standard.setValue(true, forKey: "\(productList.items[sender.tag].productId)")
+            likedButtonList.append(productList.items[sender.tag].productId)
+
+        }
+       
+        print(likedButtonList, "버트 클릭")
+        collectionView.reloadData()
     }
 
 }

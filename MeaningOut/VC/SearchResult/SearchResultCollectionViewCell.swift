@@ -16,7 +16,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     
     var productImage = SearchCellImageView(imageURL: "")
-    let likeImageButton = CustomAssetButton(imageName: "like_unselected", bgColor: CustomColor.blackAlpah50)
+    var likeImageButton = CustomAssetButton(imageName: "like_unselected", bgColor: CustomColor.blackAlpah50)
     let storeName = CustomColorLabel(title: "", textcolor: CustomColor.lightGray, textAlignmet: .left, fontSize: CustomFont.regular13)
     let productName = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)
     let productPrice = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold15)
@@ -32,12 +32,13 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private func setUpHierarchy() {
         
-        contentView.addSubview(productImage)
-        productImage.addSubview(likeImageButton)
+       
+        
         contentView.addSubview(storeName)
         contentView.addSubview(productName)
         contentView.addSubview(productPrice)
-        
+        contentView.addSubview(productImage)
+        contentView.addSubview(likeImageButton)
     }
     
     private func setUpLayout() {
@@ -46,14 +47,6 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
             
             $0.top.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)
             $0.height.equalTo(200)
-            
-        }
-        
-        likeImageButton.snp.makeConstraints {
-            
-            $0.trailing.equalTo(productImage.snp.trailing).inset(18)
-            $0.bottom.equalTo(productImage.snp.bottom).inset(18)
-            $0.size.equalTo(40)
             
         }
         
@@ -80,6 +73,13 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(28)
             
         }
+        likeImageButton.snp.makeConstraints {
+            
+            $0.trailing.equalTo(productImage.snp.trailing).inset(18)
+            $0.bottom.equalTo(productImage.snp.bottom).inset(18)
+            $0.size.equalTo(40)
+            
+        }
     }
     
     func setUpcell(productData: Item ) {
@@ -93,6 +93,12 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         
         productName.text = replacingTitle
         productPrice.text = "\(formattedPrice ?? "")원"
+        let likeImgae = UserDefaults.standard.bool(forKey: productData.productId) ? "like_selected" : "like_unselected"
+        
+        likeImageButton.setImage(UIImage(named: likeImgae), for: .normal)
+        likeImageButton.backgroundColor = UserDefaults.standard.bool(forKey: productData.productId) ? CustomColor.white : CustomColor.blackAlpah50
+        
+        
     }
     
     
