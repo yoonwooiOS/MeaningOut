@@ -53,5 +53,29 @@ struct User {
         
         
     }
-    static let shoppingList: [String]? = nil
+    static var shoppingList: [String] {
+        
+        get {
+            return UserDefaultsManager().shoppingList
+        }
+        set {
+            var ud = UserDefaultsManager()
+            ud.shoppingList = newValue
+        }
+        
+        
+        
+    }
+    
+    
+    static var likedProductList: [String] {
+        
+        get {
+            return UserDefaultsManager().shoppingList
+        }
+        set {
+            var ud = UserDefaultsManager()
+            ud.shoppingList = newValue
+        }
+    }
 }
