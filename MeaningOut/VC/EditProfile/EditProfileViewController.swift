@@ -21,15 +21,16 @@ class EditProfileViewController: UIViewController {
     
     let otherSettingList = ["나의 장바구니", "자주 묻는 질문", "1:1 문의", "알림 설정", "탈퇴하기"]
     
-    
+    var list:[String] = []
     override func viewWillAppear(_ animated: Bool) {
         userProfileImageView.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
         userNicknameLabel.text = User.nickName
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         view.backgroundColor = .systemBackground
         setUpHierarchy()
         setUpLayout()
@@ -150,7 +151,8 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: EditProfileTableViewCell.identifier, for: indexPath) as! EditProfileTableViewCell
         let data = otherSettingList[indexPath.row]
         
-        cell.setUpCell(data: data)
+        cell.setUpCell(data: data, list: list)
+        
         return cell
     }
     
@@ -171,10 +173,8 @@ extension UIViewController {
         let alert = UIAlertController(title: t, message: msg, preferredStyle: style)
         
         let ok = UIAlertAction(title: "확인", style: .default) { ok in
-            UserDefaults.standard.removeObject(forKey: "nickname")
-            UserDefaults.standard.removeObject(forKey: "joinDate")
-            UserDefaults.standard.removeObject(forKey: "selectedProfileImage")
-            UserDefaults.standard.removeObject(forKey: "savedRecentSearchList")
+            let domain = Bundle.main.bundleIdentifier!
+            UserDefaults.standard.removePersistentDomain(forName: domain)
             
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let sceneDelegate = windowScene?.delegate as? SceneDelegate
