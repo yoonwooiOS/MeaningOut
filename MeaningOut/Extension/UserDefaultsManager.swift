@@ -46,4 +46,13 @@ class UserDefaultsManager {
         
     }
     
+    var shoppingList: [String] {
+        get {
+            return (UserDefaults.standard.array(forKey: "shoppingList")  as? [String]) ?? []
+        } set {
+            UserDefaults.standard.set(newValue, forKey: "shoppingList")
+        }
+        
+    }
+
 }
