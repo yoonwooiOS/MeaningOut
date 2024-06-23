@@ -75,6 +75,8 @@ class EditProfileTableViewCell: UITableViewCell {
             
             bookMarkImage.image = UIImage(named: "like_selected")
             totalBookmarkLabel.text = "\(list.count)개의 상품"
+            // cell재사용 메커니즘으로 인해 초기 설정을 꼭 해줘야함
+            // 해주지 않으면 화면에 그려지지 않음
             totalBookmarkLabel.isHidden = false
             bookMarkImage.isHidden = false
         } else {

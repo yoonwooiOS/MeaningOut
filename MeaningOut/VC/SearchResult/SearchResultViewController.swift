@@ -23,14 +23,14 @@ class SearchResultViewController: UIViewController {
     let highPriceButton = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
     let lowPriceButton = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
-  
+    
     var likedButtonList:[String] = User.likedProductList
-//
+    //
     var page = 1
-   
+    
     override func viewWillAppear(_ animated: Bool) {
         print(likedButtonList, "viewWillAppaer")
-       
+        
         likedButtonList = User.likedProductList
         collectionView.reloadData()
     }
@@ -41,7 +41,11 @@ class SearchResultViewController: UIViewController {
         super.viewDidLoad()
         print(likedButtonList, "viewdidLoad")
         view.backgroundColor = .systemBackground
-        callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.sim.rawValue)
+        // MARK: API호출
+        NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
+            self.productList = value
+            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
+        }
         setUpHierarchy()
         setUpLayout()
         setUpCollectionView()
@@ -126,7 +130,7 @@ class SearchResultViewController: UIViewController {
         let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         blackBackButton.tintColor = .black
         navigationItem.backBarButtonItem = blackBackButton
-
+        
     }
     
     private func setUpButton() {
@@ -149,47 +153,14 @@ class SearchResultViewController: UIViewController {
         return layout
     }
     
-    func callRequestNaverSearch(query: String, sortResult: String) {
-        print(#function)
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sort=\(sortResult)"
-        let header: HTTPHeaders = [
-            "X-Naver-Client-Id" : APIKey.naverID,
-            "X-Naver-Client-Secret" : APIKey.naverSecret
-        ]
-        
-        AF.request(url, method: .get, headers: header)
-            .validate(statusCode: 200..<500)
-            .responseDecodable(of: Search.self) { response in
-                
-                print("STATUS: \(response.response?.statusCode ?? 0)")
-                
-            switch response.result {
-            case .success(let value):
-                print("Success")
-                if self.page == 1 {
-                    self.productList = value
-                } else {
-                    self.productList.items.append(contentsOf: value.items)
-                }
-                
-                if self.page == 1 {
-                    
-                    self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-                    
-                }
-                
-                self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-            case .failure(let error):
-                print("Failed")
-                print(error)
-            }
-        }
-    }
+    
     
     @objc func accuracySortButtonclicked() {
         print(#function)
         page = 1
-        callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.sim.rawValue)
+        
+        callRequest(sortResult: SearchSorted.sim.rawValue)
+        
         accuracySortButton.grayButton()
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
@@ -201,7 +172,8 @@ class SearchResultViewController: UIViewController {
     @objc func dateSortButtonClicked() {
         
         page = 1
-        callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.date.rawValue)
+        callRequest(sortResult: SearchSorted.date.rawValue)
+        
         accuracySortButton.whiteButton()
         dateSortButton.grayButton()
         highPriceButton.whiteButton()
@@ -209,10 +181,27 @@ class SearchResultViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    func callRequest(sortResult: String) {
+        
+        NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
+            if self.page == 1 {
+                self.productList = value
+            } else {
+                self.productList.items.append(contentsOf: value.items)
+            }
+            
+            if self.page == 1 {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+            
+            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
+        }
+    }
+    
     @objc func highPriceButtonClicked() {
         
         page = 1
-        callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.dsc.rawValue)
+        callRequest(sortResult: SearchSorted.asc.rawValue)
         accuracySortButton.whiteButton()
         dateSortButton.whiteButton()
         highPriceButton.grayButton()
@@ -221,9 +210,9 @@ class SearchResultViewController: UIViewController {
     }
     
     @objc func lowPriceButtonClicked() {
-       
+        
         page = 1
-        callRequestNaverSearch(query: userSearchText, sortResult: SearchSorted.asc.rawValue)
+        callRequest(sortResult: SearchSorted.dsc.rawValue)
         accuracySortButton.whiteButton()
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
@@ -242,7 +231,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         let data = productList.items[indexPath.row]
         
-        cell.setUpcell(productData: data) 
+        cell.setUpcell(productData: data)
         cell.likeImageButton.tag = indexPath.row
         cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
         
@@ -258,16 +247,16 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         vc.likedButtonList = likedButtonList
         print(likedButtonList, "cell")
         navigationController?.pushViewController(vc, animated: true)
-    
+        
         
     }
     
     //MARK: 즐겨찾기 기능 추가 예정
     @objc func likeImageButtonClicekd(sender: UIButton) {
-//        print(productList.items[sender.tag].productId)
-//        print(sender.tag)
-//        print("sdfsadfds")
-
+        //        print(productList.items[sender.tag].productId)
+        //        print(sender.tag)
+        //        print("sdfsadfds")
+        
         if UserDefaults.standard.bool(forKey: "\(productList.items[sender.tag].productId)") {
             UserDefaults.standard.set(false, forKey: "\(productList.items[sender.tag].productId)")
             if let removeLikedImage = likedButtonList.firstIndex(of:  "\(productList.items[sender.tag].productId)") {
@@ -284,7 +273,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         print(likedButtonList, "버트 클릭")
         collectionView.reloadData()
     }
-
+    
 }
 
 //MARK: pagenation
@@ -296,15 +285,12 @@ extension SearchResultViewController: UICollectionViewDataSourcePrefetching {
             print(indexPaths, "Prefetch")
             if productList.items.count - 2 == item.row && lastPage != 0 {
                 page += 30
-            
-                callRequestNaverSearch(query: userSearchText,sortResult: SearchSorted.date.rawValue)
+                
+                callRequest(sortResult: SearchSorted.date.rawValue)
+
             }
-            
         }
     }
-    
-    
-    
-    
-    
 }
+
+
