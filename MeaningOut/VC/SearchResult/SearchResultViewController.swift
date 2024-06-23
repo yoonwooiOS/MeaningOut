@@ -24,15 +24,18 @@ class SearchResultViewController: UIViewController {
     let lowPriceButton = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
   
-    var likedButtonList:[String] = []
+    var likedButtonList:[String] = User.likedProductList
 //
     var page = 1
    
     override func viewWillAppear(_ animated: Bool) {
         print(likedButtonList, "viewWillAppaer")
        
-        print(likedButtonList, "viewWillAppaer")
+        likedButtonList = User.likedProductList
         collectionView.reloadData()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        print(likedButtonList, "viewdidAppaer")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +46,7 @@ class SearchResultViewController: UIViewController {
         setUpLayout()
         setUpCollectionView()
         setUpNavigation()
-        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
-        dateSortButton.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
-        highPriceButton.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
-        lowPriceButton.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
+        setUpButton()
     }
     private func setUpHierarchy() {
         
@@ -129,7 +129,13 @@ class SearchResultViewController: UIViewController {
 
     }
     
-    //
+    private func setUpButton() {
+        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
+        dateSortButton.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
+        highPriceButton.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
+        lowPriceButton.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
+        
+    }
     static private func layout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewFlowLayout()
@@ -250,7 +256,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         vc.storeName = data.mallName
         vc.productId = data.productId
         vc.likedButtonList = likedButtonList
-        print(likedButtonList)
+        print(likedButtonList, "cell")
         navigationController?.pushViewController(vc, animated: true)
     
         
@@ -261,20 +267,20 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
 //        print(productList.items[sender.tag].productId)
 //        print(sender.tag)
 //        print("sdfsadfds")
-        
+
         if UserDefaults.standard.bool(forKey: "\(productList.items[sender.tag].productId)") {
-            UserDefaults.standard.setValue(false, forKey: "\(productList.items[sender.tag].productId)")
+            UserDefaults.standard.set(false, forKey: "\(productList.items[sender.tag].productId)")
             if let removeLikedImage = likedButtonList.firstIndex(of:  "\(productList.items[sender.tag].productId)") {
                 likedButtonList.remove(at: removeLikedImage)
                 
                 
             }
         } else {
-            UserDefaults.standard.setValue(true, forKey: "\(productList.items[sender.tag].productId)")
+            UserDefaults.standard.set(true, forKey: "\(productList.items[sender.tag].productId)")
             likedButtonList.append(productList.items[sender.tag].productId)
-
+            
         }
-       
+        User.likedProductList = likedButtonList
         print(likedButtonList, "버트 클릭")
         collectionView.reloadData()
     }

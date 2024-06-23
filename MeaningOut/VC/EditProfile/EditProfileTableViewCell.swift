@@ -15,7 +15,7 @@ class EditProfileTableViewCell: UITableViewCell {
     
     let settingLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular14)
     
-    let totalBookmarkLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .right, fontSize: CustomFont.regular13)
+    var totalBookmarkLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .right, fontSize: CustomFont.regular13)
     let bookMarkImage = CustomImageView(imageName: "", color: CustomColor.black)
    
    
@@ -66,13 +66,17 @@ class EditProfileTableViewCell: UITableViewCell {
         
     }
      
-    func setUpCell(data: String, list: [String]) {
+    func setUpCell(data: String, list:[String]) {
         
         settingLabel.text = data
         
-        if data == "나의 장바구니" {
-            totalBookmarkLabel.text = "\(list.count)개의 상품"
+        
+        if settingLabel.text == "나의 장바구니" {
+            
             bookMarkImage.image = UIImage(named: "like_selected")
+            totalBookmarkLabel.text = "\(list.count)개의 상품"
+            totalBookmarkLabel.isHidden = false
+            bookMarkImage.isHidden = false
         } else {
             
             totalBookmarkLabel.isHidden = true

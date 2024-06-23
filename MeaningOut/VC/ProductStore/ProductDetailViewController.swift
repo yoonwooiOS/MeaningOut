@@ -15,7 +15,7 @@ class ProductDetailViewController: UIViewController {
     var storeName: String?
     var siteURL:String?
     var productId: String?
-    var likedButtonList: [String]?
+    var likedButtonList: [String]? 
     //    let likedImageButton = CustomAssetButton(imageName: "", bgColor: <#T##UIColor#>)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,13 +71,14 @@ class ProductDetailViewController: UIViewController {
     }
     @objc func rightBarButtonITemTapped() {
         guard var likedButtonList = likedButtonList, let productId = productId else { return }
-        
+        let vc = EditProfileViewController()
         if UserDefaults.standard.bool(forKey: productId) {
             
             UserDefaults.standard.set(false, forKey: productId)
             if let removeLikedImage = likedButtonList.firstIndex(of: productId) {
                 likedButtonList.remove(at: removeLikedImage)
                 navigationItem.rightBarButtonItem?.image = UIImage(named: "like_unselected")
+               
                
                 
             }
@@ -87,11 +88,12 @@ class ProductDetailViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: productId)
             likedButtonList.append(productId)
             navigationItem.rightBarButtonItem?.image = UIImage(named: "like_selected")
-//            
+            
         }
-        print(likedButtonList, "productDdetail")
-        let vc = EditProfileViewController()
         vc.list = likedButtonList
+        User.likedProductList = likedButtonList
+        print(likedButtonList, "productDdetail")
+        
         
     }
 }

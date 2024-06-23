@@ -21,16 +21,22 @@ class EditProfileViewController: UIViewController {
     
     let otherSettingList = ["나의 장바구니", "자주 묻는 질문", "1:1 문의", "알림 설정", "탈퇴하기"]
     
-    var list:[String] = []
+    var list:[String] = User.likedProductList
+    
     override func viewWillAppear(_ animated: Bool) {
         userProfileImageView.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
         userNicknameLabel.text = User.nickName
         
+        
+        list = User.likedProductList
+        tableView.reloadData()
+        print(list ?? "", "editprofileList")
     }
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+       
         view.backgroundColor = .systemBackground
         setUpHierarchy()
         setUpLayout()
@@ -152,6 +158,7 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
         let data = otherSettingList[indexPath.row]
         
         cell.setUpCell(data: data, list: list)
+        print("aa")
         
         return cell
     }
@@ -163,7 +170,6 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
             showAlert(t: "탈퇴하기", msg: "탈퇴를 하면 데이터가 모두 초기화 됩니다. 탈퇴 하시겠습니까?", style: .alert)
         }
     }
-
 }
 
 extension UIViewController {
