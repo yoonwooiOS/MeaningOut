@@ -11,9 +11,9 @@ import Alamofire
 class NetworkManeger {
     
     
-    static func callRequestNaverSearch(query: String, sortResult: String, page: Int, complitionHandler:@escaping (Search) -> Void) {
+    static func callRequestNaverSearch(query: String, sortResult: String, page: Int, complitionHandler: @escaping (Search) -> Void) {
         print(#function)
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sort=\(sortResult)"
+        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sorst=\(sortResult)"
         let header: HTTPHeaders = [
             "X-Naver-Client-Id" : APIKey.naverID,
             "X-Naver-Client-Secret" : APIKey.naverSecret
