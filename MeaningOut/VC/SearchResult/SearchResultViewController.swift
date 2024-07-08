@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import RealmSwift
 
 class SearchResultViewController: UIViewController {
     
@@ -27,6 +28,7 @@ class SearchResultViewController: UIViewController {
     var likedButtonList:[String] = User.likedProductList
     //
     var page = 1
+    let repositorty = ProductTableRepository()
     
     override func viewWillAppear(_ animated: Bool) {
         print(likedButtonList, "viewWillAppaer")
@@ -45,6 +47,7 @@ class SearchResultViewController: UIViewController {
         NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
             self.productList = value
             self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
+            self.repositorty.detectRealmURL()
         }
         setUpHierarchy()
         setUpLayout()
@@ -180,7 +183,7 @@ class SearchResultViewController: UIViewController {
         lowPriceButton.whiteButton()
         collectionView.reloadData()
     }
-    
+
     func callRequest(sortResult: String) {
         
         NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
@@ -244,7 +247,9 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         vc.siteURL = data.link
         vc.storeName = data.mallName
         vc.productId = data.productId
+        
         vc.likedButtonList = likedButtonList
+        vc.product = data
         print(likedButtonList, "cell")
         navigationController?.pushViewController(vc, animated: true)
         
@@ -253,16 +258,29 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     
     //MARK: 즐겨찾기 기능 추가 예정
     @objc func likeImageButtonClicekd(sender: UIButton) {
-        //        print(productList.items[sender.tag].productId)
+//                print(productList.items[sender.tag])
         //        print(sender.tag)
         //        print("sdfsadfds")
+        let product = productList.items[sender.tag]
+        let realm = try! Realm()
+//        print(realm.configuration.fileURL)
+        
+        let result = realm.objects(ProductTable.self).where {
+            $0.id == product.productId
+        }
+        print(result)
+        if result.isEmpty {
+            let data = ProductTable(id: product.productId, name: product.title, imageURL: product.image, storeName: product.link, price: product.lprice)
+            repositorty.createItem(data)
+        } else {
+    
+            repositorty.deleteItem(result.first!)
+        }
         
         if UserDefaults.standard.bool(forKey: "\(productList.items[sender.tag].productId)") {
             UserDefaults.standard.set(false, forKey: "\(productList.items[sender.tag].productId)")
             if let removeLikedImage = likedButtonList.firstIndex(of:  "\(productList.items[sender.tag].productId)") {
                 likedButtonList.remove(at: removeLikedImage)
-                
-                
             }
         } else {
             UserDefaults.standard.set(true, forKey: "\(productList.items[sender.tag].productId)")

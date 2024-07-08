@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import SnapKit
+import RealmSwift
 
 class ProductDetailViewController: UIViewController {
     
@@ -16,7 +17,10 @@ class ProductDetailViewController: UIViewController {
     var siteURL:String?
     var productId: String?
     var likedButtonList: [String]? 
-    //    let likedImageButton = CustomAssetButton(imageName: "", bgColor: <#T##UIColor#>)
+    let repository = ProductTableRepository()
+   
+    var product: Item?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +43,6 @@ class ProductDetailViewController: UIViewController {
         
         webView.snp.makeConstraints { make in
             make.edges.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            
         }
         
     }
@@ -70,6 +73,23 @@ class ProductDetailViewController: UIViewController {
         
     }
     @objc func rightBarButtonITemTapped() {
+        
+       
+        let realm = try! Realm()
+//        print(realm.configuration.fileURL)
+        guard let product = product else { return }
+        let result = realm.objects(ProductTable.self).where {
+            $0.id == product.productId
+        }
+        print(result)
+        if result.isEmpty {
+            let data = ProductTable(id: product.productId, name: product.title, imageURL: product.image, storeName: product.link, price: product.lprice)
+            repository.createItem(data)
+        } else {
+    
+            repository.deleteItem(result.first!)
+        }
+        
         guard var likedButtonList = likedButtonList, let productId = productId else { return }
         let vc = EditProfileViewController()
         if UserDefaults.standard.bool(forKey: productId) {
@@ -78,22 +98,14 @@ class ProductDetailViewController: UIViewController {
             if let removeLikedImage = likedButtonList.firstIndex(of: productId) {
                 likedButtonList.remove(at: removeLikedImage)
                 navigationItem.rightBarButtonItem?.image = UIImage(named: "like_unselected")
-               
-               
-                
             }
-            
         } else {
-            
             UserDefaults.standard.set(true, forKey: productId)
             likedButtonList.append(productId)
             navigationItem.rightBarButtonItem?.image = UIImage(named: "like_selected")
-            
         }
         vc.list = likedButtonList
         User.likedProductList = likedButtonList
         print(likedButtonList, "productDdetail")
-        
-        
     }
 }

@@ -179,22 +179,68 @@ extension ProfileNickNameSettingViewController: UITextFieldDelegate {
         let regexSpecialCharacters = "[@#$%]"
         let ispecialCharactersContains = userNickname.range(of: regexSpecialCharacters, options: .regularExpression) != nil
         
-        if userNickname.count < 2 || userNickname.count > 10 {
-            nicknameStateLabel.text = NicknameState.isNotAllowedTextRange.rawValue
-        } else {
-            nicknameStateLabel.text = NicknameState.isValidate.rawValue
-        }
-        // MARK: 특수문자 입력 검증
-        if ispecialCharactersContains {
-            nicknameStateLabel.text = NicknameState.isUsedSpecialCharacters.rawValue
-            return
+//        if userNickname.count < 2 || userNickname.count > 10 {
+//            nicknameStateLabel.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
+//        } else {
+//            nicknameStateLabel.text = NickNameStringRawValues.isValidate.rawValue
+//        }
+//        // MARK: 특수문자 입력 검증
+//        if ispecialCharactersContains {
+//            nicknameStateLabel.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
+//            return
+//        }
+//        
+//        // MARK: 숫자 입력 검증
+//        if isNumberContains  {
+//            nicknameStateLabel.text = NickNameStringRawValues.isUsedNumber.rawValue
+//            return
+//        }
+        
+        do {
+           let isValidate = try validateUserInputNickname(text: userNickname, labelName: nicknameStateLabel)
+            
+        } catch NicknameStates.isNotAllowedTextRange {
+            
+        } catch NicknameStates.isUsedNumber {
+            
+        } catch NicknameStates.isUsedSpecialCharacters {
+            
+        } catch NicknameStates.isValidate{
+           
+            
+        } catch {
+            print("")
         }
         
-        // MARK: 숫자 입력 검증
-        if isNumberContains  {
-            nicknameStateLabel.text = NicknameState.isUsedNumber.rawValue
-            return
+    }
+    
+    func validateUserInputNickname(text: String, labelName: UILabel) throws -> Bool {
+        
+        
+        let regexNumber = "[0-9]"
+        let isNumberContains = text.range(of: regexNumber, options: .regularExpression) != nil
+        
+        let regexSpecialCharacters = "[@#$%]"
+        let ispecialCharactersContains = text.range(of: regexSpecialCharacters, options: .regularExpression) != nil
+        
+        
+        guard text.count < 2 || text.count > 10 else {
+            labelName.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
+            throw NicknameStates.isNotAllowedTextRange
+            
+        }
+        guard ispecialCharactersContains else {
+            labelName.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
+            throw NicknameStates.isUsedSpecialCharacters
+            
+        }
+        guard isNumberContains else {
+            labelName.text = NickNameStringRawValues.isUsedNumber.rawValue
+            throw NicknameStates.isUsedNumber
+            
         }
         
+        
+        return true
     }
 }

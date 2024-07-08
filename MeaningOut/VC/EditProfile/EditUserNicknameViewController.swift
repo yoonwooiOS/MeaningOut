@@ -167,19 +167,19 @@ extension EditUserNicknameViewController: UITextFieldDelegate {
         let ispecialCharactersContains = userNickname.range(of: regexSpecialCharacters, options: .regularExpression) != nil
         
         if userNickname.count < 2 || userNickname.count > 10 {
-            nicknameStateLabel.text = NicknameState.isNotAllowedTextRange.rawValue
+            nicknameStateLabel.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
         } else {
-            nicknameStateLabel.text = NicknameState.isValidate2.rawValue
+            nicknameStateLabel.text = NickNameStringRawValues.isValidate2.rawValue
         }
         // MARK: 특수문자 입력 검증
         if ispecialCharactersContains {
-            nicknameStateLabel.text = NicknameState.isUsedSpecialCharacters.rawValue
+            nicknameStateLabel.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
             return
         }
         
         // MARK: 숫자 입력 검증
         if isNumberContains  {
-            nicknameStateLabel.text = NicknameState.isUsedNumber.rawValue
+            nicknameStateLabel.text = NickNameStringRawValues.isUsedNumber.rawValue
             return
         }
         

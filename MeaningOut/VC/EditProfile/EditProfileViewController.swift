@@ -33,10 +33,10 @@ class EditProfileViewController: UIViewController {
         print(list ?? "", "editprofileList")
     }
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         view.backgroundColor = .systemBackground
         setUpHierarchy()
         setUpLayout()
@@ -45,7 +45,7 @@ class EditProfileViewController: UIViewController {
         setUpGesture()
     }
     
-
+    
     private func setUpHierarchy() {
         
         view.addSubview(topSeperator)
@@ -164,40 +164,22 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
         
         if otherSettingList[indexPath.row] == "탈퇴하기" {
-            
-            showAlert(t: "탈퇴하기", msg: "탈퇴를 하면 데이터가 모두 초기화 됩니다. 탈퇴 하시겠습니까?", style: .alert)
+            showAlert(t: "탈퇴하기", msg: "탈퇴를 하면 데이터가 모두 초기화 홥니다. 탈퇴 하시겠습니까?", style: .alert, ok: "확인") { kim in
+                print(kim)
+                let domain = Bundle.main.bundleIdentifier!
+                UserDefaults.standard.removePersistentDomain(forName: domain)
+                
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
+                let navigationController = UINavigationController(rootViewController: OnboardingViewController())
+                
+                sceneDelegate?.window?.rootViewController = navigationController
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }
         }
     }
-}
-
-extension UIViewController {
-    
-    func showAlert(t: String, msg: String, style: UIAlertController.Style) {
-        
-        let alert = UIAlertController(title: t, message: msg, preferredStyle: style)
-        
-        let ok = UIAlertAction(title: "확인", style: .default) { ok in
-            let domain = Bundle.main.bundleIdentifier!
-            UserDefaults.standard.removePersistentDomain(forName: domain)
-            
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
-            let navigationController = UINavigationController(rootViewController: OnboardingViewController())
-            
-            sceneDelegate?.window?.rootViewController = navigationController
-            sceneDelegate?.window?.makeKeyAndVisible()
-
-        }
-        let cancel = UIAlertAction(title: "취소", style: .destructive, handler: nil)
-        alert.addAction(cancel)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-        
-        
-    }
-    
-    
 }
