@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		990567712C3B60C00098DB09 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567702C3B60C00098DB09 /* FavoriteViewController.swift */; };
+		990567762C3BB4A70098DB09 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567752C3BB4A70098DB09 /* BaseView.swift */; };
+		990567782C3BB4C70098DB09 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567772C3BB4C70098DB09 /* BaseViewController.swift */; };
+		9905677A2C3BB4DD0098DB09 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567792C3BB4DD0098DB09 /* BaseTableViewCell.swift */; };
+		9905677C2C3BB4EF0098DB09 /* BaseColletciontViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9905677B2C3BB4EF0098DB09 /* BaseColletciontViewCell.swift */; };
+		9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9905677D2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift */; };
+		990567842C3BCB980098DB09 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567832C3BCB980098DB09 /* Product.swift */; };
+		990567862C3BCFA20098DB09 /* ProductTableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567852C3BCFA20098DB09 /* ProductTableRepository.swift */; };
+		9905678D2C3BE2750098DB09 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9905678C2C3BE2750098DB09 /* RealmSwift */; };
+		9905678E2C3BE2790098DB09 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9905678C2C3BE2750098DB09 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		99245FE82C1B24CD0023A63E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FE72C1B24CD0023A63E /* AppDelegate.swift */; };
 		99245FEA2C1B24CD0023A63E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FE92C1B24CD0023A63E /* SceneDelegate.swift */; };
 		99245FF12C1B24CF0023A63E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99245FF02C1B24CF0023A63E /* Assets.xcassets */; };
@@ -59,9 +69,33 @@
 		9973EC342C2147710067B97E /* EditUserNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC332C2147710067B97E /* EditUserNicknameViewController.swift */; };
 		9973EC362C21654B0067B97E /* EditUserProfileImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC352C21654B0067B97E /* EditUserProfileImageViewController.swift */; };
 		9973EC382C2171500067B97E /* CustomAssetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC372C2171500067B97E /* CustomAssetButton.swift */; };
+		99777B0D2C2817E800988F3C /* NetworkManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99777B0C2C2817E800988F3C /* NetworkManeger.swift */; };
+		99777B342C29490C00988F3C /* Alert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99777B332C29490C00988F3C /* Alert+Extension.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		990567882C3BE1090098DB09 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9905678E2C3BE2790098DB09 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		990567702C3B60C00098DB09 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		990567752C3BB4A70098DB09 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		990567772C3BB4C70098DB09 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		990567792C3BB4DD0098DB09 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		9905677B2C3BB4EF0098DB09 /* BaseColletciontViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseColletciontViewCell.swift; sourceTree = "<group>"; };
+		9905677D2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCollectionViewCell.swift; sourceTree = "<group>"; };
+		990567832C3BCB980098DB09 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		990567852C3BCFA20098DB09 /* ProductTableRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTableRepository.swift; sourceTree = "<group>"; };
 		99245FE42C1B24CD0023A63E /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99245FE72C1B24CD0023A63E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		99245FE92C1B24CD0023A63E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +145,8 @@
 		9973EC332C2147710067B97E /* EditUserNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserNicknameViewController.swift; sourceTree = "<group>"; };
 		9973EC352C21654B0067B97E /* EditUserProfileImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileImageViewController.swift; sourceTree = "<group>"; };
 		9973EC372C2171500067B97E /* CustomAssetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAssetButton.swift; sourceTree = "<group>"; };
+		99777B0C2C2817E800988F3C /* NetworkManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManeger.swift; sourceTree = "<group>"; };
+		99777B332C29490C00988F3C /* Alert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9905678D2C3BE2750098DB09 /* RealmSwift in Frameworks */,
 				992460082C1B2F470023A63E /* SnapKit in Frameworks */,
 				9924600B2C1B2F510023A63E /* IQKeyboardManagerSwift in Frameworks */,
 				992460052C1B2F350023A63E /* Kingfisher in Frameworks */,
@@ -129,6 +166,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9905676F2C3B602D0098DB09 /* FavoriteList */ = {
+			isa = PBXGroup;
+			children = (
+				990567702C3B60C00098DB09 /* FavoriteViewController.swift */,
+				9905677D2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift */,
+			);
+			path = FavoriteList;
+			sourceTree = "<group>";
+		};
+		990567742C3BB49C0098DB09 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				990567752C3BB4A70098DB09 /* BaseView.swift */,
+				990567772C3BB4C70098DB09 /* BaseViewController.swift */,
+				990567792C3BB4DD0098DB09 /* BaseTableViewCell.swift */,
+				9905677B2C3BB4EF0098DB09 /* BaseColletciontViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		9905677F2C3BBC930098DB09 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				990567832C3BCB980098DB09 /* Product.swift */,
+				990567852C3BCFA20098DB09 /* ProductTableRepository.swift */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
 		99245FDB2C1B24CD0023A63E = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +215,9 @@
 		99245FE62C1B24CD0023A63E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				9905677F2C3BBC930098DB09 /* DataBase */,
+				990567742C3BB49C0098DB09 /* Base */,
+				9905676F2C3B602D0098DB09 /* FavoriteList */,
 				9973EBC52C1C3BD50067B97E /* Model */,
 				9973EBB12C1BD9770067B97E /* Extension */,
 				9973EBA12C1B3E950067B97E /* Enum */,
@@ -227,6 +296,7 @@
 				9973EBB92C1BEB990067B97E /* TextField+Extension.swift */,
 				9973EBCE2C1EB5A80067B97E /* UserDefaultsManager.swift */,
 				9973EC222C20D7610067B97E /* UIButton+Extension.swift */,
+				99777B332C29490C00988F3C /* Alert+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -237,6 +307,7 @@
 				9973EBC62C1C3BDB0067B97E /* User.swift */,
 				9973EBCA2C1C4B870067B97E /* ProfileImage.swift */,
 				9973EC1C2C2010EF0067B97E /* Search.swift */,
+				99777B0C2C2817E800988F3C /* NetworkManeger.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,6 +377,7 @@
 				99245FE02C1B24CD0023A63E /* Sources */,
 				99245FE12C1B24CD0023A63E /* Frameworks */,
 				99245FE22C1B24CD0023A63E /* Resources */,
+				990567882C3BE1090098DB09 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -318,6 +390,7 @@
 				992460072C1B2F470023A63E /* SnapKit */,
 				9924600A2C1B2F510023A63E /* IQKeyboardManagerSwift */,
 				9973EBB52C1BE62F0067B97E /* TextFieldEffects */,
+				9905678C2C3BE2750098DB09 /* RealmSwift */,
 			);
 			productName = MeaningOut;
 			productReference = 99245FE42C1B24CD0023A63E /* MeaningOut.app */;
@@ -353,6 +426,7 @@
 				992460062C1B2F470023A63E /* XCRemoteSwiftPackageReference "SnapKit" */,
 				992460092C1B2F510023A63E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
+				990567802C3BBCB40098DB09 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 99245FE52C1B24CD0023A63E /* Products */;
 			projectDirPath = "";
@@ -381,21 +455,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */,
 				9973EBB82C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift in Sources */,
+				990567712C3B60C00098DB09 /* FavoriteViewController.swift in Sources */,
 				9973EBC42C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift in Sources */,
+				99777B342C29490C00988F3C /* Alert+Extension.swift in Sources */,
 				9973EBBC2C1BECDE0067B97E /* PrimaryColorLabel.swift in Sources */,
 				9973EBDA2C1ECC980067B97E /* TabBarController.swift in Sources */,
 				9973EBDE2C1ED0640067B97E /* CustomNoImageButton.swift in Sources */,
 				9973EBE22C1ED3740067B97E /* CustomImageView.swift in Sources */,
 				9973EBA52C1B3F020067B97E /* UIColor+Extension.swift in Sources */,
 				9973EBC72C1C3BDB0067B97E /* User.swift in Sources */,
+				99777B0D2C2817E800988F3C /* NetworkManeger.swift in Sources */,
 				9973EC292C20DF520067B97E /* EditProfileViewController.swift in Sources */,
 				9973EC212C20D67C0067B97E /* CustomButton.swift in Sources */,
 				9973EBC02C1C17D80067B97E /* CustomColorSeperator.swift in Sources */,
 				9973EC1F2C201C970067B97E /* SearchCellImageView.swift in Sources */,
+				990567762C3BB4A70098DB09 /* BaseView.swift in Sources */,
 				9973EBCD2C1D5F7C0067B97E /* GrayColorCircleButton.swift in Sources */,
 				9973EBD62C1EBDDF0067B97E /* CustomSearchTextField.swift in Sources */,
 				9973EBD82C1EC61B0067B97E /* CustomColorLabel.swift in Sources */,
+				990567782C3BB4C70098DB09 /* BaseViewController.swift in Sources */,
 				9973EBCF2C1EB5A80067B97E /* UserDefaultsManager.swift in Sources */,
 				9973EC382C2171500067B97E /* CustomAssetButton.swift in Sources */,
 				99245FE82C1B24CD0023A63E /* AppDelegate.swift in Sources */,
@@ -403,11 +483,15 @@
 				9973EC262C20DA8F0067B97E /* ProductDetailViewController.swift in Sources */,
 				9973EBC22C1C27200067B97E /* ProfileImageSettingViewController.swift in Sources */,
 				9973EBA02C1B39070067B97E /* OnboardingViewController.swift in Sources */,
+				990567862C3BCFA20098DB09 /* ProductTableRepository.swift in Sources */,
 				9973EBC92C1C49D30067B97E /* GrayColorButton.swift in Sources */,
+				9905677A2C3BB4DD0098DB09 /* BaseTableViewCell.swift in Sources */,
 				9973EBB32C1BE4990067B97E /* PirmaryColorCircleImageView.swift in Sources */,
+				990567842C3BCB980098DB09 /* Product.swift in Sources */,
 				9973EC362C21654B0067B97E /* EditUserProfileImageViewController.swift in Sources */,
 				9973EBE72C1FAE4E0067B97E /* SearchResultViewController.swift in Sources */,
 				9973EBAA2C1B4A120067B97E /* RectangleImageView.swift in Sources */,
+				9905677C2C3BB4EF0098DB09 /* BaseColletciontViewCell.swift in Sources */,
 				9973EC232C20D7610067B97E /* UIButton+Extension.swift in Sources */,
 				9973EBB02C1BD92F0067B97E /* PrimaryColorCircleImageButton.swift in Sources */,
 				99245FFF2C1B26AD0023A63E /* APIKey.swift in Sources */,
@@ -651,6 +735,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		990567802C3BBCB40098DB09 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.52.1;
+			};
+		};
 		992460002C1B2F2D0023A63E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -694,6 +786,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9905678C2C3BE2750098DB09 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 990567802C3BBCB40098DB09 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		992460012C1B2F2D0023A63E /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 992460002C1B2F2D0023A63E /* XCRemoteSwiftPackageReference "Alamofire" */;

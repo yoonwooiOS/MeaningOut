@@ -82,7 +82,7 @@ enum SearchResultCell {
 
 
 
-enum NicknameState: String {
+enum NickNameStringRawValues: String {
     
     case isNotAllowedTextRange = "2글자 이상 10글자 미만으로 설정 해주세요"
     case isUsedSpecialCharacters = "닉네임에 @,#,$,% 는 포함할 수 없어요"
@@ -91,6 +91,16 @@ enum NicknameState: String {
     case isValidate2 = "사용 가능한 닉네임 입니다 :D"
 }
 
+enum NicknameStates: Error {
+    
+    case isNotAllowedTextRange
+    case isUsedSpecialCharacters
+    case isUsedNumber
+    case isValidate
+    case isValidate2
+}
+
+                                                  
 enum SearchSorted: String {
     
     case sim 
