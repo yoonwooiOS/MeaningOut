@@ -23,7 +23,7 @@ class TabBarController: UITabBarController {
         let nav2 = UINavigationController(rootViewController: EditProfileViewController())
         nav2.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "person"), tag: 1)
         
-        let nav3 = UINavigationController(rootViewController:  FavoriteViewController())
+        let nav3 = UINavigationController(rootViewController:  FavoriteFolderViewController())
         nav3.tabBarItem = UITabBarItem(title: "좋아요", image: UIImage(systemName: "star"), tag: 1)
         
         setViewControllers([nav1, nav2, nav3], animated: true)

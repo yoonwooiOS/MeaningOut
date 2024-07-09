@@ -15,7 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        
+        let favoriteAllProductFolder = {
+            let folder = Folder()
+            folder.name = "전체"
+            return folder
+           
+        }()
+       
+        ProductTableRepository().addFolderIfNotExists(favoriteAllProductFolder.name)
         let navOnboardingVc = UINavigationController(rootViewController: OnboardingViewController())
         let tabBarVC = TabBarController()
         if User.nickName.count == 0 {

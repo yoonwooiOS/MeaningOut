@@ -35,11 +35,13 @@ class FavoriteViewController: BaseViewController {
             collectionView.reloadData()
         }
     }
+    var folder: Folder?
     let repository = ProductTableRepository()
     let realm = try! Realm()
     
     override func viewWillAppear(_ animated: Bool) {
         product = repository.fetchAll()
+//        print(folder)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

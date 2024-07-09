@@ -7,7 +7,12 @@
 
 import UIKit
 import RealmSwift
-
+class Folder: Object {
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var name: String
+    
+    @Persisted var detail: List<ProductTable>
+}
 class ProductTable: Object {
     
     @Persisted(primaryKey: true) var id: String
@@ -15,6 +20,7 @@ class ProductTable: Object {
     @Persisted var imageURL: String?
     @Persisted var storeName: String?
     @Persisted var price: String?
+    
     
     convenience init(id: String,name: String, imageURL: String?, storeName: String?, price: String?) {
         self.init()

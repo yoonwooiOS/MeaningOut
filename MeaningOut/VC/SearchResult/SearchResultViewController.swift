@@ -28,7 +28,7 @@ class SearchResultViewController: UIViewController {
     var likedButtonList:[String] = User.likedProductList
     //
     var page = 1
-    let repositorty = ProductTableRepository()
+    let repository = ProductTableRepository()
     
     override func viewWillAppear(_ animated: Bool) {
         print(likedButtonList, "viewWillAppaer")
@@ -47,7 +47,7 @@ class SearchResultViewController: UIViewController {
         NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
             self.productList = value
             self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-            self.repositorty.detectRealmURL()
+            self.repository.detectRealmURL()
         }
         setUpHierarchy()
         setUpLayout()
@@ -264,17 +264,17 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
         let product = productList.items[sender.tag]
         let realm = try! Realm()
 //        print(realm.configuration.fileURL)
-        
-        let result = realm.objects(ProductTable.self).where {
-            $0.id == product.productId
+        guard let folder = realm.objects(Folder.self).where({ $0.name == "전체" }).first else {
+            print("폴더를 찾을 수 없습니다.")
+            return
         }
-        print(result)
+        let result = realm.objects(ProductTable.self).where({ $0.id == product.productId })
+
         if result.isEmpty {
             let data = ProductTable(id: product.productId, name: product.title, imageURL: product.image, storeName: product.link, price: product.lprice)
-            repositorty.createItem(data)
+            repository.addToFolder(data, folder: folder)
         } else {
-    
-            repositorty.deleteItem(result.first!)
+            repository.removeToFolder(result.first!, folder: folder)
         }
         
         if UserDefaults.standard.bool(forKey: "\(productList.items[sender.tag].productId)") {

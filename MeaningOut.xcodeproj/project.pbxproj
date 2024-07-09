@@ -15,18 +15,12 @@
 		9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9905677D2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift */; };
 		990567842C3BCB980098DB09 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567832C3BCB980098DB09 /* Product.swift */; };
 		990567862C3BCFA20098DB09 /* ProductTableRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990567852C3BCFA20098DB09 /* ProductTableRepository.swift */; };
-		9905678D2C3BE2750098DB09 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9905678C2C3BE2750098DB09 /* RealmSwift */; };
-		9905678E2C3BE2790098DB09 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 9905678C2C3BE2750098DB09 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		99245FE82C1B24CD0023A63E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FE72C1B24CD0023A63E /* AppDelegate.swift */; };
 		99245FEA2C1B24CD0023A63E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FE92C1B24CD0023A63E /* SceneDelegate.swift */; };
 		99245FF12C1B24CF0023A63E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99245FF02C1B24CF0023A63E /* Assets.xcassets */; };
 		99245FF42C1B24CF0023A63E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 99245FF32C1B24CF0023A63E /* Base */; };
 		99245FFC2C1B266D0023A63E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 99245FFB2C1B266D0023A63E /* .gitignore */; };
 		99245FFF2C1B26AD0023A63E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FFE2C1B26AD0023A63E /* APIKey.swift */; };
-		992460022C1B2F2D0023A63E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 992460012C1B2F2D0023A63E /* Alamofire */; };
-		992460052C1B2F350023A63E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 992460042C1B2F350023A63E /* Kingfisher */; };
-		992460082C1B2F470023A63E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 992460072C1B2F470023A63E /* SnapKit */; };
-		9924600B2C1B2F510023A63E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9924600A2C1B2F510023A63E /* IQKeyboardManagerSwift */; };
 		9973EBA02C1B39070067B97E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EB9F2C1B39070067B97E /* OnboardingViewController.swift */; };
 		9973EBA32C1B3EA40067B97E /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA22C1B3EA40067B97E /* Resource.swift */; };
 		9973EBA52C1B3F020067B97E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */; };
@@ -36,7 +30,6 @@
 		9973EBAE2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */; };
 		9973EBB02C1BD92F0067B97E /* PrimaryColorCircleImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBAF2C1BD92F0067B97E /* PrimaryColorCircleImageButton.swift */; };
 		9973EBB32C1BE4990067B97E /* PirmaryColorCircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB22C1BE4990067B97E /* PirmaryColorCircleImageView.swift */; };
-		9973EBB62C1BE62F0067B97E /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 9973EBB52C1BE62F0067B97E /* TextFieldEffects */; };
 		9973EBB82C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB72C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift */; };
 		9973EBBA2C1BEB990067B97E /* TextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBB92C1BEB990067B97E /* TextField+Extension.swift */; };
 		9973EBBC2C1BECDE0067B97E /* PrimaryColorLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBBB2C1BECDE0067B97E /* PrimaryColorLabel.swift */; };
@@ -71,6 +64,13 @@
 		9973EC382C2171500067B97E /* CustomAssetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EC372C2171500067B97E /* CustomAssetButton.swift */; };
 		99777B0D2C2817E800988F3C /* NetworkManeger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99777B0C2C2817E800988F3C /* NetworkManeger.swift */; };
 		99777B342C29490C00988F3C /* Alert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99777B332C29490C00988F3C /* Alert+Extension.swift */; };
+		99E83C4A2C3C31D10057BB87 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C492C3C31D10057BB87 /* RealmSwift */; };
+		99E83C4D2C3C31DD0057BB87 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C4C2C3C31DD0057BB87 /* Toast */; };
+		99E83C4F2C3C31E80057BB87 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C4E2C3C31E80057BB87 /* Alamofire */; };
+		99E83C512C3C31F30057BB87 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C502C3C31F30057BB87 /* SnapKit */; };
+		99E83C532C3C31FC0057BB87 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C522C3C31FC0057BB87 /* Kingfisher */; };
+		99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */; };
+		99E83C572C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,7 +80,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9905678E2C3BE2790098DB09 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,6 +146,8 @@
 		9973EC372C2171500067B97E /* CustomAssetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAssetButton.swift; sourceTree = "<group>"; };
 		99777B0C2C2817E800988F3C /* NetworkManeger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManeger.swift; sourceTree = "<group>"; };
 		99777B332C29490C00988F3C /* Alert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extension.swift"; sourceTree = "<group>"; };
+		99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderViewController.swift; sourceTree = "<group>"; };
+		99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,12 +155,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9905678D2C3BE2750098DB09 /* RealmSwift in Frameworks */,
-				992460082C1B2F470023A63E /* SnapKit in Frameworks */,
-				9924600B2C1B2F510023A63E /* IQKeyboardManagerSwift in Frameworks */,
-				992460052C1B2F350023A63E /* Kingfisher in Frameworks */,
-				992460022C1B2F2D0023A63E /* Alamofire in Frameworks */,
-				9973EBB62C1BE62F0067B97E /* TextFieldEffects in Frameworks */,
+				99E83C4F2C3C31E80057BB87 /* Alamofire in Frameworks */,
+				99E83C512C3C31F30057BB87 /* SnapKit in Frameworks */,
+				99E83C4D2C3C31DD0057BB87 /* Toast in Frameworks */,
+				99E83C4A2C3C31D10057BB87 /* RealmSwift in Frameworks */,
+				99E83C532C3C31FC0057BB87 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +169,10 @@
 		9905676F2C3B602D0098DB09 /* FavoriteList */ = {
 			isa = PBXGroup;
 			children = (
-				990567702C3B60C00098DB09 /* FavoriteViewController.swift */,
 				9905677D2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift */,
+				990567702C3B60C00098DB09 /* FavoriteViewController.swift */,
+				99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */,
+				99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */,
 			);
 			path = FavoriteList;
 			sourceTree = "<group>";
@@ -385,12 +387,11 @@
 			);
 			name = MeaningOut;
 			packageProductDependencies = (
-				992460012C1B2F2D0023A63E /* Alamofire */,
-				992460042C1B2F350023A63E /* Kingfisher */,
-				992460072C1B2F470023A63E /* SnapKit */,
-				9924600A2C1B2F510023A63E /* IQKeyboardManagerSwift */,
-				9973EBB52C1BE62F0067B97E /* TextFieldEffects */,
-				9905678C2C3BE2750098DB09 /* RealmSwift */,
+				99E83C492C3C31D10057BB87 /* RealmSwift */,
+				99E83C4C2C3C31DD0057BB87 /* Toast */,
+				99E83C4E2C3C31E80057BB87 /* Alamofire */,
+				99E83C502C3C31F30057BB87 /* SnapKit */,
+				99E83C522C3C31FC0057BB87 /* Kingfisher */,
 			);
 			productName = MeaningOut;
 			productReference = 99245FE42C1B24CD0023A63E /* MeaningOut.app */;
@@ -427,6 +428,7 @@
 				992460092C1B2F510023A63E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				990567802C3BBCB40098DB09 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				99E83C4B2C3C31DD0057BB87 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 99245FE52C1B24CD0023A63E /* Products */;
 			projectDirPath = "";
@@ -458,6 +460,7 @@
 				9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */,
 				9973EBB82C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift in Sources */,
 				990567712C3B60C00098DB09 /* FavoriteViewController.swift in Sources */,
+				99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */,
 				9973EBC42C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift in Sources */,
 				99777B342C29490C00988F3C /* Alert+Extension.swift in Sources */,
 				9973EBBC2C1BECDE0067B97E /* PrimaryColorLabel.swift in Sources */,
@@ -487,6 +490,7 @@
 				9973EBC92C1C49D30067B97E /* GrayColorButton.swift in Sources */,
 				9905677A2C3BB4DD0098DB09 /* BaseTableViewCell.swift in Sources */,
 				9973EBB32C1BE4990067B97E /* PirmaryColorCircleImageView.swift in Sources */,
+				99E83C572C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift in Sources */,
 				990567842C3BCB980098DB09 /* Product.swift in Sources */,
 				9973EC362C21654B0067B97E /* EditUserProfileImageViewController.swift in Sources */,
 				9973EBE72C1FAE4E0067B97E /* SearchResultViewController.swift in Sources */,
@@ -783,38 +787,41 @@
 				minimumVersion = 1.7.0;
 			};
 		};
+		99E83C4B2C3C31DD0057BB87 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9905678C2C3BE2750098DB09 /* RealmSwift */ = {
+		99E83C492C3C31D10057BB87 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 990567802C3BBCB40098DB09 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
-		992460012C1B2F2D0023A63E /* Alamofire */ = {
+		99E83C4C2C3C31DD0057BB87 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 99E83C4B2C3C31DD0057BB87 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		99E83C4E2C3C31E80057BB87 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 992460002C1B2F2D0023A63E /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		992460042C1B2F350023A63E /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 992460032C1B2F350023A63E /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		992460072C1B2F470023A63E /* SnapKit */ = {
+		99E83C502C3C31F30057BB87 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 992460062C1B2F470023A63E /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		9924600A2C1B2F510023A63E /* IQKeyboardManagerSwift */ = {
+		99E83C522C3C31FC0057BB87 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 992460092C1B2F510023A63E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
-		9973EBB52C1BE62F0067B97E /* TextFieldEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9973EBB42C1BE62F0067B97E /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
-			productName = TextFieldEffects;
+			package = 992460032C1B2F350023A63E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
