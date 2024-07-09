@@ -25,7 +25,7 @@ class ProfileNickNameSettingViewController: UIViewController {
     private let completeButton = PrimaryColorButton(title: "완료")
     let ud = UserDefaultsManager()
     
-    
+    let viewModel = ProfileViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,8 +39,21 @@ class ProfileNickNameSettingViewController: UIViewController {
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
         User.selectedProfileImage = randomProfileImageName
         print(User.selectedProfileImage,"ViewdidLoad")
+        
+        bindData()
+        
     }
-    
+    func bindData() {
+        viewModel.outPutValdationText.bind { value in
+            self.nicknameStateLabel.text = value
+        }
+        viewModel.outPutValid.bind { value in
+            self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
+            self.completeButton.backgroundColor = value ? CustomColor.appPrimaryColor : .systemGray4
+            
+            self.completeButton.isEnabled = value
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         
         profileImageButton.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
@@ -146,12 +159,10 @@ class ProfileNickNameSettingViewController: UIViewController {
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         let tabBar = TabBarController()
-//        let navigationController = UINavigationController(rootViewController:tabBar )
         
         sceneDelegate?.window?.rootViewController = tabBar
         sceneDelegate?.window?.makeKeyAndVisible()
     }
-    
 }
 
 extension ProfileNickNameSettingViewController: UITextFieldDelegate {
@@ -165,82 +176,6 @@ extension ProfileNickNameSettingViewController: UITextFieldDelegate {
         view.endEditing(true)
     }
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        
-        validateNickname()
-        
-    }
-    
-    private func validateNickname() {
-        guard let userNickname = nicknameTextField.text else { return }
-        
-        let regexNumber = "[0-9]"
-        let isNumberContains = userNickname.range(of: regexNumber, options: .regularExpression) != nil
-        
-        let regexSpecialCharacters = "[@#$%]"
-        let ispecialCharactersContains = userNickname.range(of: regexSpecialCharacters, options: .regularExpression) != nil
-        
-//        if userNickname.count < 2 || userNickname.count > 10 {
-//            nicknameStateLabel.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
-//        } else {
-//            nicknameStateLabel.text = NickNameStringRawValues.isValidate.rawValue
-//        }
-//        // MARK: 특수문자 입력 검증
-//        if ispecialCharactersContains {
-//            nicknameStateLabel.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
-//            return
-//        }
-//        
-//        // MARK: 숫자 입력 검증
-//        if isNumberContains  {
-//            nicknameStateLabel.text = NickNameStringRawValues.isUsedNumber.rawValue
-//            return
-//        }
-        
-        do {
-           let isValidate = try validateUserInputNickname(text: userNickname, labelName: nicknameStateLabel)
-            
-        } catch NicknameStates.isNotAllowedTextRange {
-            
-        } catch NicknameStates.isUsedNumber {
-            
-        } catch NicknameStates.isUsedSpecialCharacters {
-            
-        } catch NicknameStates.isValidate{
-           
-            
-        } catch {
-            print("")
-        }
-        
-    }
-    
-    func validateUserInputNickname(text: String, labelName: UILabel) throws -> Bool {
-        
-        
-        let regexNumber = "[0-9]"
-        let isNumberContains = text.range(of: regexNumber, options: .regularExpression) != nil
-        
-        let regexSpecialCharacters = "[@#$%]"
-        let ispecialCharactersContains = text.range(of: regexSpecialCharacters, options: .regularExpression) != nil
-        
-        
-        guard text.count < 2 || text.count > 10 else {
-            labelName.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
-            throw NicknameStates.isNotAllowedTextRange
-            
-        }
-        guard ispecialCharactersContains else {
-            labelName.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
-            throw NicknameStates.isUsedSpecialCharacters
-            
-        }
-        guard isNumberContains else {
-            labelName.text = NickNameStringRawValues.isUsedNumber.rawValue
-            throw NicknameStates.isUsedNumber
-            
-        }
-        
-        
-        return true
+        viewModel.inpudId.value = nicknameTextField.text
     }
 }

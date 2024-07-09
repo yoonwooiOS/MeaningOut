@@ -71,6 +71,8 @@
 		99E83C532C3C31FC0057BB87 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C522C3C31FC0057BB87 /* Kingfisher */; };
 		99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */; };
 		99E83C572C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */; };
+		99E83C612C3D1DD10057BB87 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C602C3D1DD10057BB87 /* Observable.swift */; };
+		99E83C632C3D224E0057BB87 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -148,6 +150,8 @@
 		99777B332C29490C00988F3C /* Alert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Alert+Extension.swift"; sourceTree = "<group>"; };
 		99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderViewController.swift; sourceTree = "<group>"; };
 		99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderTableViewCell.swift; sourceTree = "<group>"; };
+		99E83C602C3D1DD10057BB87 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +314,7 @@
 				9973EBCA2C1C4B870067B97E /* ProfileImage.swift */,
 				9973EC1C2C2010EF0067B97E /* Search.swift */,
 				99777B0C2C2817E800988F3C /* NetworkManeger.swift */,
+				99E83C602C3D1DD10057BB87 /* Observable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */,
 				9973EBC12C1C27200067B97E /* ProfileImageSettingViewController.swift */,
 				9973EBC32C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift */,
+				99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */,
 			);
 			path = ProfileSetting;
 			sourceTree = "<group>";
@@ -459,6 +465,7 @@
 			files = (
 				9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */,
 				9973EBB82C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift in Sources */,
+				99E83C632C3D224E0057BB87 /* ProfileViewModel.swift in Sources */,
 				990567712C3B60C00098DB09 /* FavoriteViewController.swift in Sources */,
 				99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */,
 				9973EBC42C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift in Sources */,
@@ -476,6 +483,7 @@
 				9973EC1F2C201C970067B97E /* SearchCellImageView.swift in Sources */,
 				990567762C3BB4A70098DB09 /* BaseView.swift in Sources */,
 				9973EBCD2C1D5F7C0067B97E /* GrayColorCircleButton.swift in Sources */,
+				99E83C612C3D1DD10057BB87 /* Observable.swift in Sources */,
 				9973EBD62C1EBDDF0067B97E /* CustomSearchTextField.swift in Sources */,
 				9973EBD82C1EC61B0067B97E /* CustomColorLabel.swift in Sources */,
 				990567782C3BB4C70098DB09 /* BaseViewController.swift in Sources */,
