@@ -367,8 +367,8 @@
 		9973EC272C20DF130067B97E /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
-				9973EC282C20DF520067B97E /* EditProfileViewController.swift */,
 				9973EC2A2C20E4B00067B97E /* EditProfileTableViewCell.swift */,
+				9973EC282C20DF520067B97E /* EditProfileViewController.swift */,
 				9973EC332C2147710067B97E /* EditUserNicknameViewController.swift */,
 				9973EC352C21654B0067B97E /* EditUserProfileImageViewController.swift */,
 			);

@@ -21,7 +21,7 @@ class EditUserNicknameViewController: UIViewController {
     
    
     let ud = UserDefaultsManager()
-    
+    let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +33,11 @@ class EditUserNicknameViewController: UIViewController {
         setUPNavigation()
         setUpTextField()
         profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
-//        completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
-//        User.selectedProfileImage = randomProfileImageName
+        
         print(User.selectedProfileImage,"ViewdidLoad")
+        bindData()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         
         //        ud.profileImage
@@ -45,7 +45,15 @@ class EditUserNicknameViewController: UIViewController {
         nicknameTextField.text = ud.nickname
         print(User.selectedProfileImage,"ViewwillApear")
     }
-    
+    func bindData() {
+        viewModel.outPutValdationText.bind { value in
+            self.nicknameStateLabel.text = value
+        }
+        viewModel.outPutValid.bind { value in
+            self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
+            
+        }
+    }
     private func setUpHierarchy() {
         
         view.addSubview(profileImageButton)
@@ -125,18 +133,14 @@ class EditUserNicknameViewController: UIViewController {
     }
     
     @objc private func completeButtonClicked() {
-        guard let nickname = nicknameTextField.text else { return }
-        User.nickName = nickname
-//        User.selectedProfileImage = randomProfileImageName
         
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDateString = dateFormatter.string(from: currentDate)
-        
-        User.joinDate = currentDateString
-        
-        navigationController?.popViewController(animated: true)
+        viewModel.inputSavedButtonClicked.value = ()
+        if viewModel.isFormValid {
+            navigationController?.popViewController(animated: true)
+        } else {
+            showAlertconfirm(t: "아이디 형식에 맞지 않습니다!", msg: "아이디를 다시 입력해주세요!", style: .alert, ok: "확인")
+        }
+       
     }
     
 }
@@ -153,35 +157,7 @@ extension EditUserNicknameViewController: UITextFieldDelegate {
     }
     @objc private func textFieldDidChange(_ textField: UITextField) {
         
-        validateNickname()
-        
-    }
-    
-    private func validateNickname() {
-        guard let userNickname = nicknameTextField.text else { return }
-        
-        let regexNumber = "[0-9]"
-        let isNumberContains = userNickname.range(of: regexNumber, options: .regularExpression) != nil
-        
-        let regexSpecialCharacters = "[@#$%]"
-        let ispecialCharactersContains = userNickname.range(of: regexSpecialCharacters, options: .regularExpression) != nil
-        
-        if userNickname.count < 2 || userNickname.count > 10 {
-            nicknameStateLabel.text = NickNameStringRawValues.isNotAllowedTextRange.rawValue
-        } else {
-            nicknameStateLabel.text = NickNameStringRawValues.isValidate2.rawValue
-        }
-        // MARK: 특수문자 입력 검증
-        if ispecialCharactersContains {
-            nicknameStateLabel.text = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
-            return
-        }
-        
-        // MARK: 숫자 입력 검증
-        if isNumberContains  {
-            nicknameStateLabel.text = NickNameStringRawValues.isUsedNumber.rawValue
-            return
-        }
-        
+   
+        viewModel.inpudId.value = nicknameTextField.text
     }
 }

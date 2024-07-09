@@ -19,7 +19,14 @@ extension UIViewController {
         alert.addAction(ok)
         alert.addAction(canel)
         present(alert, animated: true, completion: nil)
+    }
+    func showAlertconfirm(t: String, msg: String, style: UIAlertController.Style, ok: String) {
         
+        let alert = UIAlertController(title: t, message: msg, preferredStyle: style)
         
+        let ok = UIAlertAction(title: ok, style: .default)
+        alert.addAction(ok)
+        
+        present(alert, animated: true, completion: nil)
     }
 }

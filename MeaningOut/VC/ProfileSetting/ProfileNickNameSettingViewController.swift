@@ -50,7 +50,6 @@ class ProfileNickNameSettingViewController: UIViewController {
         viewModel.outPutValid.bind { value in
             self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
             self.completeButton.backgroundColor = value ? CustomColor.appPrimaryColor : .systemGray4
-            
             self.completeButton.isEnabled = value
         }
     }
@@ -145,16 +144,8 @@ class ProfileNickNameSettingViewController: UIViewController {
     }
     
     @objc private func completeButtonClicked() {
-        guard let nickname = nicknameTextField.text else { return }
-        User.nickName = nickname
+        
         User.selectedProfileImage = randomProfileImageName
-        
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDateString = dateFormatter.string(from: currentDate)
-        
-        User.joinDate = currentDateString
         
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
