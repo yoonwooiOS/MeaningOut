@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class EditUserProfileImageViewController: UIViewController {
+final class EditUserProfileImageViewController: BaseViewController {
     
     
     let ud = UserDefaultsManager()
@@ -19,7 +19,14 @@ class EditUserProfileImageViewController: UIViewController {
         }
     }
     
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: EditUserProfileImageViewController.layout())
+    private lazy var collectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: EditUserProfileImageViewController.layout())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(ProfileImageSettingCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier)
+        collectionView.allowsMultipleSelection = false
+        return collectionView
+    }()
     
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
     
@@ -30,22 +37,18 @@ class EditUserProfileImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        setUpHierarchy()
-        setUpLayout()
+       
         setUPNavigation()
-        setUpCollectionView()
 
     }
 
-    private func setUpHierarchy() {
+     override func setUpHierarchy() {
         view.addSubview(userProfileImage)
         view.addSubview(collectionView)
         view.addSubview(cameraImage)
     }
     
-    private func setUpLayout() {
+    override func setUpLayout() {
         
         userProfileImage.snp.makeConstraints {
             
@@ -70,13 +73,6 @@ class EditUserProfileImageViewController: UIViewController {
             $0.height.equalTo(400)
         }
         
-    }
-    private func setUpCollectionView() {
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(ProfileImageSettingCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier)
-        collectionView.allowsMultipleSelection = false
     }
     
     private func setUPNavigation() {

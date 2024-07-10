@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class FavoriteFolderTableViewCell: BaseTableViewCell {
-    static let identifier = "FavoriteFolderTableViewCell"
+
     var folderLabel = {
         let label = UILabel()
         label.backgroundColor = .white

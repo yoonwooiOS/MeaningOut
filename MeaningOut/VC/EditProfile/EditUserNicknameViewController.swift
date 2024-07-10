@@ -7,33 +7,33 @@
 
 import UIKit
 
-class EditUserNicknameViewController: UIViewController {
+final class EditUserNicknameViewController: BaseViewController {
     
     
-    private lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
-    
-   
+    private lazy var profileImageButton = {
+        let button = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
+        button.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    private lazy var nicknameTextField = {
+        let textField = UITextField()
+        textField.blackTextField(placeholderText: "닉네임을 입력해주세요 :)")
+        textField.delegate = self
+        textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged )
+        return textField
+    }()
     
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
-    private let nicknameTextField = CustomBlackBottomLineTextField(placeholderText: "닉네임을 입력해주세요 :)")
     private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
     private let nicknameStateLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)
     
-   
     let ud = UserDefaultsManager()
     let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        
-        setUpHierarchy()
-        setUpLayout()
         setUPNavigation()
-        setUpTextField()
-        profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
-        
+
         print(User.selectedProfileImage,"ViewdidLoad")
         bindData()
     }
@@ -54,7 +54,7 @@ class EditUserNicknameViewController: UIViewController {
             
         }
     }
-    private func setUpHierarchy() {
+     override func setUpHierarchy() {
         
         view.addSubview(profileImageButton)
         view.addSubview(cameraImage)
@@ -64,7 +64,7 @@ class EditUserNicknameViewController: UIViewController {
         
     }
     
-    private func setUpLayout() {
+    override func setUpLayout() {
         
         profileImageButton.snp.makeConstraints {
             
@@ -106,30 +106,18 @@ class EditUserNicknameViewController: UIViewController {
             $0.height.equalTo(20)
             
         }
-        
-        
     }
     
     private func setUPNavigation() {
-        
         navigationItem.title = "Edit PROFILE"
-        
-        navigationItem.backBarButtonItem?.tintColor = .black
-        
-        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        blackBackButton.tintColor = .black
-        navigationItem.backBarButtonItem = blackBackButton
-        
         let savedEditProfileButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
         savedEditProfileButton.tintColor = CustomColor.black
         navigationItem.rightBarButtonItem = savedEditProfileButton
     }
     
     @objc private func profileImageButtonClicked() {
-        
         let vc = EditUserProfileImageViewController()
         navigationController?.pushViewController(vc, animated: true)
-//        navigationController?.popViewController(animated: true)
     }
     
     @objc private func completeButtonClicked() {
@@ -140,24 +128,14 @@ class EditUserNicknameViewController: UIViewController {
         } else {
             showAlertconfirm(t: "아이디 형식에 맞지 않습니다!", msg: "아이디를 다시 입력해주세요!", style: .alert, ok: "확인")
         }
-       
     }
-    
 }
 
 extension EditUserNicknameViewController: UITextFieldDelegate {
-    
-    private func setUpTextField() {
-        nicknameTextField.delegate = self
-        nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged )
-        
-    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
     }
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        
-   
         viewModel.inpudId.value = nicknameTextField.text
     }
 }

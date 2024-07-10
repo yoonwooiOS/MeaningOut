@@ -73,6 +73,7 @@
 		99E83C572C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */; };
 		99E83C612C3D1DD10057BB87 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C602C3D1DD10057BB87 /* Observable.swift */; };
 		99E83C632C3D224E0057BB87 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */; };
+		99E83C872C3E77390057BB87 /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -152,6 +153,7 @@
 		99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderTableViewCell.swift; sourceTree = "<group>"; };
 		99E83C602C3D1DD10057BB87 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +305,7 @@
 				9973EBCE2C1EB5A80067B97E /* UserDefaultsManager.swift */,
 				9973EC222C20D7610067B97E /* UIButton+Extension.swift */,
 				99777B332C29490C00988F3C /* Alert+Extension.swift */,
+				99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				9973EC1B2C2002F50067B97E /* SearchResultCollectionViewCell.swift in Sources */,
 				9973EBAE2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift in Sources */,
 				9973EC342C2147710067B97E /* EditUserNicknameViewController.swift in Sources */,
+				99E83C872C3E77390057BB87 /* ReuseIdentifier.swift in Sources */,
 				9973EC1D2C2010EF0067B97E /* Search.swift in Sources */,
 				9973EBBA2C1BEB990067B97E /* TextField+Extension.swift in Sources */,
 				9973EBCB2C1C4B870067B97E /* ProfileImage.swift in Sources */,

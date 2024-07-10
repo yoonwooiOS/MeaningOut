@@ -10,8 +10,6 @@ import RealmSwift
 
 class FavoriteCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "FavoriteCollectionViewCell"
-    
     var productImage = SearchCellImageView(imageURL: "")
     let storeName = CustomColorLabel(title: "", textcolor: CustomColor.lightGray, textAlignmet: .left, fontSize: CustomFont.regular13)
     let productName = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)

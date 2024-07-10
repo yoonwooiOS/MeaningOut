@@ -10,7 +10,7 @@ import SnapKit
 import Alamofire
 import RealmSwift
 
-class SearchResultViewController: UIViewController {
+final class SearchResultViewController: BaseViewController {
     
     var productList = Search(total: 0, items: []) {
         didSet {
@@ -19,10 +19,27 @@ class SearchResultViewController: UIViewController {
     }
     var userSearchText:String = ""
     let searchResultLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
-    let accuracySortButton = GrayColorButton(title: "정확도", backgroundColor: CustomColor.gray, tintcolor: CustomColor.white)
-    var dateSortButton = GrayColorButton(title: "날짜순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
-    let highPriceButton = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
-    let lowPriceButton = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+    lazy var accuracySortButton = {
+        let button = GrayColorButton(title: "정확도", backgroundColor: CustomColor.gray, tintcolor: CustomColor.white)
+        button.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var dateSortButton = {
+        let button = GrayColorButton(title: "날짜순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    lazy var highPriceButton = {
+        let button = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    lazy var lowPriceButton = {
+        let button = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
+        return button
+    }()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
     
     var likedButtonList:[String] = User.likedProductList
@@ -49,13 +66,10 @@ class SearchResultViewController: UIViewController {
             self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
             self.repository.detectRealmURL()
         }
-        setUpHierarchy()
-        setUpLayout()
-        setUpCollectionView()
-        setUpNavigation()
-        setUpButton()
+        
+        setUpNavigationTitle()
     }
-    private func setUpHierarchy() {
+    override func setUpHierarchy() {
         
         view.addSubview(searchResultLabel)
         view.addSubview(accuracySortButton)
@@ -66,7 +80,7 @@ class SearchResultViewController: UIViewController {
         
     }
     
-    private func setUpLayout() {
+    override func setUpLayout() {
         
         searchResultLabel.snp.makeConstraints {
             
@@ -126,23 +140,10 @@ class SearchResultViewController: UIViewController {
         collectionView.isUserInteractionEnabled = true
     }
     
-    private func setUpNavigation() {
-        
+    private func setUpNavigationTitle() {
         navigationItem.title = userSearchText
-        navigationItem.backBarButtonItem?.tintColor = .black
-        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        blackBackButton.tintColor = .black
-        navigationItem.backBarButtonItem = blackBackButton
-        
     }
     
-    private func setUpButton() {
-        accuracySortButton.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
-        dateSortButton.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
-        highPriceButton.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
-        lowPriceButton.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
-        
-    }
     static private func layout() -> UICollectionViewLayout {
         
         let layout = UICollectionViewFlowLayout()
@@ -163,7 +164,6 @@ class SearchResultViewController: UIViewController {
         page = 1
         
         callRequest(sortResult: SearchSorted.sim.rawValue)
-        
         accuracySortButton.grayButton()
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
@@ -183,7 +183,7 @@ class SearchResultViewController: UIViewController {
         lowPriceButton.whiteButton()
         collectionView.reloadData()
     }
-
+    
     func callRequest(sortResult: String) {
         
         NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
@@ -258,18 +258,14 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     
     //MARK: 즐겨찾기 기능 추가 예정
     @objc func likeImageButtonClicekd(sender: UIButton) {
-//                print(productList.items[sender.tag])
-        //        print(sender.tag)
-        //        print("sdfsadfds")
         let product = productList.items[sender.tag]
         let realm = try! Realm()
-//        print(realm.configuration.fileURL)
         guard let folder = realm.objects(Folder.self).where({ $0.name == "전체" }).first else {
             print("폴더를 찾을 수 없습니다.")
             return
         }
         let result = realm.objects(ProductTable.self).where({ $0.id == product.productId })
-
+        
         if result.isEmpty {
             let data = ProductTable(id: product.productId, name: product.title, imageURL: product.image, storeName: product.link, price: product.lprice)
             repository.addToFolder(data, folder: folder)
@@ -303,9 +299,8 @@ extension SearchResultViewController: UICollectionViewDataSourcePrefetching {
             print(indexPaths, "Prefetch")
             if productList.items.count - 2 == item.row && lastPage != 0 {
                 page += 30
-                
                 callRequest(sortResult: SearchSorted.date.rawValue)
-
+                
             }
         }
     }

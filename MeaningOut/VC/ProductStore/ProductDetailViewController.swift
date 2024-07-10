@@ -10,7 +10,7 @@ import WebKit
 import SnapKit
 import RealmSwift
 
-class ProductDetailViewController: UIViewController {
+final class ProductDetailViewController: BaseViewController {
     
     let webView = WKWebView()
     var storeName: String?
@@ -23,32 +23,21 @@ class ProductDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        
-        setUpHierarchy()
-        setUpLayout()
         setUpWebView()
         setUpNavigation()
-//        print(likedButtonList, "웹뷰")
     }
     
-    private func setUpHierarchy() {
-        
+     override func setUpHierarchy() {
         view.addSubview(webView)
-        
     }
     
-    private func setUpLayout() {
-        
+    override func setUpLayout() {
         webView.snp.makeConstraints { make in
             make.edges.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
-        
     }
     
     private func setUpWebView() {
-        
         guard let siteurl = siteURL else { return }
         
         let url = URL(string: siteurl)
@@ -74,7 +63,6 @@ class ProductDetailViewController: UIViewController {
     }
     @objc func rightBarButtonITemTapped() {
         
-       
         let realm = try! Realm()
 //        print(realm.configuration.fileURL)
         guard let product = product else { return }
@@ -106,6 +94,5 @@ class ProductDetailViewController: UIViewController {
         }
         vc.list = likedButtonList
         User.likedProductList = likedButtonList
-        print(likedButtonList, "productDdetail")
     }
 }

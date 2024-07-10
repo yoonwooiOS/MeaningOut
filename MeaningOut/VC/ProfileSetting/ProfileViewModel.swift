@@ -10,9 +10,10 @@ import Foundation
 class ProfileViewModel {
     
     var inpudId: Observable<String?> = Observable("")
+    var inputSavedButtonClicked: Observable<Void?> = Observable(nil)
     var outPutValid = Observable(false)
     var outPutValdationText = Observable("")
-    var inputSavedButtonClicked: Observable<Void?> = Observable(nil)
+   
     
     init() {
         inpudId.bind { _ in
@@ -25,6 +26,7 @@ class ProfileViewModel {
             }
         }
     }
+    
     var isFormValid: Bool {
             return outPutValid.value
         }
@@ -61,6 +63,7 @@ class ProfileViewModel {
         User.nickName = id
         
     }
+    
     private func userJoinDate() {
         let currentDate = Date()
         let dateFormatter = DateFormatter()

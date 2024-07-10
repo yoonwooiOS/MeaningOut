@@ -10,36 +10,39 @@ import SnapKit
 
 
 
-class ProfileNickNameSettingViewController: UIViewController {
+final class ProfileNickNameSettingViewController: BaseViewController {
     
-    
-    private lazy var profileImageButton = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
-    
+    private lazy var profileImageButton = {
+        let button =  PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
+        button.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
+        return button
+    }()
     private var randomProfileImageName = ProfileImages().profileImageName.randomElement() ?? "profile_0"
     
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
-    private let nicknameTextField = CustomBlackBottomLineTextField(placeholderText: "닉네임을 입력해주세요 :)")
+    private lazy var nicknameTextField = {
+        let textfield = UITextField()
+        textfield.blackTextField(placeholderText: "아이디를 입력해주세요!")
+        textfield.delegate = self
+        textfield.addTarget(self, action: #selector(self.textFieldDidChange), for: .editingChanged )
+        return textfield
+    }()
     private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
     private let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     
-    private let completeButton = PrimaryColorButton(title: "완료")
+    private lazy var completeButton = {
+        let button = PrimaryColorButton(title: "완료")
+        button.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    
     let ud = UserDefaultsManager()
     
     let viewModel = ProfileViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        
-        setUpHierarchy()
-        setUpLayout()
-        setUPNavigation()
-        setUpTextField()
-        profileImageButton.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
-        completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+        setUpNavigationTitle()
         User.selectedProfileImage = randomProfileImageName
-        print(User.selectedProfileImage,"ViewdidLoad")
-        
         bindData()
         
     }
@@ -60,19 +63,12 @@ class ProfileNickNameSettingViewController: UIViewController {
         print(User.selectedProfileImage,"ViewwillApear")
     }
     
-    private func setUpHierarchy() {
-        
-        view.addSubview(profileImageButton)
-        view.addSubview(cameraImage)
-        view.addSubview(nicknameTextField)
-        view.addSubview(seperator)
-        view.addSubview(nicknameStateLabel)
-        view.addSubview(completeButton)
-
+     override func setUpHierarchy() {
+         [profileImageButton, cameraImage, nicknameTextField, seperator, nicknameStateLabel,completeButton ].forEach {
+             self.view.addSubview($0)
+         }
     }
-    
-    private func setUpLayout() {
-        
+    override func setUpLayout() {
         profileImageButton.snp.makeConstraints {
             
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
@@ -80,7 +76,6 @@ class ProfileNickNameSettingViewController: UIViewController {
             $0.size.equalTo(PrimaryCircleSize.size)
             
         }
-        
         cameraImage.snp.makeConstraints {
             
             $0.trailing.equalTo(profileImageButton.snp.trailing)
@@ -94,7 +89,6 @@ class ProfileNickNameSettingViewController: UIViewController {
             $0.top.equalTo(profileImageButton.snp.bottom).offset(16)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(28)
             $0.height.equalTo(40)
-            
             
         }
         
@@ -122,20 +116,10 @@ class ProfileNickNameSettingViewController: UIViewController {
             
         }
     }
-    
-    private func setUPNavigation() {
-        
+     func setUpNavigationTitle() {
         navigationItem.title = "PROFILE SETTING"
-        
-        navigationItem.backBarButtonItem?.tintColor = .black
-        
-        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        blackBackButton.tintColor = .black
-        navigationItem.backBarButtonItem = blackBackButton
-        
-        
     }
-    
+   
     @objc private func profileImageButtonClicked() {
         
         let vc = ProfileImageSettingViewController()
@@ -157,12 +141,6 @@ class ProfileNickNameSettingViewController: UIViewController {
 }
 
 extension ProfileNickNameSettingViewController: UITextFieldDelegate {
-    
-    private func setUpTextField() {
-        nicknameTextField.delegate = self
-        nicknameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged )
-        
-    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
     }

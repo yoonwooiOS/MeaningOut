@@ -7,19 +7,34 @@
 
 import UIKit
 
-class RecentSearchViewController: UIViewController {
+class RecentSearchViewController: BaseViewController {
     
-    let searchTextField = CustomSearchTextField(placeholderText: "검색어를 입력하세요")
-    let seperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
-    let recentSearchLabel = CustomColorLabel(title: "최근 검색", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold16)
-    let allRemoveButton = CustomNoImageButton(title: "전체 삭제", textColor: CustomColor.appPrimaryColor, fontSize: CustomFont.regular14, backgroundColor: .clear, cornerRadius: .zero)
-    let noRecentImage = RectangleImageView(imageName: "empty")
-    let noRecentLabel = CustomColorLabel(title: "최근 검색어가 없어요", textcolor: CustomColor.black, textAlignmet: .center, fontSize: CustomFont.bold16)
-    let tableView = UITableView()
+    private lazy var searchTextField = {
+        let textField = CustomSearchTextField(placeholderText: "검색어를 입력하세요")
+        textField.delegate = self
+        return textField
+    }()
+    private lazy var allRemoveButton = {
+        let button = CustomNoImageButton(title: "전체 삭제", textColor: CustomColor.appPrimaryColor, fontSize: CustomFont.regular14, backgroundColor: .clear, cornerRadius: .zero)
+        button.addTarget(self, action: #selector(allRemoveButtonClicked), for: .touchUpInside)
+        return button
+    }()
+    private lazy var tableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(RecentSearchTableViewCell.self, forCellReuseIdentifier: RecentSearchTableViewCell.identifier)
+        tableView.rowHeight = 40
+        tableView.isUserInteractionEnabled = true
+        return tableView
+    }()
+    private let seperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
+    private let recentSearchLabel = CustomColorLabel(title: "최근 검색", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold16)
+   
+    private let noRecentImage = RectangleImageView(imageName: "empty")
+    private let noRecentLabel = CustomColorLabel(title: "최근 검색어가 없어요", textcolor: CustomColor.black, textAlignmet: .center, fontSize: CustomFont.bold16)
     
-    
-    var userRecentSearchList: [String] = [] {
-        
+    private var userRecentSearchList: [String] = [] {
         didSet {
             User.savedRecentSearchList = userRecentSearchList
             
@@ -34,32 +49,24 @@ class RecentSearchViewController: UIViewController {
                 tableView.isHidden = false
                 allRemoveButton.isHidden = false
             }
-            
             tableView.reloadData()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
-        setUpHierarchy()
-        setUpLayout()
-        setUPNavigation()
-        setUpTableView()
+        
+        setUPNavigationtitle()
+       
 
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
-        setUpHierarchy()
-        setUpLayout()
-        setUPNavigation()
-        setUpTableView()
-        searchTextField.delegate = self
-        allRemoveButton.addTarget(self, action: #selector(allRemoveButtonClicked), for: .touchUpInside)
+        setUPNavigationtitle()
         userRecentSearchList = User.savedRecentSearchList
     }
     
-    private func setUpHierarchy() {
+     override func setUpHierarchy() {
         
         view.addSubview(searchTextField)
         view.addSubview(seperator)
@@ -72,7 +79,7 @@ class RecentSearchViewController: UIViewController {
         
     }
     
-    private func setUpLayout() {
+     override func setUpLayout() {
         searchTextField.snp.makeConstraints {
             
             $0.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
@@ -87,76 +94,38 @@ class RecentSearchViewController: UIViewController {
             
         }
         if userRecentSearchList.count == 0 {
-            
             noRecentImage.snp.makeConstraints {
-                
-                
                 $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
                 $0.centerX.centerY.equalTo(view.safeAreaLayoutGuide)
                 $0.height.equalTo(280)
-                
             }
-            
             noRecentLabel.snp.makeConstraints {
-                
                 $0.top.equalTo(noRecentImage.snp.bottom).offset(8)
                 $0.centerX.equalTo(view.safeAreaLayoutGuide)
                 $0.height.equalTo(30)
             }
         } else {
-            
-            
             recentSearchLabel.snp.makeConstraints {
-                
                 $0.top.equalTo(seperator.snp.bottom).offset(16)
                 $0.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
                 $0.height.equalTo(30)
-                
             }
-            
             allRemoveButton.snp.makeConstraints {
-                
                 $0.top.equalTo(seperator.snp.bottom).offset(16)
                 $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
                 $0.height.equalTo(30)
-                
-                
             }
-            
             tableView.snp.makeConstraints {
-                
                 $0.top.equalTo(allRemoveButton.snp.bottom).offset(8)
                 $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
                 $0.bottom.equalTo(view.safeAreaLayoutGuide)
             }
-            
         }
-        
-        
-        
     }
     
-    private func setUPNavigation() {
-        
+    private func setUPNavigationtitle() {
         let nickname = User.nickName
         navigationItem.title = "\(nickname)'s MEANING OUT"
-        
-        navigationItem.backBarButtonItem?.tintColor = .black
-        
-        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        blackBackButton.tintColor = .black
-        navigationItem.backBarButtonItem = blackBackButton
-    }
-    
-    
-    private func setUpTableView() {
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(RecentSearchTableViewCell.self, forCellReuseIdentifier: RecentSearchTableViewCell.identifier)
-        tableView.rowHeight = 40
-        tableView.isUserInteractionEnabled = true
-        
     }
 }
 
@@ -193,16 +162,13 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     @objc func removeButtonClicked(sender: UIButton) {
-        
         userRecentSearchList.remove(at: sender.tag)
         User.savedRecentSearchList = userRecentSearchList
-        
         tableView.reloadData()
         
     }
     
     @objc func allRemoveButtonClicked() {
-        
         userRecentSearchList.removeAll()
         searchTextField.text = nil
         User.savedRecentSearchList = userRecentSearchList
@@ -224,8 +190,7 @@ extension RecentSearchViewController: UITextFieldDelegate {
         let vc = SearchResultViewController()
         vc.userSearchText = searchText
         navigationController?.pushViewController(vc, animated: true)
-        
-        
+     
         return true
     }
     

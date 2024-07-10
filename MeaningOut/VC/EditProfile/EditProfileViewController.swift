@@ -8,12 +8,24 @@
 import UIKit
 import SnapKit
 
-class EditProfileViewController: UIViewController {
+final class EditProfileViewController: BaseViewController {
     
-    let gestureView = UIView()
+    lazy var gestureView = {
+     let view = UIView()
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
+        view.addGestureRecognizer(tapGestureRecognizer)
+        return view
+    }()
+    lazy var tableView = {
+        let tableview = UITableView()
+        tableview.dataSource = self
+        tableview.delegate = self
+        tableview.register(EditProfileTableViewCell.self, forCellReuseIdentifier: EditProfileTableViewCell.identifier)
+        tableview.rowHeight = 40
+        return tableview
+    }()
     let topSeperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
     let seperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
-    let tableView = UITableView()
     let userProfileImageView = PrimaryColorCircleImageButton(imageName: User.selectedProfileImage, cornerRadius: UserProfileImageGrayCircleSize.size)
     let userNicknameLabel = CustomColorLabel(title: User.nickName, textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold16)
     let userSingUpDateLabel = CustomColorLabel(title: "\(User.joinDate) 가입 ", textcolor: CustomColor.gray, textAlignmet: .left, fontSize: CustomFont.regular13)
@@ -26,44 +38,30 @@ class EditProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         userProfileImageView.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
         userNicknameLabel.text = User.nickName
-        
-        
         list = User.likedProductList
         tableView.reloadData()
-        print(list ?? "", "editprofileList")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .systemBackground
-        setUpHierarchy()
-        setUpLayout()
-        setUpTableView()
-        setUpNavigation()
-        setUpGesture()
+        setUpNavigationTitle()
     }
     
-    
-    private func setUpHierarchy() {
-        
+     override func setUpHierarchy() {
         view.addSubview(topSeperator)
         view.addSubview(gestureView)
         gestureView.addSubview(userProfileImageView)
         gestureView.addSubview(userNicknameLabel)
         gestureView.addSubview(userSingUpDateLabel)
         gestureView.addSubview(rightChevronLabel)
-        
         view.addSubview(seperator)
         view.addSubview(tableView)
-        
     }
     
-    private func setUpLayout() {
+    override func setUpLayout() {
         
         topSeperator.snp.makeConstraints {
-            
+
             $0.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(1)
             
@@ -74,7 +72,6 @@ class EditProfileViewController: UIViewController {
             $0.height.equalTo(120)
         }
         userProfileImageView.snp.makeConstraints {
-            
             
             $0.centerY.equalTo(gestureView.safeAreaLayoutGuide)
             $0.leading.equalTo(gestureView.safeAreaLayoutGuide).offset(8)
@@ -121,26 +118,10 @@ class EditProfileViewController: UIViewController {
         
     }
     
-    private func setUpTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(EditProfileTableViewCell.self, forCellReuseIdentifier: EditProfileTableViewCell.identifier)
-        tableView.rowHeight = 40
-    }
-    private func setUpNavigation() {
-        
+    private func setUpNavigationTitle() {
         navigationItem.title = "SETTING"
-        navigationItem.backBarButtonItem?.tintColor = .black
-        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        blackBackButton.tintColor = .black
-        navigationItem.backBarButtonItem = blackBackButton
     }
     
-    private func setUpGesture() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapView))
-        gestureView.addGestureRecognizer(tapGestureRecognizer)
-        
-    }
     @objc func didTapView(_ sender: UITapGestureRecognizer) {
         print("did tap view", sender)
         navigationController?.pushViewController(EditUserNicknameViewController(), animated: true)
@@ -165,7 +146,6 @@ extension EditProfileViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        
         if otherSettingList[indexPath.row] == "탈퇴하기" {
             showAlert(t: "탈퇴하기", msg: "탈퇴를 하면 데이터가 모두 초기화 홥니다. 탈퇴 하시겠습니까?", style: .alert, ok: "확인") { kim in
                 print(kim)

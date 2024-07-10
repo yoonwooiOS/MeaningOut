@@ -27,4 +27,15 @@ extension UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+    func blackTextField(placeholderText: String) {
+        font = CustomFont.bold14
+        textColor = CustomColor.black
+        textAlignment = .left
+        keyboardType = .default
+        borderStyle = .none
+        placeholder = placeholderText
+        tintColor = CustomColor.gray
+    }
+    
+    
 }

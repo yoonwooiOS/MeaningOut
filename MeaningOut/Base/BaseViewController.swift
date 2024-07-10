@@ -16,13 +16,20 @@ class BaseViewController: UIViewController {
         setUpLayout()
         setUpView()
         setUpTableView()
+        setUpNavigationItems()
     }
     
     func setUpHierarchy() { }
     func setUpLayout() { }
     func setUpView() { }
     func setUpTableView() { }
-    
+    func setUpButton() { }
+    func setUpNavigationItems() {
+        navigationItem.backBarButtonItem?.tintColor = .black
+        let blackBackButton = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        blackBackButton.tintColor = .black
+        navigationItem.backBarButtonItem = blackBackButton
+    }
     func showAlert(title: String,message: String, ok: String, handler: @escaping (() -> Void)) {
         
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

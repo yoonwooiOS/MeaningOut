@@ -8,52 +8,37 @@
 import UIKit
 import SnapKit
 
-class ProfileImageSettingViewController: UIViewController {
+final class ProfileImageSettingViewController: BaseViewController {
     
-    
-    let ud = UserDefaultsManager()
-//    ud.profileImage
-    lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size) {
-        
+    private let ud = UserDefaultsManager()
+    private lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size) {
         didSet {
-            
             collectionView.reloadData()
-            
         }
     }
-    
-    private var collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProfileImageSettingViewController.layout())
-    
-    private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
-    
-    private let profileImageList = ProfileImages().profileImageName
-
-    
-    var selectedIndexPath: IndexPath?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private lazy var collectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProfileImageSettingViewController.layout())
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(ProfileImageSettingCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier)
+        collectionView.allowsMultipleSelection = false
+        return collectionView
+    }()
         
-        view.backgroundColor = .systemBackground
-        setUpHierarchy()
-        setUpLayout()
-        setUPNavigation()
-        setUpCollectionView()
-
-    }
+    private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
+    private let profileImageList = ProfileImages().profileImageName
+    
+    private var selectedIndexPath: IndexPath?
     
     
-    
-    private func setUpHierarchy() {
+    override func setUpHierarchy() {
         
         view.addSubview(userProfileImage)
         view.addSubview(collectionView)
         view.addSubview(cameraImage)
-        
-        
     }
     
-    private func setUpLayout() {
+     override func setUpLayout() {
         
         userProfileImage.snp.makeConstraints {
             
@@ -79,18 +64,9 @@ class ProfileImageSettingViewController: UIViewController {
         }
         
     }
-    private func setUpCollectionView() {
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(ProfileImageSettingCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier)
-        collectionView.allowsMultipleSelection = false
-    }
-    
-    private func setUPNavigation() {
-        
+
+    override func setUpNavigationItems() {
         navigationItem.title = "PROFILE SETTING"
-        
         
     }
     

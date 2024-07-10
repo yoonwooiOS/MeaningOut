@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 
-class EditProfileTableViewCell: UITableViewCell {
+final class EditProfileTableViewCell: BaseTableViewCell {
 
     static let identifier = "EditProfileTableViewCell"
     
@@ -17,18 +17,8 @@ class EditProfileTableViewCell: UITableViewCell {
     
     var totalBookmarkLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .right, fontSize: CustomFont.regular13)
     let bookMarkImage = CustomImageView(imageName: "", color: CustomColor.black)
-   
-   
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.backgroundColor = .systemBackground
-        setUpHierarchy()
-        setUpLayout()
-        
-    }
     
-    private func setUpHierarchy() {
+     override func setUpHierarchy() {
         
         contentView.addSubview(settingLabel)
         contentView.addSubview(totalBookmarkLabel)
@@ -36,7 +26,7 @@ class EditProfileTableViewCell: UITableViewCell {
         
     }
     
-    private func setUpLayout() {
+    override func setUpLayout() {
         
         settingLabel.snp.makeConstraints {
             
@@ -55,24 +45,16 @@ class EditProfileTableViewCell: UITableViewCell {
         }
         bookMarkImage.snp.makeConstraints {
             
-           
             $0.centerY.equalTo(contentView.safeAreaLayoutGuide)
             $0.trailing.equalTo(totalBookmarkLabel.snp.leading)
             $0.size.equalTo(20)
             
         }
-        
-        
-        
     }
      
     func setUpCell(data: String, list:[String]) {
-        
         settingLabel.text = data
-        
-        
         if settingLabel.text == "나의 장바구니" {
-            
             bookMarkImage.image = UIImage(named: "like_selected")
             totalBookmarkLabel.text = "\(list.count)개의 상품"
             // cell재사용 메커니즘으로 인해 초기 설정을 꼭 해줘야함
@@ -80,25 +62,12 @@ class EditProfileTableViewCell: UITableViewCell {
             totalBookmarkLabel.isHidden = false
             bookMarkImage.isHidden = false
         } else {
-            
             totalBookmarkLabel.isHidden = true
             bookMarkImage.isHidden = true
-            
         }
-        
         if data != "탈퇴하기" {
-            
             selectionStyle = .none
         }
-        
-        
     }
-   
-    
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }
 
