@@ -252,9 +252,9 @@
 		9973EB9E2C1B389A0067B97E /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				9973EBD92C1ECC980067B97E /* TabBarController.swift */,
 				9973EC272C20DF130067B97E /* EditProfile */,
 				9973EC242C20D9A10067B97E /* ProductStore */,
-				9973EBD92C1ECC980067B97E /* TabBarController.swift */,
 				9973EBD02C1EBA070067B97E /* Onboarding */,
 				9973EBD12C1EBA130067B97E /* ProfileSetting */,
 				9973EBD22C1EBA240067B97E /* Main */,
@@ -302,7 +302,6 @@
 			children = (
 				9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */,
 				9973EBB92C1BEB990067B97E /* TextField+Extension.swift */,
-				9973EBCE2C1EB5A80067B97E /* UserDefaultsManager.swift */,
 				9973EC222C20D7610067B97E /* UIButton+Extension.swift */,
 				99777B332C29490C00988F3C /* Alert+Extension.swift */,
 				99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */,
@@ -318,6 +317,7 @@
 				9973EC1C2C2010EF0067B97E /* Search.swift */,
 				99777B0C2C2817E800988F3C /* NetworkManeger.swift */,
 				99E83C602C3D1DD10057BB87 /* Observable.swift */,
+				9973EBCE2C1EB5A80067B97E /* UserDefaultsManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

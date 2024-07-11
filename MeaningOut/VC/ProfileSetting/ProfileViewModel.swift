@@ -9,20 +9,21 @@ import Foundation
 
 class ProfileViewModel {
     
-    var inpudId: Observable<String?> = Observable("")
+    var user = Users.shared
+    var inputNickName: Observable<String?> = Observable("")
     var inputSavedButtonClicked: Observable<Void?> = Observable(nil)
     var outPutValid = Observable(false)
-    var outPutValdationText = Observable("")
+    var outPutValdationNickName = Observable("")
    
     
     init() {
-        inpudId.bind { _ in
+        inputNickName.bind { _ in
             self.validation()
         }
         inputSavedButtonClicked.bind { _ in
-            guard let id = self.inpudId.value else { return }
+            guard let id = self.inputNickName.value else { return }
             if self.outPutValid.value {
-                User.nickName = id
+                
             }
         }
     }
@@ -31,36 +32,36 @@ class ProfileViewModel {
             return outPutValid.value
         }
     private func validation()  {
-        guard let id = inpudId.value else { return }
+        guard let id = inputNickName.value else { return }
         let regexNumber = "[0-9]"
         let isNumberContains = id.range(of: regexNumber, options: .regularExpression) != nil
         let regexSpecialCharacters = "[@#$%]"
         let ispecialCharactersContains = id.range(of: regexSpecialCharacters, options: .regularExpression) != nil
         
         guard id.count >= 2 && id.count <= 10 else {
-            outPutValdationText.value = NickNameStringRawValues.isNotAllowedTextRange.rawValue
+            outPutValdationNickName.value = NickNameStringRawValues.isNotAllowedTextRange.rawValue
             outPutValid.value = false
             return
         }
 
         // MARK: 특수문자 입력 검증
         guard !ispecialCharactersContains else {
-            outPutValdationText.value = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
+            outPutValdationNickName.value = NickNameStringRawValues.isUsedSpecialCharacters.rawValue
             outPutValid.value = false
             return
         }
 
         // MARK: 숫자 입력 검증
         guard !isNumberContains else {
-            outPutValdationText.value = NickNameStringRawValues.isUsedNumber.rawValue
+            outPutValdationNickName.value = NickNameStringRawValues.isUsedNumber.rawValue
             outPutValid.value = false
             return
         }
 
         outPutValid.value = true
-        outPutValdationText.value = NickNameStringRawValues.isValidate.rawValue
+        outPutValdationNickName.value = NickNameStringRawValues.isValidate.rawValue
+        user.nickName = id
         
-        User.nickName = id
         
     }
     
@@ -70,7 +71,8 @@ class ProfileViewModel {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let currentDateString = dateFormatter.string(from: currentDate)
         
-        User.joinDate = currentDateString
+        user.joinDate = currentDateString
+        
     }
     
 }

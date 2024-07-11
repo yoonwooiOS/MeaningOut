@@ -9,13 +9,8 @@ import UIKit
 import SnapKit
 
 final class ProfileImageSettingViewController: BaseViewController {
-    
-    private let ud = UserDefaultsManager()
-    private lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size) {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+
+    private lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(profileImage)", cornerRadius: PrimaryCircleSize.size)
     private lazy var collectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProfileImageSettingViewController.layout())
         collectionView.delegate = self
@@ -28,9 +23,16 @@ final class ProfileImageSettingViewController: BaseViewController {
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
     private let profileImageList = ProfileImages().profileImageName
     
-    private var selectedIndexPath: IndexPath?
+    var user = Users.shared
+    lazy var profileImage = user.profileImage
     
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        user.profileImage = profileImage
+        print(profileImage)
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     override func setUpHierarchy() {
         
         view.addSubview(userProfileImage)
@@ -97,31 +99,22 @@ extension ProfileImageSettingViewController: UICollectionViewDelegate, UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier, for: indexPath) as! ProfileImageSettingCollectionViewCell
         
         let imageData = profileImageList[indexPath.row]
-        
-        cell.setUpCell(data: imageData)
+       
+        cell.setUpCell(data: imageData, image: profileImage)
 
-        if imageData == User.selectedProfileImage {
-            cell.profileImageButton.alpha = 1
-            cell.profileImageButton.layer.borderWidth = 3
-            cell.profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
-        } else {
-            cell.profileImageButton.alpha = 0.5
-            cell.profileImageButton.layer.borderWidth = 1
-            cell.profileImageButton.layer.borderColor = CustomColor.gray.cgColor
-        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        selectedIndexPath = indexPath
         let selectedImage = profileImageList[indexPath.row]
-        userProfileImage.setImage(UIImage(named: selectedImage), for: .normal)
-        
+        profileImage = profileImageList[indexPath.row]
+        print(profileImage)
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileImageSettingCollectionViewCell else {
             return }
-        
-        if User.selectedProfileImage != selectedImage {
+        userProfileImage.setImage(UIImage(named: profileImage), for: .normal)
+        if profileImage == selectedImage {
             cell.profileImageButton.alpha = 1
             cell.profileImageButton.layer.borderWidth = 3
             cell.profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
@@ -130,10 +123,11 @@ extension ProfileImageSettingViewController: UICollectionViewDelegate, UICollect
             cell.profileImageButton.layer.borderWidth = 1
             cell.profileImageButton.layer.borderColor = CustomColor.gray.cgColor
         }
+        
         collectionView.reloadData()
         
-        User.selectedProfileImage = selectedImage
-        UserDefaults.standard.set(selectedImage, forKey: "profileImage")
+//        User.selectedProfileImage = selectedImage
+//        UserDefaults.standard.set(selectedImage, forKey: "profileImage")
     }
 }
 

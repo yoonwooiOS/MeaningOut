@@ -106,7 +106,7 @@ extension EditUserProfileImageViewController: UICollectionViewDelegate, UICollec
         
         let imageData = profileImageList[indexPath.row]
         
-        cell.setUpCell(data: imageData)
+        cell.setUpCell(data: imageData, image: "")
 
         if imageData == User.selectedProfileImage {
             cell.profileImageButton.alpha = 1

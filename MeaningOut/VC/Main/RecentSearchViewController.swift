@@ -52,12 +52,8 @@ class RecentSearchViewController: BaseViewController {
             tableView.reloadData()
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        
-        setUPNavigationtitle()
-       
-
-    }
+    let user = Users.shared
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +120,8 @@ class RecentSearchViewController: BaseViewController {
     }
     
     private func setUPNavigationtitle() {
-        let nickname = User.nickName
+        guard let nickname = user.nickName else { return }
+        print(nickname)
         navigationItem.title = "\(nickname)'s MEANING OUT"
     }
 }
@@ -187,6 +184,7 @@ extension RecentSearchViewController: UITextFieldDelegate {
        
         userRecentSearchList.append(searchText)
         searchTextField.resignFirstResponder()
+        
         let vc = SearchResultViewController()
         vc.userSearchText = searchText
         navigationController?.pushViewController(vc, animated: true)

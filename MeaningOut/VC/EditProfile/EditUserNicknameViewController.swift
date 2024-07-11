@@ -46,7 +46,7 @@ final class EditUserNicknameViewController: BaseViewController {
         print(User.selectedProfileImage,"ViewwillApear")
     }
     func bindData() {
-        viewModel.outPutValdationText.bind { value in
+        viewModel.outPutValdationNickName.bind { value in
             self.nicknameStateLabel.text = value
         }
         viewModel.outPutValid.bind { value in
@@ -136,6 +136,6 @@ extension EditUserNicknameViewController: UITextFieldDelegate {
         view.endEditing(true)
     }
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        viewModel.inpudId.value = nicknameTextField.text
+        viewModel.inputNickName.value = nicknameTextField.text
     }
 }

@@ -26,15 +26,15 @@ final class EditProfileViewController: BaseViewController {
     }()
     let topSeperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
     let seperator = CustomColorSeperator(bgColor: CustomColor.lightGray)
-    let userProfileImageView = PrimaryColorCircleImageButton(imageName: User.selectedProfileImage, cornerRadius: UserProfileImageGrayCircleSize.size)
-    let userNicknameLabel = CustomColorLabel(title: User.nickName, textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold16)
-    let userSingUpDateLabel = CustomColorLabel(title: "\(User.joinDate) 가입 ", textcolor: CustomColor.gray, textAlignmet: .left, fontSize: CustomFont.regular13)
+    lazy var userProfileImageView = PrimaryColorCircleImageButton(imageName: user.profileImage, cornerRadius: UserProfileImageGrayCircleSize.size)
+    lazy var userNicknameLabel = CustomColorLabel(title: user.nickName ?? "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold16)
+    lazy var userSingUpDateLabel = CustomColorLabel(title: "\(user.joinDate) 가입 ", textcolor: CustomColor.gray, textAlignmet: .left, fontSize: CustomFont.regular13)
     let rightChevronLabel = CustomImageView(imageName: "chevron.right", color: CustomColor.lightGray)
     
     let otherSettingList = ["나의 장바구니", "자주 묻는 질문", "1:1 문의", "알림 설정", "탈퇴하기"]
     
     var list:[String] = User.likedProductList
-    
+    let user = Users.shared
     override func viewWillAppear(_ animated: Bool) {
         userProfileImageView.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
         userNicknameLabel.text = User.nickName

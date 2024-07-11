@@ -26,8 +26,17 @@ final class ProfileImageSettingCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    func setUpCell(data: String) {
+    func setUpCell(data: String, image: String) {
          profileImageButton.setImage(UIImage(named: data), for: .normal)
+        if data == image {
+            profileImageButton.alpha = 1
+            profileImageButton.layer.borderWidth = 3
+            profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
+        } else {
+            profileImageButton.alpha = 0.5
+            profileImageButton.layer.borderWidth = 1
+            profileImageButton.layer.borderColor = CustomColor.gray.cgColor
+        }
         
     }
     override func prepareForReuse() {

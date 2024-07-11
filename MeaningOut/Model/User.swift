@@ -7,13 +7,52 @@
 
 import Foundation
 
+class Users {
+    
+    static let shared = Users()
+    let ud = UserDefaultsManager()
+    private init() { }
+    
+    var nickName: String? {
+        didSet {
+            saveNickName()
+        }
+    }
+    
+    var joinDate: String? {
+        didSet {
+            saveJoinDate()
+        }
+    }
+    
+    var profileImage: String = ProfileImages().randomProfieImage {
+        didSet {
+            saveProfileImage()
+        }
+    }
+    
+    private func saveNickName() {
+        ud.nickname = self.nickName ?? ""
+    }
+    
+    private func saveProfileImage() {
+        ud.profileImage = self.profileImage
+    }
+    
+    private func saveJoinDate() {
+        ud.joinDate = self.joinDate ?? ""
+    }
+}
+
+
 struct User {
+    
     static var nickName: String {
         get {
             return UserDefaultsManager().nickname
         }
         set {
-            var ud = UserDefaultsManager()
+            let ud = UserDefaultsManager()
             ud.nickname = newValue
         }
     }
@@ -24,7 +63,7 @@ struct User {
             return UserDefaultsManager().profileImage
         }
         set {
-            var ud = UserDefaultsManager()
+            let ud = UserDefaultsManager()
             ud.profileImage = newValue
         }
         
@@ -34,7 +73,7 @@ struct User {
                 return UserDefaultsManager().recentSearchList
             }
             set {
-                var ud = UserDefaultsManager()
+                let ud = UserDefaultsManager()
                 ud.recentSearchList = newValue
             }
         }
@@ -46,7 +85,7 @@ struct User {
             return UserDefaultsManager().joinDate
         }
         set {
-            var ud = UserDefaultsManager()
+            let ud = UserDefaultsManager()
             ud.joinDate = newValue
         }
         
@@ -59,7 +98,7 @@ struct User {
             return UserDefaultsManager().shoppingList
         }
         set {
-            var ud = UserDefaultsManager()
+            let ud = UserDefaultsManager()
             ud.shoppingList = newValue
         }
         
@@ -74,7 +113,7 @@ struct User {
             return UserDefaultsManager().shoppingList
         }
         set {
-            var ud = UserDefaultsManager()
+            let ud = UserDefaultsManager()
             ud.shoppingList = newValue
         }
     }

@@ -8,13 +8,14 @@
 import Foundation
 
 struct ProfileImages {
-    let profileImageName: [String]
+    let profileImageName: [String] = [
+    "profile_0", "profile_1", "profile_2", "profile_3", "profile_4",
+    "profile_5", "profile_6", "profile_7", "profile_8", "profile_9",
+    "profile_10", "profile_11"
+]
     
-    init() {
-        self.profileImageName = [
-            "profile_0", "profile_1", "profile_2", "profile_3", "profile_4",
-            "profile_5", "profile_6", "profile_7", "profile_8", "profile_9",
-            "profile_10", "profile_11"
-        ]
+    var randomProfieImage: String {
+        
+        return profileImageName.randomElement() ?? "profile_0"
     }
 }
