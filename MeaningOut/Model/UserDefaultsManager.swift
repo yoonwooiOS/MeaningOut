@@ -9,7 +9,11 @@ import Foundation
 
 class UserDefaultsManager {
     
-    var nickname:String {
+//    let shared = UserDefaultsManager()
+    
+//    private init() { }
+    
+    var nickname: String {
         get {
             return UserDefaults.standard.string(forKey: "nickname") ?? ""
         } set {
