@@ -9,9 +9,9 @@ import Foundation
 
 class UserDefaultsManager {
     
-//    let shared = UserDefaultsManager()
+    static let shared = UserDefaultsManager()
     
-//    private init() { }
+    private init() { }
     
     var nickname: String {
         get {

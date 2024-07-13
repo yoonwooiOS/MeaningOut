@@ -21,11 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return folder
            
         }()
-       
+        
         ProductTableRepository().addFolderIfNotExists(favoriteAllProductFolder.name)
         let navOnboardingVc = UINavigationController(rootViewController: OnboardingViewController())
         let tabBarVC = TabBarController()
-        if User.nickName.count == 0 {
+        let user = User.shared
+        if user.nickName.count == 0 {
             window?.rootViewController = navOnboardingVc
         } else {
             window?.rootViewController = tabBarVC

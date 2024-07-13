@@ -7,113 +7,70 @@
 
 import Foundation
 
-class Users {
+class User {
+    static let shared = User()
+    let ud = UserDefaultsManager.shared
     
-    static let shared = Users()
-    let ud = UserDefaultsManager()
-    private init() { }
-    
-    var nickName: String? {
-        didSet {
-            saveNickName()
+    private init() {
+        if ud.profileImage.isEmpty {
+            ud.profileImage = ProfileImages().randomProfieImage
         }
     }
     
-    var joinDate: String? {
-        didSet {
-            saveJoinDate()
-        }
-    }
-    
-    var profileImage: String = ProfileImages().randomProfieImage {
-        didSet {
-            saveProfileImage()
-        }
-    }
-    
-    private func saveNickName() {
-        ud.nickname = self.nickName ?? ""
-    }
-    
-    private func saveProfileImage() {
-        ud.profileImage = self.profileImage
-    }
-    
-    private func saveJoinDate() {
-        ud.joinDate = self.joinDate ?? ""
-    }
-}
-
-
-struct User {
-    
-    static var nickName: String {
+    var nickName: String {
         get {
-            return UserDefaultsManager().nickname
+            return ud.nickname
         }
         set {
-            let ud = UserDefaultsManager()
             ud.nickname = newValue
         }
     }
     
-    static var selectedProfileImage: String {
+    var profileImage: String {
         
         get {
-            return UserDefaultsManager().profileImage
+            return ud.profileImage
         }
         set {
-            let ud = UserDefaultsManager()
             ud.profileImage = newValue
         }
         
     }
-    static var savedRecentSearchList: [String] {
-            get {
-                return UserDefaultsManager().recentSearchList
-            }
-            set {
-                let ud = UserDefaultsManager()
-                ud.recentSearchList = newValue
-            }
-        }
-    let isLiked: Bool
-    
-    static var joinDate: String {
-        
+    var savedRecentSearchList: [String] {
         get {
-            return UserDefaultsManager().joinDate
+            return ud.recentSearchList
         }
         set {
-            let ud = UserDefaultsManager()
+            ud.recentSearchList = newValue
+        }
+    }
+    
+    var isLiked: Bool?
+    
+    var joinDate: String {
+        
+        get {
+            return ud.joinDate
+        }
+        set {
             ud.joinDate = newValue
         }
-        
-        
-        
     }
-    static var shoppingList: [String] {
+    var shoppingList: [String] {
         
         get {
-            return UserDefaultsManager().shoppingList
+            return ud.shoppingList
         }
         set {
-            let ud = UserDefaultsManager()
             ud.shoppingList = newValue
         }
-        
-        
-        
     }
-    
-    
-    static var likedProductList: [String] {
+    var likedProductList: [String] {
         
         get {
-            return UserDefaultsManager().shoppingList
+            return ud.shoppingList
         }
         set {
-            let ud = UserDefaultsManager()
             ud.shoppingList = newValue
         }
     }
