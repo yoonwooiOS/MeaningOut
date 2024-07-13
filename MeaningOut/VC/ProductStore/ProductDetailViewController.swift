@@ -20,7 +20,7 @@ final class ProductDetailViewController: BaseViewController {
     let repository = ProductTableRepository()
    
     var product: Item?
-    
+    var user = User.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpWebView()
@@ -93,6 +93,6 @@ final class ProductDetailViewController: BaseViewController {
             navigationItem.rightBarButtonItem?.image = UIImage(named: "like_selected")
         }
         vc.list = likedButtonList
-        User.likedProductList = likedButtonList
+       user.likedProductList = likedButtonList
     }
 }

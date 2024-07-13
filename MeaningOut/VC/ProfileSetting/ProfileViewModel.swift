@@ -9,7 +9,7 @@ import Foundation
 
 class ProfileViewModel {
     
-    var user = Users.shared
+    var user = User.shared
     var inputNickName: Observable<String?> = Observable("")
     var inputSavedButtonClicked: Observable<Void?> = Observable(nil)
     var outPutValid = Observable(false)
@@ -21,7 +21,7 @@ class ProfileViewModel {
             self.validation()
         }
         inputSavedButtonClicked.bind { _ in
-            guard let id = self.inputNickName.value else { return }
+//            guard let id = self.inputNickName.value else { return }
             if self.outPutValid.value {
                 
             }
@@ -66,10 +66,10 @@ class ProfileViewModel {
     }
     
     private func userJoinDate() {
-        let currentDate = Date()
+        let joinDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDateString = dateFormatter.string(from: currentDate)
+        let currentDateString = dateFormatter.string(from: joinDate)
         
         user.joinDate = currentDateString
         

@@ -34,21 +34,30 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
     private let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     
-    let ud = UserDefaultsManager()
+    let ud = UserDefaultsManager.shared
     let viewModel = ProfileViewModel()
-    var user = Users.shared
+    var user = User.shared
     lazy var profileImage = user.profileImage
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationTitle()
         bindData()
+        print(#function, user.profileImage)
         print(profileImage)
     }
     override func viewWillAppear(_ animated: Bool) {
-        profileImage = user.profileImage
+        super.viewWillAppear(animated)
+        if user.profileImage.isEmpty {
+            user.profileImage = ProfileImages().randomProfieImage
+            profileImage = user.profileImage
+        } else {
+            profileImage = user.profileImage
+        }
+        
         profileImageButton.setImage(UIImage(named: profileImage), for: .normal)
         nicknameTextField.text = user.nickName
+        print(#function, user.profileImage)
     }
     func bindData() {
         viewModel.outPutValdationNickName.bind { value in
@@ -127,6 +136,14 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     }
     
     @objc private func completeButtonClicked() {
+        
+        
+        let joinDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let currentDateString = dateFormatter.string(from: joinDate)
+        user.joinDate = currentDateString
+        user.profileImage = profileImage
         
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate

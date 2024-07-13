@@ -11,7 +11,7 @@ final class EditUserNicknameViewController: BaseViewController {
     
     
     private lazy var profileImageButton = {
-        let button = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size)
+        let button = PrimaryColorCircleImageButton(imageName: "\(user.profileImage)", cornerRadius: PrimaryCircleSize.size)
         button.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
         return button
     }()
@@ -27,23 +27,19 @@ final class EditUserNicknameViewController: BaseViewController {
     private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
     private let nicknameStateLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)
     
-    let ud = UserDefaultsManager()
+    let ud = UserDefaultsManager.shared
     let viewModel = ProfileViewModel()
-    
+    let user = User.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         setUPNavigation()
-
-        print(User.selectedProfileImage,"ViewdidLoad")
         bindData()
     }
         
     override func viewWillAppear(_ animated: Bool) {
-        
-        //        ud.profileImage
-        profileImageButton.setImage(UIImage(named: User.selectedProfileImage), for: .normal)
+        super.viewWillAppear(animated)
+        profileImageButton.setImage(UIImage(named: user.profileImage), for: .normal)
         nicknameTextField.text = ud.nickname
-        print(User.selectedProfileImage,"ViewwillApear")
     }
     func bindData() {
         viewModel.outPutValdationNickName.bind { value in

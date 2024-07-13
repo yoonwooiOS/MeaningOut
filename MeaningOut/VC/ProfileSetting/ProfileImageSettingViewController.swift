@@ -23,15 +23,13 @@ final class ProfileImageSettingViewController: BaseViewController {
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
     private let profileImageList = ProfileImages().profileImageName
     
-    var user = Users.shared
+    var user = User.shared
     lazy var profileImage = user.profileImage
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         user.profileImage = profileImage
-        print(profileImage)
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
+       
     }
     override func setUpHierarchy() {
         
@@ -125,9 +123,6 @@ extension ProfileImageSettingViewController: UICollectionViewDelegate, UICollect
         }
         
         collectionView.reloadData()
-        
-//        User.selectedProfileImage = selectedImage
-//        UserDefaults.standard.set(selectedImage, forKey: "profileImage")
     }
 }
 

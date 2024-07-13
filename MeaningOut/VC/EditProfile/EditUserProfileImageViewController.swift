@@ -11,8 +11,8 @@ import SnapKit
 final class EditUserProfileImageViewController: BaseViewController {
     
     
-    let ud = UserDefaultsManager()
-    lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(User.selectedProfileImage)", cornerRadius: PrimaryCircleSize.size) {
+    let ud = UserDefaultsManager.shared
+    lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(user.profileImage)", cornerRadius: PrimaryCircleSize.size) {
         
         didSet {
             collectionView.reloadData()
@@ -32,7 +32,7 @@ final class EditUserProfileImageViewController: BaseViewController {
     
     private let profileImageList = ProfileImages().profileImageName
 
-    
+    var user = User.shared
     var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
@@ -108,7 +108,7 @@ extension EditUserProfileImageViewController: UICollectionViewDelegate, UICollec
         
         cell.setUpCell(data: imageData, image: "")
 
-        if imageData == User.selectedProfileImage {
+        if imageData == user.profileImage {
             cell.profileImageButton.alpha = 1
             cell.profileImageButton.layer.borderWidth = 3
             cell.profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
@@ -129,7 +129,7 @@ extension EditUserProfileImageViewController: UICollectionViewDelegate, UICollec
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileImageSettingCollectionViewCell else {
             return }
         
-        if User.selectedProfileImage != selectedImage {
+        if user.profileImage != selectedImage {
             cell.profileImageButton.alpha = 1
             cell.profileImageButton.layer.borderWidth = 3
             cell.profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
@@ -140,7 +140,7 @@ extension EditUserProfileImageViewController: UICollectionViewDelegate, UICollec
         }
         collectionView.reloadData()
         
-        User.selectedProfileImage = selectedImage
+        user.profileImage = selectedImage
     }
 }
 

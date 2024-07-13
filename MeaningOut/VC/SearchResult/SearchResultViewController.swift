@@ -12,7 +12,7 @@ import RealmSwift
 
 final class SearchResultViewController: BaseViewController {
     
-    var productList = Search(total: 0, items: []) {
+     var productList = Search(total: 0, items: []) {
         didSet {
             collectionView.reloadData()
         }
@@ -24,7 +24,6 @@ final class SearchResultViewController: BaseViewController {
         button.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
         return button
     }()
-    
     lazy var dateSortButton = {
         let button = GrayColorButton(title: "날짜순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
         button.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
@@ -40,29 +39,34 @@ final class SearchResultViewController: BaseViewController {
         button.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
         return button
     }()
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
-    
-    var likedButtonList:[String] = User.likedProductList
+    lazy var collectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: SearchResultViewController.layout())
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.prefetchDataSource = self
+        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
+        collectionView.isUserInteractionEnabled = true
+        return collectionView
+    }()
+    var user = User.shared
+    lazy var likedButtonList:[String] = user.likedProductList
     //
     var page = 1
     let repository = ProductTableRepository()
     
     override func viewWillAppear(_ animated: Bool) {
-        print(likedButtonList, "viewWillAppaer")
+//        print(likedButtonList, "viewWillAppaer")
         
-        likedButtonList = User.likedProductList
+        likedButtonList = user.likedProductList
         collectionView.reloadData()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        print(likedButtonList, "viewdidAppaer")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(likedButtonList, "viewdidLoad")
-        view.backgroundColor = .systemBackground
         // MARK: API호출
         NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
             self.productList = value
+//            dump(self.productList)
+            self.collectionView.reloadData()
             self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
             self.repository.detectRealmURL()
         }
@@ -128,17 +132,8 @@ final class SearchResultViewController: BaseViewController {
             $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
             
         }
-        
     }
     
-    private func setUpCollectionView() {
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.prefetchDataSource = self
-        collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
-        collectionView.isUserInteractionEnabled = true
-    }
     
     private func setUpNavigationTitle() {
         navigationItem.title = userSearchText
@@ -192,11 +187,9 @@ final class SearchResultViewController: BaseViewController {
             } else {
                 self.productList.items.append(contentsOf: value.items)
             }
-            
             if self.page == 1 {
                 self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
             }
-            
             self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
         }
     }
@@ -227,13 +220,14 @@ final class SearchResultViewController: BaseViewController {
 
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(#function, productList.items.count)
         return productList.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         let data = productList.items[indexPath.row]
-        
+        print(productList)
         cell.setUpcell(productData: data)
         cell.likeImageButton.tag = indexPath.row
         cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
@@ -283,7 +277,7 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
             likedButtonList.append(productList.items[sender.tag].productId)
             
         }
-        User.likedProductList = likedButtonList
+        user.likedProductList = likedButtonList
         print(likedButtonList, "버트 클릭")
         collectionView.reloadData()
     }
@@ -293,14 +287,12 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
 //MARK: pagenation
 extension SearchResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        
         let lastPage = productList.total % 30
         for item in indexPaths {
             print(indexPaths, "Prefetch")
             if productList.items.count - 2 == item.row && lastPage != 0 {
                 page += 30
                 callRequest(sortResult: SearchSorted.date.rawValue)
-                
             }
         }
     }

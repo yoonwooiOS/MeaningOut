@@ -38,7 +38,7 @@ class FavoriteViewController: BaseViewController {
     var folder: Folder?
     let repository = ProductTableRepository()
     let realm = try! Realm()
-    
+    var user = User.shared
     override func viewWillAppear(_ animated: Bool) {
         product = repository.fetchAll()
 //        print(folder)
@@ -81,9 +81,9 @@ class FavoriteViewController: BaseViewController {
                 product.remove(at: sender.tag)
                 // UserDefault,
                 UserDefaults.standard.removeObject(forKey: productId)
-                if let removeLikedIndex = User.likedProductList.firstIndex(of: productId) {
-                    User.likedProductList.remove(at: removeLikedIndex)
-                    }
+//                if let removeLikedIndex = .firstIndex(of: productId) {
+//                    user.likedProductList.remove(at: removeLikedIndex)
+//                    }
                 
                 collectionView.reloadData()
             } catch {
