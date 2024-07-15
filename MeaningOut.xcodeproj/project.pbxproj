@@ -21,6 +21,8 @@
 		99245FF42C1B24CF0023A63E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 99245FF32C1B24CF0023A63E /* Base */; };
 		99245FFC2C1B266D0023A63E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 99245FFB2C1B266D0023A63E /* .gitignore */; };
 		99245FFF2C1B26AD0023A63E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99245FFE2C1B26AD0023A63E /* APIKey.swift */; };
+		9939D3142C45097800497A81 /* ProfileImageSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9939D3132C45097800497A81 /* ProfileImageSettingViewModel.swift */; };
+		9939D3152C45564800497A81 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 99E83C492C3C31D10057BB87 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		9973EBA02C1B39070067B97E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EB9F2C1B39070067B97E /* OnboardingViewController.swift */; };
 		9973EBA32C1B3EA40067B97E /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA22C1B3EA40067B97E /* Resource.swift */; };
 		9973EBA52C1B3F020067B97E /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */; };
@@ -72,7 +74,7 @@
 		99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */; };
 		99E83C572C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */; };
 		99E83C612C3D1DD10057BB87 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C602C3D1DD10057BB87 /* Observable.swift */; };
-		99E83C632C3D224E0057BB87 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */; };
+		99E83C632C3D224E0057BB87 /* ProfileNicknameSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C622C3D224E0057BB87 /* ProfileNicknameSettingViewModel.swift */; };
 		99E83C872C3E77390057BB87 /* ReuseIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +85,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				9939D3152C45564800497A81 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +109,7 @@
 		99245FF52C1B24CF0023A63E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99245FFB2C1B266D0023A63E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		99245FFE2C1B26AD0023A63E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		9939D3132C45097800497A81 /* ProfileImageSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageSettingViewModel.swift; sourceTree = "<group>"; };
 		9973EB9F2C1B39070067B97E /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9973EBA22C1B3EA40067B97E /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		9973EBA42C1B3F020067B97E /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -152,7 +156,7 @@
 		99E83C542C3C39D10057BB87 /* FavoriteFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderViewController.swift; sourceTree = "<group>"; };
 		99E83C562C3C3C9E0057BB87 /* FavoriteFolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteFolderTableViewCell.swift; sourceTree = "<group>"; };
 		99E83C602C3D1DD10057BB87 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
-		99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		99E83C622C3D224E0057BB87 /* ProfileNicknameSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNicknameSettingViewModel.swift; sourceTree = "<group>"; };
 		99E83C862C3E77390057BB87 /* ReuseIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -336,7 +340,8 @@
 				9973EBAD2C1BD1B50067B97E /* ProfileNickNameSettingViewController.swift */,
 				9973EBC12C1C27200067B97E /* ProfileImageSettingViewController.swift */,
 				9973EBC32C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift */,
-				99E83C622C3D224E0057BB87 /* ProfileViewModel.swift */,
+				99E83C622C3D224E0057BB87 /* ProfileNicknameSettingViewModel.swift */,
+				9939D3132C45097800497A81 /* ProfileImageSettingViewModel.swift */,
 			);
 			path = ProfileSetting;
 			sourceTree = "<group>";
@@ -468,7 +473,7 @@
 			files = (
 				9905677E2C3BB6610098DB09 /* FavoriteCollectionViewCell.swift in Sources */,
 				9973EBB82C1BE6B00067B97E /* CustomBlackBottomLineTextField.swift in Sources */,
-				99E83C632C3D224E0057BB87 /* ProfileViewModel.swift in Sources */,
+				99E83C632C3D224E0057BB87 /* ProfileNicknameSettingViewModel.swift in Sources */,
 				990567712C3B60C00098DB09 /* FavoriteViewController.swift in Sources */,
 				99E83C552C3C39D10057BB87 /* FavoriteFolderViewController.swift in Sources */,
 				9973EBC42C1C2E7D0067B97E /* ProfileImageSettingCollectionViewCell.swift in Sources */,
@@ -489,6 +494,7 @@
 				99E83C612C3D1DD10057BB87 /* Observable.swift in Sources */,
 				9973EBD62C1EBDDF0067B97E /* CustomSearchTextField.swift in Sources */,
 				9973EBD82C1EC61B0067B97E /* CustomColorLabel.swift in Sources */,
+				9939D3142C45097800497A81 /* ProfileImageSettingViewModel.swift in Sources */,
 				990567782C3BB4C70098DB09 /* BaseViewController.swift in Sources */,
 				9973EBCF2C1EB5A80067B97E /* UserDefaultsManager.swift in Sources */,
 				9973EC382C2171500067B97E /* CustomAssetButton.swift in Sources */,

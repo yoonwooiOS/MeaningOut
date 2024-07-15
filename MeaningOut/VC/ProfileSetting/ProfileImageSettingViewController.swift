@@ -10,7 +10,7 @@ import SnapKit
 
 final class ProfileImageSettingViewController: BaseViewController {
 
-    private lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "\(profileImage)", cornerRadius: PrimaryCircleSize.size)
+    private lazy var userProfileImage = PrimaryColorCircleImageButton(imageName: "", cornerRadius: PrimaryCircleSize.size)
     private lazy var collectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ProfileImageSettingViewController.layout())
         collectionView.delegate = self
@@ -23,13 +23,37 @@ final class ProfileImageSettingViewController: BaseViewController {
     private let cameraImage = PirmaryColorCircleImageView(imageName: "camera.fill")
     private let profileImageList = ProfileImages().profileImageName
     
-    var user = User.shared
-    lazy var profileImage = user.profileImage
+//    var user = User.shared
+    let viewModel = ProfileImageSettingViewModel()
+//    lazy var profileImage = user.profileImage
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        user.profileImage = profileImage
-       
+//        user.profileImage = profileImage
+        viewWillDisAppearBindData()
+        viewModel.viewWillDisappearTrigger.value = ()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewDidLoadBindData()
+        print(self.viewModel.user.profileImage)
+    }
+    func viewDidLoadBindData() {
+        
+        viewModel.profieImage.bind { value in
+            guard let value = value else { return }
+            self.userProfileImage.setImage(UIImage(named: value), for: .normal)
+        }
+        viewModel.inputViewDidloadTrigger.value = ()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function, viewModel.user.profileImage)
+    }
+    func viewWillDisAppearBindData() {
+        viewModel.viewWillDisappearTrigger.value = ()
+        print(#function)
     }
     override func setUpHierarchy() {
         
@@ -90,29 +114,30 @@ final class ProfileImageSettingViewController: BaseViewController {
 
 extension ProfileImageSettingViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return profileImageList.count
+        return viewModel.outputProfileImageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileImageSettingCollectionViewCell.identifier, for: indexPath) as! ProfileImageSettingCollectionViewCell
         
-        let imageData = profileImageList[indexPath.row]
-       
-        cell.setUpCell(data: imageData, image: profileImage)
+        let imageData = viewModel.outputProfileImageList[indexPath.row]
+        
+        cell.setUpCell(data: imageData, image: viewModel.profieImage.value!)
 
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  
+        let selectedImage = viewModel.outputProfileImageList[indexPath.row]
+        viewModel.profieImage.value = viewModel.outputProfileImageList[indexPath.row]
         
-        let selectedImage = profileImageList[indexPath.row]
-        profileImage = profileImageList[indexPath.row]
-        print(profileImage)
         guard let cell = collectionView.cellForItem(at: indexPath) as? ProfileImageSettingCollectionViewCell else {
             return }
-        userProfileImage.setImage(UIImage(named: profileImage), for: .normal)
-        if profileImage == selectedImage {
+        
+        userProfileImage.setImage(UIImage(named: viewModel.profieImage.value!), for: .normal)
+        if viewModel.profieImage.value! == selectedImage {
             cell.profileImageButton.alpha = 1
             cell.profileImageButton.layer.borderWidth = 3
             cell.profileImageButton.layer.borderColor = CustomColor.appPrimaryColor.cgColor
@@ -121,7 +146,8 @@ extension ProfileImageSettingViewController: UICollectionViewDelegate, UICollect
             cell.profileImageButton.layer.borderWidth = 1
             cell.profileImageButton.layer.borderColor = CustomColor.gray.cgColor
         }
-        
+        viewModel.inputSelectedImage.value = selectedImage
+        print(#function, selectedImage)
         collectionView.reloadData()
     }
 }

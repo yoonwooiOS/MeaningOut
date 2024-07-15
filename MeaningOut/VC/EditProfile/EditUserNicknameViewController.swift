@@ -28,7 +28,7 @@ final class EditUserNicknameViewController: BaseViewController {
     private let nicknameStateLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)
     
     let ud = UserDefaultsManager.shared
-    let viewModel = ProfileViewModel()
+    let viewModel = ProfileNicknameSettingViewModel()
     let user = User.shared
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +42,10 @@ final class EditUserNicknameViewController: BaseViewController {
         nicknameTextField.text = ud.nickname
     }
     func bindData() {
-        viewModel.outPutValdationNickName.bind { value in
+        viewModel.outputValdationNickName.bind { value in
             self.nicknameStateLabel.text = value
         }
-        viewModel.outPutValid.bind { value in
+        viewModel.ouputValid.bind { value in
             self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
             
         }
