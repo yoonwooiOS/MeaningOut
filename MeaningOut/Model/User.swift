@@ -12,9 +12,9 @@ class User {
     let ud = UserDefaultsManager.shared
     
     private init() {
-        if ud.profileImage.isEmpty {
-            ud.profileImage = ProfileImages().randomProfieImage
-        }
+//        if ud.profileImage.isEmpty {
+//            ud.profileImage = ProfileImages().randomProfieImage
+//        }
     }
     
     var nickName: String {

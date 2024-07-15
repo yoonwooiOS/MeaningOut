@@ -11,7 +11,7 @@ import SnapKit
 final class ProfileNickNameSettingViewController: BaseViewController {
    
     private lazy var profileImageButton = {
-        let button = PrimaryColorCircleImageButton(imageName: profileImage, cornerRadius: PrimaryCircleSize.size)
+        let button = PrimaryColorCircleImageButton(imageName: "", cornerRadius: PrimaryCircleSize.size)
         button.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
         return button
     }()
@@ -34,43 +34,46 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     private let seperator = CustomColorSeperator(bgColor: CustomColor.black)
     private let nicknameStateLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     
-    let ud = UserDefaultsManager.shared
-    let viewModel = ProfileViewModel()
-    var user = User.shared
-    lazy var profileImage = user.profileImage
+    let viewModel = ProfileNicknameSettingViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavigationTitle()
-        bindData()
-        print(#function, user.profileImage)
-        print(profileImage)
+        viewDidLoadBindData()
+        viewModel.inputViewDidLoadTrigger.value = ()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if user.profileImage.isEmpty {
-            user.profileImage = ProfileImages().randomProfieImage
-            profileImage = user.profileImage
-        } else {
-            profileImage = user.profileImage
-        }
-        
-        profileImageButton.setImage(UIImage(named: profileImage), for: .normal)
-        nicknameTextField.text = user.nickName
-        print(#function, user.profileImage)
+        viewWillAppearBindData()
+        viewModel.inputViewWillAppearTrigger.value = ()
+        print(viewModel.user.profileImage, #function)
     }
-    func bindData() {
-        viewModel.outPutValdationNickName.bind { value in
+    func viewDidLoadBindData() {
+        viewModel.outputValdationNickName.bind { value in
             self.nicknameStateLabel.text = value
         }
-        viewModel.outPutValid.bind { value in
+        viewModel.ouputValid.bind { value in
             self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
             self.completeButton.backgroundColor = value ? CustomColor.appPrimaryColor : .systemGray4
             self.completeButton.isEnabled = value
         }
+        viewModel.outputRandomImage.bind { value in
+            print(#function, "!23123213213123213")
+            self.profileImageButton.setImage(UIImage(named: value), for: .normal)
+            
+        }
+        
+    }
+    func viewWillAppearBindData() {
+        print(#function, "닉네임뷰", viewModel.user.profileImage)
+        
+        viewModel.outputImage.bind { value in
+            guard let value else { return }
+            self.profileImageButton.setImage(UIImage(named: value), for: .normal)
+        }
+        
     }
    
-    
      override func setUpHierarchy() {
          [profileImageButton, cameraImage, nicknameTextField, seperator, nicknameStateLabel,completeButton ].forEach {
              self.view.addSubview($0)
@@ -129,7 +132,8 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     }
    
     @objc private func profileImageButtonClicked() {
-        
+        print(#function)
+        viewModel.inputSavedButtonClicked.value = ()
         
         let vc = ProfileImageSettingViewController()
         navigationController?.pushViewController(vc, animated: true)
@@ -137,13 +141,7 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     
     @objc private func completeButtonClicked() {
         
-        
-        let joinDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDateString = dateFormatter.string(from: joinDate)
-        user.joinDate = currentDateString
-        user.profileImage = profileImage
+        viewModel.inputSavedButtonClicked.value = ()
         
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
