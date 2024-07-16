@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 final class ProfileNickNameSettingViewController: BaseViewController {
-   
     private lazy var profileImageButton = {
         let button = PrimaryColorCircleImageButton(imageName: "", cornerRadius: PrimaryCircleSize.size)
         button.addTarget(self, action: #selector(profileImageButtonClicked), for: .touchUpInside)
@@ -127,6 +126,7 @@ final class ProfileNickNameSettingViewController: BaseViewController {
             
         }
     }
+    
      func setUpNavigationTitle() {
         navigationItem.title = "PROFILE SETTING"
     }

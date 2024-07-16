@@ -19,7 +19,7 @@ class Observable<T> {
         self.value = value
     }
     func bind(closure: @escaping (T) -> Void) {
-        closure(value)
+        closure(value) // 바인드 하는 순간 바로 실행
         self.closure = closure
     }
 }

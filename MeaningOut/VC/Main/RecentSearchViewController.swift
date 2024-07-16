@@ -33,41 +33,43 @@ class RecentSearchViewController: BaseViewController {
     
     private let noRecentImage = RectangleImageView(imageName: "empty")
     private let noRecentLabel = CustomColorLabel(title: "최근 검색어가 없어요", textcolor: CustomColor.black, textAlignmet: .center, fontSize: CustomFont.bold16)
-    private let ud = UserDefaultsManager.shared
-    private var user = User.shared
-    private lazy var userRecentSearchList: [String] = user.savedRecentSearchList
-    {
-        didSet {
-            if userRecentSearchList.isEmpty {
-                recentSearchLabel.isHidden = true
-                tableView.isHidden = true
-                allRemoveButton.isHidden = true
-                noRecentImage.isHidden = false
-                noRecentLabel.isHidden = false
-            } else {
-                recentSearchLabel.isHidden = false
-                tableView.isHidden = false
-                allRemoveButton.isHidden = false
-                
-            }
-            print(userRecentSearchList,"didset")
-            tableView.reloadData()
-            print("테이블 뷰 리로드 됨")
-        
-        }
-    }
+    
+    private let viewModel = RecentSearchViewModel()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUPNavigationtitle()
-        userRecentSearchList = user.savedRecentSearchList
-        print(#function, userRecentSearchList)
+        bindData()
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setUPNavigationtitle()
-    }
+        bindData()
     
+    }
+    func bindData() {
+        viewModel.outputList.bind { _ in
+            self.viewModel.outputList.bind { [weak self] _ in
+                guard let self = self else { return }
+                if self.viewModel.outputList.value.isEmpty {
+                    self.recentSearchLabel.isHidden = true
+                    self.tableView.isHidden = true
+                    self.allRemoveButton.isHidden = true
+                    self.noRecentImage.isHidden = false
+                    self.noRecentLabel.isHidden = false
+                } else {
+                    self.recentSearchLabel.isHidden = false
+                    self.tableView.isHidden = false
+                    self.allRemoveButton.isHidden = false
+                    self.noRecentImage.isHidden = true
+                    self.noRecentLabel.isHidden = true
+                }
+                self.tableView.reloadData()
+            }
+        }
+        
+    }
     override func setUpHierarchy() {
         view.addSubview(searchTextField)
         view.addSubview(seperator)
@@ -117,33 +119,25 @@ class RecentSearchViewController: BaseViewController {
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-            
-//        view.layoutIfNeeded()
-        }
+    }
     
     private func setUPNavigationtitle() {
-        navigationItem.title = "\(ud.nickname)'s MEANING OUT"
+        guard let nickName = viewModel.ouputNavigtaionTitle.value else { return }
+        navigationItem.title = "\(nickName)'s MEANING OUT"
     }
 }
 
 extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-        return userRecentSearchList.count
+        return viewModel.outputList.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier, for: indexPath) as! RecentSearchTableViewCell
+        let data = viewModel.outputList.value[indexPath.row]
         
-        
-        let data = userRecentSearchList[indexPath.row]
-//        print(data,"------")
         cell.setUpCell(data: data)
-        
         cell.removeButton.tag = indexPath.row
-        
         cell.removeButton.addTarget(self, action: #selector(removeButtonClicked), for: .touchUpInside)
         
         return cell
@@ -152,28 +146,22 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let vc = SearchResultViewController()
-        vc.userSearchText = userRecentSearchList[indexPath.row]
+        vc.userSearchText = viewModel.outputList.value[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
         
     }
     
     @objc func removeButtonClicked(sender: UIButton) {
-        userRecentSearchList.remove(at: sender.tag)
-        user.savedRecentSearchList = userRecentSearchList
         
+        viewModel.inputRemoveAtItemIndexPath.value = sender.tag
+        viewModel.inputRemoveAtButtonClicked.value = ()
     }
     
     @objc func allRemoveButtonClicked() {
-        userRecentSearchList.removeAll()
-        user.savedRecentSearchList = userRecentSearchList
-        searchTextField.text = nil
-        
+        viewModel.inputRemoveallButtonClicked.value = ()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let searchText = searchTextField.text else { return  }
-//        print(#function, "배열에 추가")
-//        userRecentSearchList.append(searchText)
-//        print(#function, userRecentSearchList)
+   
         view.endEditing(true)
         
     }
@@ -184,14 +172,11 @@ extension RecentSearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         guard let searchText = searchTextField.text else { return false }
+        viewModel.inputSearchText.value = searchText
+        viewModel.inputTextFieldShouldReturnTrigger.value = ()
         
-//        user.savedRecentSearchList.append(searchText)
-        userRecentSearchList.append(searchText)
-        print(userRecentSearchList)
-        searchTextField.resignFirstResponder()
-        user.savedRecentSearchList = userRecentSearchList
         let vc = SearchResultViewController()
-        vc.userSearchText = searchText
+        vc.userSearchText = viewModel.inputSearchText.value
         navigationController?.pushViewController(vc, animated: true)
         
         return true
