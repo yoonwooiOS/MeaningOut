@@ -41,8 +41,8 @@ final class ProfileImageSettingViewController: BaseViewController {
     }
     func viewDidLoadBindData() {
         
-        viewModel.profieImage.bind { value in
-            guard let value = value else { return }
+        viewModel.profieImage.bind {[weak self] value in
+            guard let value = value, let self else { return }
             self.userProfileImage.setImage(UIImage(named: value), for: .normal)
         }
         viewModel.inputViewDidloadTrigger.value = ()

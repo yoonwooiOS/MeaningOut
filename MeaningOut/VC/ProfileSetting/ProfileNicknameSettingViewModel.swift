@@ -24,26 +24,27 @@ class ProfileNicknameSettingViewModel {
     
     init() {
         
-        inputNickName.bind { _ in
+        inputNickName.bind { [weak self] value in
+            guard value != nil, let self else { return }
             self.validation()
         }
-        inputSavedButtonClicked.bind { _ in
-            guard let id = self.inputNickName.value else { return }
+        inputSavedButtonClicked.bind { [weak self] value in
+            guard let self , let id = self.inputNickName.value else { return }
             if self.ouputValid.value {
                 self.userJoinDate()
                 self.user.nickName = id
             }
         }
-        inputViewWillAppearTrigger.bind { value in
-            guard let value else { return }
+        inputViewWillAppearTrigger.bind { [weak self] value in
+            guard let value, let self else { return }
             print(self.user.profileImage, #function, "123123123")
             print(self.outputImage.value, #function)
             print("123213123")
             self.outputImage.value = self.user.profileImage
         }
         
-        self.inputViewDidLoadTrigger.bind { value in
-            guard let value else { return }
+        self.inputViewDidLoadTrigger.bind { [weak self] value in
+            guard let value, let self else { return }
             self.outputRandomImage.value = ProfileImages().randomProfieImage
             self.user.profileImage = self.outputRandomImage.value
         }

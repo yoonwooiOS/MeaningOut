@@ -11,11 +11,7 @@ class User {
     static let shared = User()
     let ud = UserDefaultsManager.shared
     
-    private init() {
-//        if ud.profileImage.isEmpty {
-//            ud.profileImage = ProfileImages().randomProfieImage
-//        }
-    }
+    private init() { }
     
     var nickName: String {
         get {

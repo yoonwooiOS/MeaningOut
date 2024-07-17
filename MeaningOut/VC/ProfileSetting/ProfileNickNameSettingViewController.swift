@@ -48,16 +48,19 @@ final class ProfileNickNameSettingViewController: BaseViewController {
         print(viewModel.user.profileImage, #function)
     }
     func viewDidLoadBindData() {
-        viewModel.outputValdationNickName.bind { value in
+        viewModel.outputValdationNickName.bind { [weak self] value in
+            guard let self else { return }
             self.nicknameStateLabel.text = value
         }
-        viewModel.ouputValid.bind { value in
+        viewModel.ouputValid.bind { [weak self] value in
+            guard let self else { return }
             self.nicknameStateLabel.textColor = value ? CustomColor.appPrimaryColor : .red
             self.completeButton.backgroundColor = value ? CustomColor.appPrimaryColor : .systemGray4
             self.completeButton.isEnabled = value
         }
-        viewModel.outputRandomImage.bind { value in
+        viewModel.outputRandomImage.bind { [weak self] value in
             print(#function, "!23123213213123213")
+            guard let self else { return }
             self.profileImageButton.setImage(UIImage(named: value), for: .normal)
             
         }
@@ -66,14 +69,14 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     func viewWillAppearBindData() {
         print(#function, "닉네임뷰", viewModel.user.profileImage)
         
-        viewModel.outputImage.bind { value in
-            guard let value else { return }
+        viewModel.outputImage.bind { [weak self] value in
+            guard let value, let self else { return }
             self.profileImageButton.setImage(UIImage(named: value), for: .normal)
         }
         
     }
    
-     override func setUpHierarchy() {
+     override func setUpHierarchy() { 
          [profileImageButton, cameraImage, nicknameTextField, seperator, nicknameStateLabel,completeButton ].forEach {
              self.view.addSubview($0)
          }

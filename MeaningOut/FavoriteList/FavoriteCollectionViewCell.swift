@@ -23,7 +23,7 @@ class FavoriteCollectionViewCell: UICollectionViewCell {
     
     let repository = ProductTableRepository()
     
-    var product: ProductTable?
+    weak var product: ProductTable?
     
     
     override init(frame: CGRect) {

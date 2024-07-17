@@ -49,7 +49,9 @@ class RecentSearchViewController: BaseViewController {
     
     }
     func bindData() {
-        viewModel.outputList.bind { _ in
+        viewModel.outputList.bind { [weak self] _ in
+            guard let self else { return }
+            
             self.viewModel.outputList.bind { [weak self] _ in
                 guard let self = self else { return }
                 if self.viewModel.outputList.value.isEmpty {

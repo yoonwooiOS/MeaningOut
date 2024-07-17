@@ -35,25 +35,25 @@ class RecentSearchViewModel {
             print("저장")
         }
         inputRemoveAtButtonClicked.bind { [weak self] value in
-            guard let value, let self else { return }
+            guard value != nil, let self else { return }
             self.removeSearchItem()
         }
         inputRemoveallButtonClicked.bind { [weak self] value in
-            guard let value, let self else { return }
+            guard value != nil, let self else { return }
             self.removeAllSearchItems()
         }
         ouputNavigtaionTitle.bind { [weak self] value in
-            guard let value, let self else { return }
+            guard value != nil, let self else { return }
             self.ouputNavigtaionTitle.value = user.nickName
         }
     }
     func addSearchItem() {
         
-            var updatedList = outputList.value
+        var updatedList = outputList.value
         updatedList.append(self.inputSearchText.value)
-            outputList.value = updatedList
-            user.savedRecentSearchList = updatedList
-        }
+        outputList.value = updatedList
+        user.savedRecentSearchList = updatedList
+    }
         
         func removeSearchItem() {
             guard let idx = inputRemoveAtItemIndexPath.value else { return }

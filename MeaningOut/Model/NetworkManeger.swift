@@ -10,8 +10,9 @@ import Alamofire
 
 class NetworkManeger {
     
-    
-    static func callRequestNaverSearch(query: String, sortResult: String, page: Int, complitionHandler: @escaping (Search) -> Void) {
+    static let shared = NetworkManeger()
+    private init() {}
+     func callRequestNaverSearch(query: String, sortResult: String, page: Int, complitionHandler: @escaping (Search) -> Void) {
         print(#function)
         let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sorst=\(sortResult)"
         let header: HTTPHeaders = [
@@ -21,11 +22,12 @@ class NetworkManeger {
         
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<500)
-            .responseDecodable(of: Search.self) { response in
+            .responseDecodable(of: Search.self) { [weak self] response in
+                guard let self else { return }
                 print("STATUS: \(response.response?.statusCode ?? 0)")
             switch response.result {
             case .success(let value):
-                complitionHandler(value)
+//                 dump(value)
                 print("Success")
                 
             case .failure(let error):

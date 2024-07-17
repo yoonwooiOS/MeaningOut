@@ -17,12 +17,13 @@ class ProfileImageSettingViewModel {
     var inputViewDidloadTrigger: Observable<Void?> = Observable(nil)
     init() {
         
-        profieImage.bind { _ in
+        profieImage.bind { [weak self] value in
+            guard let self, value != nil else { return }
             self.profieImage.value = self.user.profileImage
         }
         
-        viewWillDisappearTrigger.bind { value in
-            guard let value else { return }
+        viewWillDisappearTrigger.bind { [weak self] value in
+            guard let value, let self else { return }
             guard let image = self.inputSelectedImage.value else {
                 print("디스어피어 트리거")
                 return }
@@ -30,8 +31,8 @@ class ProfileImageSettingViewModel {
             print("디스어피어 트리거",self.user.profileImage )
            
         }
-        inputViewDidloadTrigger.bind { value in
-            guard let value else { return }
+        inputViewDidloadTrigger.bind { [weak self] value in
+            guard let value, let self else { return }
             self.profieImage.value = self.user.profileImage
         }
         

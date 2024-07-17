@@ -53,7 +53,7 @@ final class SearchResultViewController: BaseViewController {
     //
     var page = 1
     let repository = ProductTableRepository()
-    
+    let viewModel = SearchResultViewModel()
     override func viewWillAppear(_ animated: Bool) {
 //        print(likedButtonList, "viewWillAppaer")
         
@@ -63,13 +63,16 @@ final class SearchResultViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // MARK: API호출
-        NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
-            self.productList = value
-//            dump(self.productList)
-            self.collectionView.reloadData()
-            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-            self.repository.detectRealmURL()
-        }
+        viewModel.inputSearchText.value = userSearchText
+        viewModel.inputCallRequestTrigger.value = ()
+        
+//        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
+//            self.productList = value
+////            dump(self.productList)
+//            self.collectionView.reloadData()
+//            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
+//            self.repository.detectRealmURL()
+//        }
         
         setUpNavigationTitle()
     }
@@ -181,7 +184,7 @@ final class SearchResultViewController: BaseViewController {
     
     func callRequest(sortResult: String) {
         
-        NetworkManeger.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
+        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
             if self.page == 1 {
                 self.productList = value
             } else {
@@ -221,14 +224,15 @@ final class SearchResultViewController: BaseViewController {
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(#function, productList.items.count)
-        return productList.items.count
+        
+        return viewModel.outputProductList.value?.items.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
-        let data = productList.items[indexPath.row]
+        let data = viewModel.outputProductList.value?.items[indexPath.row]
         print(productList)
-        cell.setUpcell(productData: data)
+//        cell.setUpcell(productData: data)
         cell.likeImageButton.tag = indexPath.row
         cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
         
