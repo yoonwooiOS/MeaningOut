@@ -58,6 +58,7 @@ final class SearchResultCollectionViewCell: BaseCollectionViewCell {
     }
     
     func setUpcell(productData: Item ) {
+        print(productData)
         let url = URL(string: productData.image)
         let formattedPrice = Int(productData.lprice)?.formatted()
         productImage.kf.setImage(with: url)

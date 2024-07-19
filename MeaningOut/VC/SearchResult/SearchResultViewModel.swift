@@ -11,35 +11,59 @@ import Foundation
 class SearchResultViewModel {
     var inputCallRequestTrigger: Observable<Void?> = Observable(nil)
     var inputSearchText: Observable<String?> = Observable("")
+    var searchResultCollectionViewPrefecthTrigger:  Observable<[IndexPath]?> = Observable(nil)
+    var inputButtonTage: Observable<Int?> = Observable(nil)
+    
+    var filteredButtonTrigger: Observable<Int?> = Observable(nil)
     var outputProductList: Observable<Search?> = Observable(nil)
     
     
     private var page = 1
     
     init() {
-        
+        transfrom()
+    }
+    
+    private func transfrom() {
         inputCallRequestTrigger.bind { [weak self] value in
-            guard let  self, let searchText = self.inputSearchText.value,  value != nil else { return }
-            self.callRequest(query: searchText, sortResult: SearchSorted.sim.rawValue, page: self.page)
+            guard let  self, let searchText = self.inputSearchText.value, value != nil else { return }
+            self.callRequest(searchText: searchText, page: page, srotResult: SearchSorted.sim.rawValue)
+        }
+        
+        searchResultCollectionViewPrefecthTrigger.bind { [weak self] value  in
+            
+            guard let value, let self ,let searchText = self.inputSearchText.value,
+            let totalProuctItem = self.outputProductList.value?.total,
+            let productList = self.outputProductList.value?.items else { return }
+            print("페이지네이션2")
+            let lastPage = totalProuctItem % 30
+            for item in value {
+                if productList.count - 4 == item.row && lastPage != 0 {
+                    self.page += 30
+                    print(self.page)
+                    self.callRequest(searchText: searchText, page: self.page, srotResult: SearchSorted.asc.rawValue)
+                }
+            }
+        }
+        
+        filteredButtonTrigger.bind { [weak self] value in
+            guard let value, let self else { return }
             
             
         }
-        
     }
-    
-    
-    
-    
-    func callRequest(query: String, sortResult: String, page: Int) {
-        //input - query: userText, sortReuslt : enum, page: page
-        NetworkManeger.shared.callRequestNaverSearch(query: query, sortResult: sortResult, page: page) { value in
-            print(value,#function)
-            self.outputProductList.value = value 
-           
+
+    private func callRequest(searchText: String, page: Int, srotResult: String) {
+        NetworkManeger.shared.callRequestNaverSearch(query: searchText, sortResult:  srotResult, page: self.page) { value in
+            if self.page == 1 {
+                self.outputProductList.value = value
+                print(#function,"1231232131231231231")
+            } else {
+               
+                self.outputProductList.value?.items.append(contentsOf: value.items)
+            }
            
         }
-        
     }
-   
     
 }

@@ -10,6 +10,14 @@ import SnapKit
 import Alamofire
 import RealmSwift
 
+enum filterdButton: Int {
+    case accuracy
+    case date
+    case asc
+    case dsc
+    
+}
+
 final class SearchResultViewController: BaseViewController {
     
      var productList = Search(total: 0, items: []) {
@@ -21,21 +29,26 @@ final class SearchResultViewController: BaseViewController {
     let searchResultLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     lazy var accuracySortButton = {
         let button = GrayColorButton(title: "정확도", backgroundColor: CustomColor.gray, tintcolor: CustomColor.white)
+        button.tag = filterdButton.accuracy.rawValue
         button.addTarget(self, action: #selector(accuracySortButtonclicked), for: .touchUpInside)
         return button
     }()
     lazy var dateSortButton = {
         let button = GrayColorButton(title: "날짜순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.tag = filterdButton.date.rawValue
         button.addTarget(self, action: #selector(dateSortButtonClicked), for: .touchUpInside)
+        
         return button
     }()
     lazy var highPriceButton = {
         let button = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.tag = filterdButton.asc.rawValue
         button.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
         return button
     }()
     lazy var lowPriceButton = {
         let button = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
+        button.tag = filterdButton.dsc.rawValue
         button.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
         return button
     }()
@@ -63,19 +76,21 @@ final class SearchResultViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // MARK: API호출
-        viewModel.inputSearchText.value = userSearchText
-        viewModel.inputCallRequestTrigger.value = ()
-        
-//        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult:  SearchSorted.sim.rawValue, page: page) { value in
-//            self.productList = value
-////            dump(self.productList)
-//            self.collectionView.reloadData()
-//            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-//            self.repository.detectRealmURL()
-//        }
+        print(userSearchText)
+        bindData()
         
         setUpNavigationTitle()
     }
+    private func bindData() {
+        viewModel.inputSearchText.value = userSearchText
+        viewModel.inputCallRequestTrigger.value = ()
+        
+        viewModel.outputProductList.bind { [weak self] value in
+            guard let self, value != nil else { return }
+            self.collectionView.reloadData()
+        }
+    }
+    
     override func setUpHierarchy() {
         
         view.addSubview(searchResultLabel)
@@ -160,8 +175,9 @@ final class SearchResultViewController: BaseViewController {
     @objc func accuracySortButtonclicked() {
         print(#function)
         page = 1
+        viewModel.filteredButtonTrigger.value = accuracySortButton.tag
         
-        callRequest(sortResult: SearchSorted.sim.rawValue)
+//        callRequest(sortResult: SearchSorted.sim.rawValue)
         accuracySortButton.grayButton()
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
@@ -171,9 +187,9 @@ final class SearchResultViewController: BaseViewController {
     }
     
     @objc func dateSortButtonClicked() {
-        
-        page = 1
-        callRequest(sortResult: SearchSorted.date.rawValue)
+        viewModel.filteredButtonTrigger.value = dateSortButton.tag
+       
+//        callRequest(sortResult: SearchSorted.date.rawValue)
         
         accuracySortButton.whiteButton()
         dateSortButton.grayButton()
@@ -182,25 +198,29 @@ final class SearchResultViewController: BaseViewController {
         collectionView.reloadData()
     }
     
-    func callRequest(sortResult: String) {
+//    func callRequest(sortResult: String) {
+//        
+//        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
+//            if self.page == 1 {
+//                self.productList = value
+//             } else {
+//                self.productList.items.append(contentsOf: value.items)
+//            }
+//            if self.page == 1 {
+//                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+//            }
+//            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
+//        }
+//    }
+    func sorteButton() {
         
-        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
-            if self.page == 1 {
-                self.productList = value
-            } else {
-                self.productList.items.append(contentsOf: value.items)
-            }
-            if self.page == 1 {
-                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-            }
-            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-        }
+        
     }
     
     @objc func highPriceButtonClicked() {
-        
+        viewModel.filteredButtonTrigger.value = highPriceButton.tag
         page = 1
-        callRequest(sortResult: SearchSorted.asc.rawValue)
+//        callRequest(sortResult: SearchSorted.asc.rawValue)
         accuracySortButton.whiteButton()
         dateSortButton.whiteButton()
         highPriceButton.grayButton()
@@ -209,9 +229,9 @@ final class SearchResultViewController: BaseViewController {
     }
     
     @objc func lowPriceButtonClicked() {
-        
+        viewModel.filteredButtonTrigger.value = lowPriceButton.tag
         page = 1
-        callRequest(sortResult: SearchSorted.dsc.rawValue)
+//        callRequest(sortResult: SearchSorted.dsc.rawValue)
         accuracySortButton.whiteButton()
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
@@ -224,15 +244,15 @@ final class SearchResultViewController: BaseViewController {
 extension SearchResultViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(#function, productList.items.count)
-        
-        return viewModel.outputProductList.value?.items.count ?? 0
+        guard let productList = viewModel.outputProductList.value else { return 0}
+        return productList.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
-        let data = viewModel.outputProductList.value?.items[indexPath.row]
-        print(productList)
-//        cell.setUpcell(productData: data)
+        guard let data = viewModel.outputProductList.value?.items[indexPath.row] else { return cell}
+       
+        cell.setUpcell(productData: data)
         cell.likeImageButton.tag = indexPath.row
         cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
         
@@ -240,21 +260,16 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let data = productList.items[indexPath.row]
+        guard let data = viewModel.outputProductList.value?.items[indexPath.row] else { return }
+      
         let vc = ProductDetailViewController()
-        vc.siteURL = data.link
-        vc.storeName = data.mallName
-        vc.productId = data.productId
-        
-        vc.likedButtonList = likedButtonList
         vc.product = data
-        print(likedButtonList, "cell")
         navigationController?.pushViewController(vc, animated: true)
         
         
     }
     
-    //MARK: 즐겨찾기 기능 추가 예정
+    //MARK: 즐겨찾기 기능
     @objc func likeImageButtonClicekd(sender: UIButton) {
         let product = productList.items[sender.tag]
         let realm = try! Realm()
@@ -291,14 +306,8 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
 //MARK: pagenation
 extension SearchResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        let lastPage = productList.total % 30
-        for item in indexPaths {
-            print(indexPaths, "Prefetch")
-            if productList.items.count - 2 == item.row && lastPage != 0 {
-                page += 30
-                callRequest(sortResult: SearchSorted.date.rawValue)
-            }
-        }
+        viewModel.searchResultCollectionViewPrefecthTrigger.value = indexPaths
+
     }
 }
 
