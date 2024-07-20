@@ -21,6 +21,7 @@ final class EditProfileViewController: BaseViewController {
         tableview.dataSource = self
         tableview.delegate = self
         tableview.register(EditProfileTableViewCell.self, forCellReuseIdentifier: EditProfileTableViewCell.identifier)
+        
         tableview.rowHeight = 40
         return tableview
     }()

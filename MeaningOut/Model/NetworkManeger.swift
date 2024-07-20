@@ -22,12 +22,13 @@ class NetworkManeger {
         
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<500)
-            .responseDecodable(of: Search.self) { [weak self] response in
-                guard let self else { return }
+            .responseDecodable(of: Search.self) { response in
+                
                 print("STATUS: \(response.response?.statusCode ?? 0)")
             switch response.result {
             case .success(let value):
 //                 dump(value)
+                complitionHandler(value)
                 print("Success")
                 
             case .failure(let error):

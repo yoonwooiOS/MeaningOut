@@ -13,13 +13,13 @@ import RealmSwift
 final class ProductDetailViewController: BaseViewController {
     
     let webView = WKWebView()
-    var storeName: String?
-    var siteURL:String?
-    var productId: String?
-    var likedButtonList: [String]? 
+
+    var likedButtonList: [String]?
+    var product: Item?
+    
     let repository = ProductTableRepository()
    
-    var product: Item?
+   
     var user = User.shared
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ final class ProductDetailViewController: BaseViewController {
     }
     
     private func setUpWebView() {
-        guard let siteurl = siteURL else { return }
+        guard let siteurl = product?.link else { return }
         
         let url = URL(string: siteurl)
         guard let urlsString = url else { return }
@@ -49,10 +49,10 @@ final class ProductDetailViewController: BaseViewController {
     
     private func setUpNavigation() {
         
-        navigationItem.title = storeName
+        navigationItem.title = product?.mallName
         navigationItem.backBarButtonItem?.tintColor = .black
         
-        guard let id = productId else { return }
+        guard let id = product?.productId else { return }
         let likeImage = UserDefaults.standard.bool(forKey: id) ? "like_selected" : "like_unselected"
         let rigthBarButtonItem = UIBarButtonItem(image: UIImage(named: likeImage) , style: .plain, target: self, action: #selector(rightBarButtonITemTapped))
         rigthBarButtonItem.tintColor = CustomColor.black
@@ -78,8 +78,9 @@ final class ProductDetailViewController: BaseViewController {
             repository.deleteItem(result.first!)
         }
         
-        guard var likedButtonList = likedButtonList, let productId = productId else { return }
+        guard var likedButtonList = likedButtonList else { return }
         let vc = EditProfileViewController()
+        let productId = product.productId
         if UserDefaults.standard.bool(forKey: productId) {
             
             UserDefaults.standard.set(false, forKey: productId)

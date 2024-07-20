@@ -11,7 +11,7 @@ import SnapKit
 
 final class EditProfileTableViewCell: BaseTableViewCell {
 
-    static let identifier = "EditProfileTableViewCell"
+    
     
     let settingLabel = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular14)
     

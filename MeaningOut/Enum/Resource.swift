@@ -102,10 +102,18 @@ enum NicknameStates: Error {
 
                                                   
 enum SearchSorted: String {
-    
     case sim 
     case date
     case asc
     case dsc
     
+}
+
+enum filterdButton: Int {
+    case accuracy
+    case date
+    case asc
+    case dsc
+    
+
 }

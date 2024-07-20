@@ -23,7 +23,11 @@ class ProfileNicknameSettingViewModel {
     var outputImage:Observable<String?> = Observable(nil)
     
     init() {
+        transform()
         
+    }
+    
+    private func transform() {
         inputNickName.bind { [weak self] value in
             guard value != nil, let self else { return }
             self.validation()
@@ -47,16 +51,15 @@ class ProfileNicknameSettingViewModel {
             guard let value, let self else { return }
             self.outputRandomImage.value = ProfileImages().randomProfieImage
             self.user.profileImage = self.outputRandomImage.value
+            
         }
-//        self.inputProfileImageButtonclicked.bind { _ in
-//            self.user.profileImage = self.outputRandomImage.value
-//           
-//        }
+        
     }
     
      var isFormValid: Bool {
             return ouputValid.value
         }
+    
     private func validation()  {
         guard let id = inputNickName.value else { return }
         let regexNumber = "[0-9]"

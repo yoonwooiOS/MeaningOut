@@ -12,14 +12,14 @@ class SearchResultViewModel {
     var inputCallRequestTrigger: Observable<Void?> = Observable(nil)
     var inputSearchText: Observable<String?> = Observable("")
     var searchResultCollectionViewPrefecthTrigger:  Observable<[IndexPath]?> = Observable(nil)
-    var inputButtonTage: Observable<Int?> = Observable(nil)
+    var inputButtonTag: Observable<Int?> = Observable(nil)
+    var inputfiltetedButtonTag: Observable<Int?> = Observable(nil)
     
-    var filteredButtonTrigger: Observable<Int?> = Observable(nil)
+    var filteredButtonTrigger: Observable<Void?> = Observable(nil)
     var outputProductList: Observable<Search?> = Observable(nil)
-    
-    
-    private var page = 1
-    
+    var outputTotalSeachResultCount: Observable<String?> = Observable("")
+    var page = 1
+    var sortResult: String?
     init() {
         transfrom()
     }
@@ -40,29 +40,44 @@ class SearchResultViewModel {
             for item in value {
                 if productList.count - 4 == item.row && lastPage != 0 {
                     self.page += 30
-                    print(self.page)
                     self.callRequest(searchText: searchText, page: self.page, srotResult: SearchSorted.asc.rawValue)
                 }
             }
         }
         
         filteredButtonTrigger.bind { [weak self] value in
-            guard let value, let self else { return }
+            guard let value, let self, let searchText = self.inputSearchText.value, let sortResult = self.sortResult else { return }
+            print(self.inputButtonTag.value)
             
             
+           
         }
     }
-
+//    self.page = 1
+//    switch value {
+//    case 0:
+//        self.sortResult = SearchSorted.sim.rawValue
+//    case 1:
+//        self.sortResult = SearchSorted.date.rawValue
+//    case 2:
+//        self.sortResult = SearchSorted.asc.rawValue
+//    case 3:
+//        self.sortResult = SearchSorted.dsc.rawValue
+//    default:
+//        self.sortResult = SearchSorted.sim.rawValue
+//    }
+//    print(#function,sortResult)
+//    
+//    callRequest(searchText: searchText, page: self.page, srotResult: sortResult)
     private func callRequest(searchText: String, page: Int, srotResult: String) {
         NetworkManeger.shared.callRequestNaverSearch(query: searchText, sortResult:  srotResult, page: self.page) { value in
             if self.page == 1 {
                 self.outputProductList.value = value
-                print(#function,"1231232131231231231")
             } else {
                
                 self.outputProductList.value?.items.append(contentsOf: value.items)
             }
-           
+            self.outputTotalSeachResultCount.value = value.total.formatted()
         }
     }
     
