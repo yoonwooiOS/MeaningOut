@@ -363,9 +363,9 @@
 		9973EBE52C1FAE350067B97E /* SearchResult */ = {
 			isa = PBXGroup;
 			children = (
+				9939D3232C466E3A00497A81 /* SearchResultViewModel.swift */,
 				9973EBE62C1FAE4E0067B97E /* SearchResultViewController.swift */,
 				9973EC1A2C2002F50067B97E /* SearchResultCollectionViewCell.swift */,
-				9939D3232C466E3A00497A81 /* SearchResultViewModel.swift */,
 			);
 			path = SearchResult;
 			sourceTree = "<group>";

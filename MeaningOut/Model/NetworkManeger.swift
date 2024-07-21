@@ -13,8 +13,8 @@ class NetworkManeger {
     static let shared = NetworkManeger()
     private init() {}
      func callRequestNaverSearch(query: String, sortResult: String, page: Int, complitionHandler: @escaping (Search) -> Void) {
-        print(#function)
-        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sorst=\(sortResult)"
+        print(#function, sortResult)
+        let url = "https://openapi.naver.com/v1/search/shop.json?query=\(query)&display=30&start=\(page)&sort=\(sortResult)"
         let header: HTTPHeaders = [
             "X-Naver-Client-Id" : APIKey.naverID,
             "X-Naver-Client-Secret" : APIKey.naverSecret
