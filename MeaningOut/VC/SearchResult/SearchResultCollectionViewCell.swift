@@ -9,16 +9,13 @@ import UIKit
 import Kingfisher
 
 final class SearchResultCollectionViewCell: BaseCollectionViewCell {
-    
     private var productImage = SearchCellImageView(imageURL: "")
     var likeImageButton = CustomAssetButton(imageName: "like_unselected", bgColor: CustomColor.blackAlpah50)
     private let storeName = CustomColorLabel(title: "", textcolor: CustomColor.lightGray, textAlignmet: .left, fontSize: CustomFont.regular13)
     private let productName = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.regular13)
     private let productPrice = CustomColorLabel(title: "", textcolor: CustomColor.black, textAlignmet: .left, fontSize: CustomFont.bold15)
     
-
     override func setUpHierarchy() {
-        
         contentView.addSubview(storeName)
         contentView.addSubview(productName)
         contentView.addSubview(productPrice)
@@ -27,24 +24,20 @@ final class SearchResultCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setUpLayout() {
-        
         productImage.snp.makeConstraints {
             $0.top.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)
             $0.height.equalTo(200)
         }
-        
         storeName.snp.makeConstraints {
             $0.top.equalTo(productImage.snp.bottom).offset(4)
             $0.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)
             $0.height.equalTo(20)
         }
-        
         productName.snp.makeConstraints {
             $0.top.equalTo(storeName.snp.bottom)
             $0.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)
             $0.height.equalTo(40)
         }
-        
         productPrice.snp.makeConstraints {
             $0.top.equalTo(productName.snp.bottom)
             $0.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(4)

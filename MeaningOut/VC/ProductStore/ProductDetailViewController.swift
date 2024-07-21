@@ -82,7 +82,6 @@ final class ProductDetailViewController: BaseViewController {
         let vc = EditProfileViewController()
         let productId = product.productId
         if UserDefaults.standard.bool(forKey: productId) {
-            
             UserDefaults.standard.set(false, forKey: productId)
             if let removeLikedImage = likedButtonList.firstIndex(of: productId) {
                 likedButtonList.remove(at: removeLikedImage)

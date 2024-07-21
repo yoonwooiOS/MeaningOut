@@ -54,8 +54,6 @@ class ProductTableRepository {
                 print("상품 삭제 중 오류 발생: \(error)")
             }
         }
-
-    
     func removeFolder(_ folder: Folder) {
             do {
                 try realm.write {

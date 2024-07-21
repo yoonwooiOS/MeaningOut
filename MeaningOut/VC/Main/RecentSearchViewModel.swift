@@ -12,7 +12,6 @@ class RecentSearchViewModel {
     
     var inputTextFieldShouldReturnTrigger: Observable<Void?> = Observable(nil)
     var inputSearchText: Observable<String> = Observable("")
-    
     var inputRemoveAtButtonClicked: Observable<Void?> = Observable(nil)
     var inputRemoveAtItemIndexPath: Observable<Int?> = Observable(nil)
     var inputRemoveallButtonClicked: Observable<Void?> = Observable(nil)
@@ -20,9 +19,7 @@ class RecentSearchViewModel {
     var outputList: Observable<[String]> = Observable([""])
     var ouputNavigtaionTitle: Observable<String?> = Observable("")
     
-    
     init() {
-            
         outputList.bind { [weak self] _ in
             guard let self else { return }
             self.outputList.value = self.user.savedRecentSearchList
@@ -47,25 +44,25 @@ class RecentSearchViewModel {
             self.ouputNavigtaionTitle.value = user.nickName
         }
     }
+    
     func addSearchItem() {
-        
         var updatedList = outputList.value
         updatedList.append(self.inputSearchText.value)
         outputList.value = updatedList
         user.savedRecentSearchList = updatedList
     }
-        
-        func removeSearchItem() {
-            guard let idx = inputRemoveAtItemIndexPath.value else { return }
-            var updatedList = outputList.value
-            updatedList.remove(at: idx)
-            outputList.value = updatedList
-            user.savedRecentSearchList = updatedList
-        }
-        
-        func removeAllSearchItems() {
-            outputList.value.removeAll()
-            user.savedRecentSearchList.removeAll()
-        }
+    
+    func removeSearchItem() {
+        guard let idx = inputRemoveAtItemIndexPath.value else { return }
+        var updatedList = outputList.value
+        updatedList.remove(at: idx)
+        outputList.value = updatedList
+        user.savedRecentSearchList = updatedList
     }
+    
+    func removeAllSearchItems() {
+        outputList.value.removeAll()
+        user.savedRecentSearchList.removeAll()
+    }
+}
 

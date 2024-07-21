@@ -83,50 +83,34 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     }
     override func setUpLayout() {
         profileImageButton.snp.makeConstraints {
-            
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
             $0.size.equalTo(PrimaryCircleSize.size)
-            
         }
         cameraImage.snp.makeConstraints {
-            
             $0.trailing.equalTo(profileImageButton.snp.trailing)
             $0.bottom.equalTo(profileImageButton.safeAreaLayoutGuide)
             $0.size.equalTo(PrimaryCircleSize.size / 3)
-            
         }
-        
         nicknameTextField.snp.makeConstraints {
-            
             $0.top.equalTo(profileImageButton.snp.bottom).offset(16)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(28)
             $0.height.equalTo(40)
-            
         }
-        
         seperator.snp.makeConstraints {
-            
             $0.top.equalTo(nicknameTextField.snp.bottom)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(28)
             $0.height.equalTo(1)
-            
         }
-        
         nicknameStateLabel.snp.makeConstraints {
-            
             $0.top.equalTo(nicknameTextField.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(28)
             $0.height.equalTo(20)
-            
         }
-        
         completeButton.snp.makeConstraints {
-            
             $0.top.equalTo(nicknameStateLabel.snp.bottom).offset(8)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(28)
             $0.height.equalTo(40)
-            
         }
     }
     
@@ -135,21 +119,16 @@ final class ProfileNickNameSettingViewController: BaseViewController {
     }
    
     @objc private func profileImageButtonClicked() {
-        print(#function)
         viewModel.inputSavedButtonClicked.value = ()
-        
         let vc = ProfileImageSettingViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func completeButtonClicked() {
-        
         viewModel.inputSavedButtonClicked.value = ()
-        
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         let tabBar = TabBarController()
-        
         sceneDelegate?.window?.rootViewController = tabBar
         sceneDelegate?.window?.makeKeyAndVisible()
     }
@@ -157,7 +136,6 @@ final class ProfileNickNameSettingViewController: BaseViewController {
 
 extension ProfileNickNameSettingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         view.endEditing(true)
     }
     @objc private func textFieldDidChange(_ textField: UITextField) {

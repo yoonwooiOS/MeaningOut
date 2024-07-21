@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecentSearchViewController: BaseViewController {
+final class RecentSearchViewController: BaseViewController {
     
     private lazy var searchTextField = {
         let textField = CustomSearchTextField(placeholderText: "검색어를 입력하세요")
@@ -48,10 +48,9 @@ class RecentSearchViewController: BaseViewController {
         bindData()
     
     }
-    func bindData() {
+    private func bindData() {
         viewModel.outputList.bind { [weak self] _ in
             guard let self else { return }
-            
             self.viewModel.outputList.bind { [weak self] _ in
                 guard let self = self else { return }
                 if self.viewModel.outputList.value.isEmpty {
@@ -84,13 +83,10 @@ class RecentSearchViewController: BaseViewController {
     
     override func setUpLayout() {
         searchTextField.snp.makeConstraints {
-            
             $0.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(40)
         }
-        
         seperator.snp.makeConstraints {
-            
             $0.top.equalTo(searchTextField.snp.bottom).offset(16)
             $0.horizontalEdges.equalTo(view).inset(2)
             $0.height.equalTo(1)
@@ -105,7 +101,6 @@ class RecentSearchViewController: BaseViewController {
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(30)
         }
-        
         recentSearchLabel.snp.makeConstraints {
             $0.top.equalTo(seperator.snp.bottom).offset(16)
             $0.leading.equalTo(view.safeAreaLayoutGuide).offset(16)
@@ -134,27 +129,23 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
         return viewModel.outputList.value.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchTableViewCell.identifier, for: indexPath) as! RecentSearchTableViewCell
         let data = viewModel.outputList.value[indexPath.row]
         
         cell.setUpCell(data: data)
         cell.removeButton.tag = indexPath.row
         cell.removeButton.addTarget(self, action: #selector(removeButtonClicked), for: .touchUpInside)
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let vc = SearchResultViewController()
         vc.userSearchText = viewModel.outputList.value[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     @objc func removeButtonClicked(sender: UIButton) {
-        
         viewModel.inputRemoveAtItemIndexPath.value = sender.tag
         viewModel.inputRemoveAtButtonClicked.value = ()
     }
@@ -162,25 +153,21 @@ extension RecentSearchViewController: UITableViewDelegate, UITableViewDataSource
     @objc func allRemoveButtonClicked() {
         viewModel.inputRemoveallButtonClicked.value = ()
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-   
         view.endEditing(true)
-        
     }
 }
 
 extension RecentSearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         guard let searchText = searchTextField.text else { return false }
         viewModel.inputSearchText.value = searchText
         viewModel.inputTextFieldShouldReturnTrigger.value = ()
-        
         let vc = SearchResultViewController()
         vc.userSearchText = viewModel.inputSearchText.value
         navigationController?.pushViewController(vc, animated: true)
-        
         return true
     }
     

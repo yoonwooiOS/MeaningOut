@@ -20,7 +20,9 @@ class SearchResultViewModel {
     var outputProductList: Observable<Search?> = Observable(nil)
     var outputTotalSeachResultCount: Observable<String?> = Observable("")
     var page = 1
+    lazy var ouputPage: Observable<Int?> = Observable(self.page)
     var sortResult: String = "sim"
+    
     init() {
         transfrom()
     }
@@ -28,16 +30,14 @@ class SearchResultViewModel {
     private func transfrom() {
         inputCallRequestTrigger.bind { [weak self] value in
             guard let  self, let searchText = self.inputSearchText.value, value != nil else { return }
-            
             self.callRequest(searchText: searchText, page: page, srotResult: SearchSorted.sim.rawValue)
         }
         
         searchResultCollectionViewPrefecthTrigger.bind { [weak self] value  in
-            
             guard let value, let self ,let searchText = self.inputSearchText.value,
             let totalProuctItem = self.outputProductList.value?.total,
             let productList = self.outputProductList.value?.items else { return }
-            print("페이지네이션2")
+            
             let lastPage = totalProuctItem % 30
             for item in value {
                 if productList.count - 4 == item.row && lastPage != 0 {
@@ -50,11 +50,10 @@ class SearchResultViewModel {
         inputButtonTag.bind { [weak self] value in
             print(#function)
             guard let value, let self, let searchText = self.inputSearchText.value else {
-               print("inputButtonTag error")
+                print("inputButtonTag error")
                 return }
             self.page = 1
                 switch value {
-                   
                 case 0:
                     self.sortResult = SearchSorted.sim.rawValue
                     print("Case0")
@@ -72,32 +71,12 @@ class SearchResultViewModel {
                     self.sortResult = SearchSorted.sim.rawValue
                     print("No Case !!!!!!!!!!!!!!")
                 }
-                print(#function,sortResult)
             self.ouputButtonTag.value = value
-            print("Calling callRequest with searchText: \(searchText), page: \(page), sortResult: \(sortResult)")
-
             callRequest(searchText: searchText, page: page, srotResult: sortResult)
         }
     }
-//    self.page = 1
-//    switch value {
-//    case 0:
-//        self.sortResult = SearchSorted.sim.rawValue
-//    case 1:
-//        self.sortResult = SearchSorted.date.rawValue
-//    case 2:
-//        self.sortResult = SearchSorted.asc.rawValue
-//    case 3:
-//        self.sortResult = SearchSorted.dsc.rawValue
-//    default:
-//        self.sortResult = SearchSorted.sim.rawValue
-//    }
-//    print(#function,sortResult)
-//    
-//    callRequest(searchText: searchText, page: self.page, srotResult: sortResult)
+    
     private func callRequest(searchText: String, page: Int, srotResult: String) {
-        print("callRequest called with searchText: \(searchText), page: \(page), sortResult: \(srotResult)")
-
         NetworkManeger.shared.callRequestNaverSearch(query: searchText, sortResult:  self.sortResult, page: self.page) { value in
             print(#function, self.sortResult, "dsadasdsa")
             if self.page == 1 {
@@ -106,8 +85,7 @@ class SearchResultViewModel {
                 self.outputProductList.value?.items.append(contentsOf: value.items)
             }
             self.outputTotalSeachResultCount.value = value.total.formatted()
-            print("outputProductList updated with value: \(String(describing: self.outputProductList.value))")
-
+            self.ouputPage.value = self.page
         }
     }
     

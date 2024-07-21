@@ -36,13 +36,13 @@ final class OnboardingViewController: BaseViewController {
             $0.height.equalTo(360)
         }
         startButton.snp.makeConstraints {
-            
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(32)
             $0.centerX.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(40)
         }
     }
+    
     @objc private func startButtonClicked() {
             navigationController?.pushViewController(ProfileNickNameSettingViewController(), animated: true)
     }

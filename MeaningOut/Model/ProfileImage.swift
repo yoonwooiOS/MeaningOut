@@ -13,9 +13,7 @@ struct ProfileImages {
     "profile_5", "profile_6", "profile_7", "profile_8", "profile_9",
     "profile_10", "profile_11"
 ]
-    
     var randomProfieImage: String {
-        
         return profileImageName.randomElement() ?? "profile_0"
     }
 }

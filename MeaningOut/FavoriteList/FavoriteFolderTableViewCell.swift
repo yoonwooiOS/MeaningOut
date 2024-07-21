@@ -15,7 +15,6 @@ class FavoriteFolderTableViewCell: BaseTableViewCell {
         label.backgroundColor = .white
         return label
     }()
-    
     override func setUpHierarchy() {
         contentView.addSubview(folderLabel)
     }

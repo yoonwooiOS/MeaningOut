@@ -11,13 +11,7 @@ import Alamofire
 import RealmSwift
 
 final class SearchResultViewController: BaseViewController {
-    
-    //     var productList = Search(total: 0, items: []) {
-    //        didSet {
-    //            collectionView.reloadData()
-    //        }
-    //    }
-     var userSearchText:String = ""
+    var userSearchText:String = ""
     private let searchResultLabel = PrimaryColorLabel(title: "", textAlignmet: .left)
     private lazy var accuracySortButton = {
         let button = GrayColorButton(title: "정확도", backgroundColor: CustomColor.gray, tintcolor: CustomColor.white)
@@ -34,13 +28,13 @@ final class SearchResultViewController: BaseViewController {
     }()
     private lazy var highPriceButton = {
         let button = GrayColorButton(title: "가격높은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
-        button.tag = filterdButton.asc.rawValue
+        button.tag = filterdButton.dsc.rawValue
         button.addTarget(self, action: #selector(highPriceButtonClicked), for: .touchUpInside)
         return button
     }()
     private lazy var lowPriceButton = {
         let button = GrayColorButton(title: "가격낮은순", backgroundColor: CustomColor.white, tintcolor: CustomColor.black)
-        button.tag = filterdButton.dsc.rawValue
+        button.tag = filterdButton.asc.rawValue
         button.addTarget(self, action: #selector(lowPriceButtonClicked), for: .touchUpInside)
         return button
     }()
@@ -60,7 +54,6 @@ final class SearchResultViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         likedButtonList = user.likedProductList
-        bindData()
         collectionView.reloadData()
     }
     override func viewDidLoad() {
@@ -79,12 +72,13 @@ final class SearchResultViewController: BaseViewController {
         viewModel.outputTotalSeachResultCount.bind { [weak self] value in
             guard let self, let value else { return }
             self.searchResultLabel.text = value + "개의 검색결과"
+            self.collectionView.reloadData()
         }
-        viewModel.ouputButtonTag.bind { _ in
+        viewModel.ouputButtonTag.bind { [weak self] value in
+            guard let self, value != nil else { return }
             print(#function, "ouputButtonTag")
             self.collectionView.reloadData()
         }
-        
     }
     
     override func setUpHierarchy() {
@@ -153,51 +147,41 @@ final class SearchResultViewController: BaseViewController {
     }
     
     @objc func accuracySortButtonclicked() {
-        
         viewModel.inputButtonTag.value = accuracySortButton.tag
         self.accuracySortButton.grayButton()
         self.dateSortButton.whiteButton()
         self.highPriceButton.whiteButton()
         self.lowPriceButton.whiteButton()
-        //            self.collectionView.reloadData()
-        
-        //        callRequest(sortResult: SearchSorted.sim.rawValue)
+        viewModel.ouputPage.bind { value in
+            if value == 1 {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
     
     @objc func dateSortButtonClicked() {
-        print("버튼 눌림 ㅇㅇ")
-        bindData()
-
         viewModel.inputButtonTag.value = dateSortButton.tag
         self.accuracySortButton.whiteButton()
         self.dateSortButton.grayButton()
         self.highPriceButton.whiteButton()
         self.lowPriceButton.whiteButton()
-        //               self.collectionView.reloadData()
-        //        callRequest(sortResult: SearchSorted.date.rawValue)
+        viewModel.ouputPage.bind { value in
+            if value == 1 {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
-    
-    //    func callRequest(sortResult: String) {
-    //
-    //        NetworkManeger.shared.callRequestNaverSearch(query: userSearchText, sortResult: sortResult, page: page) { value in
-    //            if self.page == 1 {
-    //                self.productList = value
-    //             } else {
-    //                self.productList.items.append(contentsOf: value.items)
-    //            }
-    //            if self.page == 1 {
-    //                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-    //            }
-    //            self.searchResultLabel.text = "\(self.productList.total.formatted())개의 검색 결과"
-    //        }
-    //    }
     @objc func highPriceButtonClicked() {
         viewModel.inputButtonTag.value = highPriceButton.tag
         accuracySortButton.whiteButton()
         dateSortButton.whiteButton()
         highPriceButton.grayButton()
         lowPriceButton.whiteButton()
-        //        collectionView.reloadData()
+        viewModel.ouputPage.bind { value in
+            if value == 1 {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
     @objc func lowPriceButtonClicked() {
         viewModel.inputButtonTag.value = lowPriceButton.tag
@@ -205,7 +189,11 @@ final class SearchResultViewController: BaseViewController {
         dateSortButton.whiteButton()
         highPriceButton.whiteButton()
         lowPriceButton.grayButton()
-        //        collectionView.reloadData()
+        viewModel.ouputPage.bind { value in
+            if value == 1 {
+                self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
+        }
     }
 }
 
@@ -218,25 +206,19 @@ extension SearchResultViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as! SearchResultCollectionViewCell
         guard let data = viewModel.outputProductList.value?.items[indexPath.row] else { return cell}
-        
         cell.setUpcell(productData: data)
         cell.likeImageButton.tag = indexPath.row
         cell.likeImageButton.addTarget(self, action: #selector(likeImageButtonClicekd(sender:)), for: .touchUpInside)
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let data = viewModel.outputProductList.value?.items[indexPath.row] else { return }
-        
         let vc = ProductDetailViewController()
         vc.product = data
         navigationController?.pushViewController(vc, animated: true)
-        
-        
     }
-    
-    //MARK: 즐겨찾기 기능
+    //MARK: 즐겨찾기 기능 VM으로
     @objc func likeImageButtonClicekd(sender: UIButton) {
         //        let product = productList.items[sender.tag]
         //        let realm = try! Realm()

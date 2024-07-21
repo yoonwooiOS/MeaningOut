@@ -261,12 +261,12 @@
 			isa = PBXGroup;
 			children = (
 				9973EBD92C1ECC980067B97E /* TabBarController.swift */,
-				9973EC272C20DF130067B97E /* EditProfile */,
-				9973EC242C20D9A10067B97E /* ProductStore */,
 				9973EBD02C1EBA070067B97E /* Onboarding */,
 				9973EBD12C1EBA130067B97E /* ProfileSetting */,
 				9973EBD22C1EBA240067B97E /* Main */,
 				9973EBE52C1FAE350067B97E /* SearchResult */,
+				9973EC242C20D9A10067B97E /* ProductStore */,
+				9973EC272C20DF130067B97E /* EditProfile */,
 			);
 			path = VC;
 			sourceTree = "<group>";
